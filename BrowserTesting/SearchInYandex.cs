@@ -1,19 +1,22 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
 using NUnit.Framework;
 using OpenQA.Selenium;
-using System;
 using System.Threading;
+
 namespace BrowserTesting
 {
-    public class SearchInGoogle
+    class SearchInYandex
     {
         private IWebDriver driver;
-        private readonly By Input_Search = By.XPath("//input[@class='gLFyf gsfi']");
+        private readonly By Input_Search = By.Id("text");
 
         [SetUp]
         public void Setup()
         {
             driver = new OpenQA.Selenium.Firefox.FirefoxDriver();
-            driver.Navigate().GoToUrl("https://www.google.ru/");
+            driver.Navigate().GoToUrl("https://yandex.ru/");
             driver.Manage().Window.Maximize();
 
         }
@@ -25,7 +28,7 @@ namespace BrowserTesting
             enter.Click();
             enter.SendKeys("ABOBA");
             enter.SendKeys(Keys.Enter);
-            enter = driver.FindElement(By.Id("result-stats"));
+            enter = driver.FindElement(By.CssSelector("div [class=serp-adv__found]"));
             Assert.IsTrue(enter.Displayed);
             Thread.Sleep(2000);
         }
