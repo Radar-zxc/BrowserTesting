@@ -26,8 +26,16 @@ namespace BrowserTesting
             enter.SendKeys("ABOBA");
             enter.SendKeys(Keys.Enter);
             var check = driver.FindElement(By.XPath("//*[text()='ABOBA']"));
-            Assert.IsTrue(check.Displayed);
-            
+            Assert.IsTrue(check.Displayed, "Искомая информация не найдена");
+
+            enter = driver.FindElement(Input_Search);
+            string search_term = "Audi";
+            enter.Clear();
+            enter.SendKeys(search_term);
+            enter.SendKeys(Keys.Enter);
+            Check_Search check_search = new Check_Search();
+            check_search.Check(search_term, driver);
+             
         }
         [TearDown]
         public void TearDown()
