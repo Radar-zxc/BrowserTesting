@@ -25,9 +25,9 @@ namespace BrowserTesting
             enter.Click();
             enter.SendKeys("ABOBA");
             enter.SendKeys(Keys.Enter);
-            enter = driver.FindElement(By.Id("result-stats"));
-            Assert.IsTrue(enter.Displayed);
-            Thread.Sleep(2000);
+            var check = driver.FindElement(By.XPath("//*[text()='ABOBA']"));
+            Assert.IsTrue(check.Displayed);
+            
         }
         [TearDown]
         public void TearDown()

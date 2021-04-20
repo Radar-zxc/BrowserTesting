@@ -16,6 +16,7 @@ namespace BrowserTesting
         public void Setup()
         {
             driver = new OpenQA.Selenium.Firefox.FirefoxDriver();
+            
             driver.Navigate().GoToUrl("https://yandex.ru/");
             driver.Manage().Window.Maximize();
 
@@ -28,9 +29,8 @@ namespace BrowserTesting
             enter.Click();
             enter.SendKeys("ABOBA");
             enter.SendKeys(Keys.Enter);
-            enter = driver.FindElement(By.CssSelector("div [class=serp-adv__found]"));
-            Assert.IsTrue(enter.Displayed);
-            Thread.Sleep(2000);
+            var check = driver.FindElement(By.XPath("//*[text()='ABOBA']"));
+            Assert.IsTrue(check.Displayed);
         }
         [TearDown]
         public void TearDown()
