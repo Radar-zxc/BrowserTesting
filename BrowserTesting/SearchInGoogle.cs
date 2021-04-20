@@ -4,23 +4,14 @@ using System;
 using System.Threading;
 namespace BrowserTesting
 {
-    public class SearchInGoogle
+    public class SearchInGoogle:Open_Close_Browser
     {
-        private IWebDriver driver;
         private readonly By Input_Search = By.XPath("//input[@class='gLFyf gsfi']");
-
-        [SetUp]
-        public void Setup()
-        {
-            driver = new OpenQA.Selenium.Firefox.FirefoxDriver();
-            driver.Navigate().GoToUrl("https://www.google.ru/");
-            driver.Manage().Window.Maximize();
-
-        }
 
         [Test]
         public void Test1()
         {
+            Open_browser(ref driver, "https://www.google.ru/");
             var enter = driver.FindElement(Input_Search);
             enter.Click();
             enter.SendKeys("ABOBA");
@@ -35,12 +26,7 @@ namespace BrowserTesting
             enter.SendKeys(Keys.Enter);
             Check_Search check_search = new Check_Search();
             check_search.Check(search_term, driver);
-             
-        }
-        [TearDown]
-        public void TearDown()
-        {
-            driver.Close();
+            Close_browser(driver);
         }
     }
 }

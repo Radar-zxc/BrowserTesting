@@ -4,27 +4,16 @@ using System.Text;
 using NUnit.Framework;
 using OpenQA.Selenium;
 using System.Threading;
-
 namespace BrowserTesting
 {
-    class SearchInYandex
+    public class SearchInYandex:Open_Close_Browser
     {
-        private IWebDriver driver;
         private readonly By Input_Search = By.Id("text");
-
-        [SetUp]
-        public void Setup()
-        {
-            driver = new OpenQA.Selenium.Firefox.FirefoxDriver();
-            
-            driver.Navigate().GoToUrl("https://yandex.ru/");
-            driver.Manage().Window.Maximize();
-
-        }
 
         [Test]
         public void Test1()
         {
+            Open_browser(ref driver, "https://yandex.ru/");
             var enter = driver.FindElement(Input_Search);
             enter.Click();
             enter.SendKeys("ABOBA");
@@ -40,11 +29,8 @@ namespace BrowserTesting
             enter.Click();
             Check_Search check_search = new Check_Search();
             check_search.Check(search_term, driver);
+            Close_browser(driver);
         }
-        [TearDown]
-        public void TearDown()
-        {
-            driver.Close();
-        }
+        
     }
 }
