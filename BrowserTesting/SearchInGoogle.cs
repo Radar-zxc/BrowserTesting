@@ -22,7 +22,7 @@ namespace BrowserTesting
             enter.SendKeys("ABOBA");
             enter.SendKeys(Keys.Enter);
             var check = driver.FindElement(By.XPath("//div[@id='rso']//*[text()='ABOBA']"));
-            Assert.IsTrue(check.Displayed, "Искомая информация не найдена");
+            Assert.IsTrue(check.Displayed, "РСЃРєРѕРјР°СЏ РёРЅС„РѕСЂРјР°С†РёСЏ РЅРµ РЅР°Р№РґРµРЅР°");
         }
         [Test, Description("Search_with_button"), Order(1)]
         public void Test2()
