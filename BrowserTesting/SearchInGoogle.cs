@@ -15,7 +15,7 @@ namespace BrowserTesting
             driver.Navigate().GoToUrl("https://www.google.ru/");
         }
         [Test, Description("Search_with_enter"), Order(0)]
-        public void Test1()
+        public void Search_with_enter()
         {
             var enter = driver.FindElement(Input_Search);
             enter.Click();
@@ -25,7 +25,7 @@ namespace BrowserTesting
             Assert.IsTrue(check.Displayed, "Искомая информация не найдена");
         }
         [Test, Description("Search_with_button"), Order(1)]
-        public void Test2()
+        public void Search_with_button()
         {
             var enter = driver.FindElement(Input_Search);
             enter.Clear();
