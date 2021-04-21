@@ -9,10 +9,9 @@ namespace BrowserTesting
 {
     public class TestBase
     {
-        
         protected IWebDriver driver;
         [OneTimeSetUp]
-        public void Open_browser ()
+        public void Open_browser()
         {
             driver = new OpenQA.Selenium.Firefox.FirefoxDriver();
             driver.Manage().Window.Maximize();

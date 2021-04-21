@@ -35,8 +35,7 @@ namespace BrowserTesting
             enter.SendKeys(search_term);
             enter = driver.FindElement(By.ClassName("websearch-button__text"));
             enter.Click();
-            Check_Search check_search = new Check_Search();
-            check_search.Check(search_term, driver);
+            Check_Search.Check(search_term, driver);
         }
     }
 }

@@ -5,9 +5,9 @@ using System.Threading;
 namespace BrowserTesting
 {
     [TestFixture]
-    public class SearchInGoogle:TestBase
+    public class SearchInGoogle : TestBase
     {
-        private readonly By Input_Search = By.XPath("//input[@class='gLFyf gsfi']");
+        private readonly By Input_Search = By.XPath("//input[@name='q']");
 
         [OneTimeSetUp]
         public void driver_set_up()
@@ -31,11 +31,9 @@ namespace BrowserTesting
             enter.Clear();
             string search_term = "Audi";
             enter.SendKeys(search_term);
-            //enter.SendKeys(Keys.Enter);
-            enter = driver.FindElement(By.ClassName("Tg7LZd"));
+            enter = driver.FindElement(By.XPath("//button"));
             enter.Click();
-            Check_Search check_search = new Check_Search();
-            check_search.Check(search_term, driver);
+            Check_Search.Check(search_term, driver);
         }
     }
 }

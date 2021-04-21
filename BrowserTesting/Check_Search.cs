@@ -8,7 +8,7 @@ namespace BrowserTesting
 {
     public class Check_Search
     {
-        public void Check(string keys , IWebDriver driver)
+        public static void Check(string keys , IWebDriver driver)
         {
             string xpath_check = ".//*[text()='" + keys + "']";
             var check = driver.FindElement(By.XPath(xpath_check));
