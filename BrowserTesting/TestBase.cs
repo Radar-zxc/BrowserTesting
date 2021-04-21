@@ -7,16 +7,18 @@ using System.Threading;
 
 namespace BrowserTesting
 {
-    public class Open_Close_Browser
+    public class TestBase
     {
-        public IWebDriver driver;
-        public void Open_browser (ref IWebDriver driver ,string url)
+        
+        protected IWebDriver driver;
+        [OneTimeSetUp]
+        public void Open_browser ()
         {
             driver = new OpenQA.Selenium.Firefox.FirefoxDriver();
-            driver.Navigate().GoToUrl(url);
             driver.Manage().Window.Maximize();
         }
-        public void Close_browser(IWebDriver driver)
+        [OneTimeTearDown]
+        public void Close_browser()
         {
             driver.Quit();
         }
