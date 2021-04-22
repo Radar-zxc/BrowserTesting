@@ -14,7 +14,12 @@ namespace BrowserTesting
         [OneTimeSetUp]
         public void Open_browser()
         {
-            string browser =  Browsers.JsonRead.Read_file();
+            FileStream fs = new FileStream("Appsettings.json", FileMode.Open);
+            byte[] array = new byte[fs.Length];
+            fs.Read(array);
+            string info = System.Text.Encoding.Default.GetString(array);
+            Browser restoredBrowser = JsonSerializer.Deserialize<Browser>(info);
+            string browser = restoredBrowser.name;
             switch(browser){
                 case "Firefox":
                     driver = new OpenQA.Selenium.Firefox.FirefoxDriver();
@@ -30,6 +35,7 @@ namespace BrowserTesting
                     break;
             }
             driver.Manage().Window.Maximize();
+            fs.Close();
         }
         [OneTimeTearDown]
         public void Close_browser()
