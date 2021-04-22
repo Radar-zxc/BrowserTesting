@@ -2,6 +2,8 @@ using NUnit.Framework;
 using OpenQA.Selenium;
 using System;
 using System.Threading;
+using System.IO;
+using System.Text.Json;
 namespace BrowserTesting
 {
     [TestFixture]

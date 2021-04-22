@@ -3,7 +3,12 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29411.108
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BrowserTesting", "BrowserTesting\BrowserTesting.csproj", "{4B6599B5-2104-4AF0-A565-0E272A1E91B9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BrowserTesting", "BrowserTesting\BrowserTesting.csproj", "{4B6599B5-2104-4AF0-A565-0E272A1E91B9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{1B50111A-E0F3-44A5-AE78-C66B5A213C5A}"
+	ProjectSection(SolutionItems) = preProject
+		BrowserTesting\bin\Debug\netcoreapp3.0\Appsettings.json = BrowserTesting\bin\Debug\netcoreapp3.0\Appsettings.json
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
