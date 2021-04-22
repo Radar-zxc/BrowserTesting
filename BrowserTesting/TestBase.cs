@@ -5,7 +5,7 @@ using NUnit.Framework;
 using OpenQA.Selenium;
 using System.Threading;
 using System.IO;
-using System.Text.Json;
+using Newtonsoft.Json;
 namespace BrowserTesting
 {
     public class TestBase
@@ -14,13 +14,9 @@ namespace BrowserTesting
         [OneTimeSetUp]
         public void Open_browser()
         {
-            FileStream fs = new FileStream("Appsettings.json", FileMode.Open);
-            byte[] array = new byte[fs.Length];
-            fs.Read(array);
-            string info = System.Text.Encoding.Default.GetString(array);
-            Browser restoredBrowser = JsonSerializer.Deserialize<Browser>(info);
-            string browser = restoredBrowser.name;
-            switch(browser){
+            var JsonText = File.ReadAllText("Appsettings.json");
+            var browser = JsonConvert.DeserializeObject<Browser>(JsonText);
+            switch (browser.name){
                 case "Firefox":
                     driver = new OpenQA.Selenium.Firefox.FirefoxDriver();
                     break;
@@ -37,7 +33,6 @@ namespace BrowserTesting
                     throw new Exception("Некорректное содержание Json файла");
             }
             driver.Manage().Window.Maximize();
-            fs.Close();
         }
         [OneTimeTearDown]
         public void Close_browser()
