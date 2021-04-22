@@ -33,6 +33,8 @@ namespace BrowserTesting
                 case "Edge":
                     driver = new OpenQA.Selenium.Edge.EdgeDriver();
                     break;
+                default:
+                    throw new Exception("Некорректное содержание Json файла");
             }
             driver.Manage().Window.Maximize();
             fs.Close();
