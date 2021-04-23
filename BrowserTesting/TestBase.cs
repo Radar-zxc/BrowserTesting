@@ -13,21 +13,23 @@ namespace BrowserTesting
     {
         protected IWebDriver driver;
         [OneTimeSetUp]
-        public void Open_browser()
+        public void OpenBrowserWithJson()
         {
-            var JsonText = File.ReadAllText("Appsettings.json");
-            var browser = JsonConvert.DeserializeObject<Browser>(JsonText);
-            switch (browser.name){
-                case "Firefox":
+            var jsonText = File.ReadAllText("Appsettings.json");
+            var convertedBrowser = JsonConvert.DeserializeObject<Browser>(jsonText);
+            string content = convertedBrowser.name;
+            Browsers browser = (Browsers)Enum.Parse(typeof(Browsers),content);
+            switch (browser){
+                case Browsers.Firefox:
                     driver = new OpenQA.Selenium.Firefox.FirefoxDriver();
                     break;
-                case "Chrome":
+                case Browsers.Chrome:
                     driver = new OpenQA.Selenium.Chrome.ChromeDriver();
                     break;
-                case "IE":
+                case Browsers.IE:
                     driver = new OpenQA.Selenium.IE.InternetExplorerDriver();
                     break;
-                case "Edge":
+                case Browsers.Edge:
                     driver = new OpenQA.Selenium.Edge.EdgeDriver();
                     break;
                 default:
@@ -40,31 +42,31 @@ namespace BrowserTesting
         {
             driver.Navigate().GoToUrl("https://www.google.ru/");
         }
-        public void UrlVerify(string NecessaryUrl)
+        public void UrlVerify(string necessaryUrl)
         {
-            string PageUrl = driver.Url;
-            Assert.IsTrue(PageUrl.Contains(NecessaryUrl),
+            string pageUrl = driver.Url;
+            Assert.IsTrue(pageUrl.Contains(necessaryUrl),
                 "Неверный Url после перехода на вкладку");
         }
         public void ContentVerify(string key)
         {
-            string xpath_check = "//div[@class='page-title']//h1[text()='" + key + "']";
-            var check = driver.FindElement(By.XPath(xpath_check));
+            string xpathCheck = "//div[@class='page-title']//h1[text()='" + key + "']";
+            var check = driver.FindElement(By.XPath(xpathCheck));
             Assert.IsTrue(check.Displayed, "Искомая информация не найдена");
         }
-        public void OpenPage(string PageName )
+        public void OpenPage(string pageName )
         {
-            string path = "//ul[@class='top-menu']//a[@href='/" + PageName + "']";
+            string path = "//ul[@class='top-menu']//a[@href='/" + pageName + "']";
             var find = driver.FindElement(By.XPath(path));
             find.Click();
         }
-        public void OpenPageWithList(string PageName,string PageElement)
+        public void OpenPageWithList(string pageName,string pageElement)
         {
-            string path = "//ul[@class='top-menu']//a[@href='/" + PageName + "']";
+            string path = "//ul[@class='top-menu']//a[@href='/" + pageName + "']";
             var find = driver.FindElement(By.XPath(path));
             Actions actions = new Actions(driver);
             actions.MoveToElement(find).Build().Perform();
-            path = "//ul[@class='top-menu']//a[@href='/" + PageElement + "']";
+            path = "//ul[@class='top-menu']//ul[@class='sublist firstLevel active']//a[@href='/" + pageElement + "']";
             find = driver.FindElement(By.XPath(path));
             find.Click();
         }

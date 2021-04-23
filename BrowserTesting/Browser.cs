@@ -8,4 +8,11 @@ namespace BrowserTesting
     {
         public string name { get; set; }
     }
+    enum Browsers
+    {
+        Chrome,
+        Firefox,
+        Edge,
+        IE
+    }
 }

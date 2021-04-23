@@ -14,7 +14,7 @@ namespace BrowserTesting
         {
             driver.Navigate().GoToUrl("http://demowebshop.tricentis.com/");
         }
-        [Test,Description("Проверка вкладки Books"),Order(0)]
+        [Test, Description("Проверка вкладки Books"),Order(0)]
         public void CheckBooks()
         {
             OpenPage("books");
@@ -63,7 +63,7 @@ namespace BrowserTesting
             UrlVerify("http://demowebshop.tricentis.com/camera-photo");
             ContentVerify("Camera, photo");
         }
-        [Test ,Description("Проверка вкладки Cell phones"), Order(7)]
+        [Test, Description("Проверка вкладки Cell phones"), Order(7)]
         public void CheckElectronics_CellPhones()
         {
             OpenPageWithList("electronics", "cell-phones");
@@ -77,21 +77,21 @@ namespace BrowserTesting
             UrlVerify("http://demowebshop.tricentis.com/apparel-shoes");
             ContentVerify("Apparel & Shoes");
         }
-        [Test ,Description("Проверка вкладки Digital downloads"), Order(9)]
+        [Test, Description("Проверка вкладки Digital downloads"), Order(9)]
         public void CheckDigitalDownloades()
         {
             OpenPage("digital-downloads");
             UrlVerify("http://demowebshop.tricentis.com/digital-downloads");
             ContentVerify("Digital downloads");
         }
-        [Test ,Description("Проверка вкладки Jewelry"), Order(10)]
+        [Test, Description("Проверка вкладки Jewelry"), Order(10)]
         public void CheckJewelry()
         {
             OpenPage("jewelry");
             UrlVerify("http://demowebshop.tricentis.com/jewelry");
             ContentVerify("Jewelry");
         }
-        [Test ,Description("Проверка вкладки Gift Cards"), Order(11)]
+        [Test, Description("Проверка вкладки Gift Cards"), Order(11)]
         public void CheckGiftCards()
         {
             OpenPage("gift-cards");
