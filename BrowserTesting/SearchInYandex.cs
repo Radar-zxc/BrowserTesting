@@ -15,6 +15,7 @@ namespace BrowserTesting
         public void driver_set_up()
         {
             driver.Navigate().GoToUrl("https://yandex.ru/");
+            
         }
         [Test,Description("Search_with_enter"),Order(0)]
         public void Search_with_enter()
