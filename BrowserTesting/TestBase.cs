@@ -7,6 +7,7 @@ using System.Threading;
 using System.IO;
 using Newtonsoft.Json;
 using OpenQA.Selenium.Interactions;
+using BrowserTesting.Enums;
 namespace BrowserTesting
 {
     public class TestBase
@@ -17,8 +18,7 @@ namespace BrowserTesting
         {
             var jsonText = File.ReadAllText("Appsettings.json");
             var convertedBrowser = JsonConvert.DeserializeObject<Browser>(jsonText);
-            string content = convertedBrowser.name;
-            Browsers browser = (Browsers)Enum.Parse(typeof(Browsers),content);
+            Browsers browser = (Browsers)Enum.Parse(typeof(Browsers),convertedBrowser.name);
             switch (browser){
                 case Browsers.Firefox:
                     driver = new OpenQA.Selenium.Firefox.FirefoxDriver();
@@ -33,7 +33,7 @@ namespace BrowserTesting
                     driver = new OpenQA.Selenium.Edge.EdgeDriver();
                     break;
                 default:
-                    throw new Exception("Некорректное содержание Json файла");
+                    throw new Exception("Неудалось определить тип браузера");
             }
             driver.Manage().Window.Maximize();
         }
@@ -71,7 +71,7 @@ namespace BrowserTesting
             find.Click();
         }
         [OneTimeTearDown]
-        public void Close_browser()
+        public void CloseBrowser()
         {
             driver.Quit();
         }
