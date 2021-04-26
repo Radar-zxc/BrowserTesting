@@ -49,7 +49,6 @@ namespace BrowserTesting
         [OneTimeSetUp]
         public void ChangeCultureToUS()
         {
-            CultureInfo temp_culture = Thread.CurrentThread.CurrentCulture;
             Thread.CurrentThread.CurrentCulture = CultureInfo.CreateSpecificCulture("en-US");
         }
         public void UrlVerify(string necessaryUrl)
@@ -84,7 +83,8 @@ namespace BrowserTesting
         {
             string pathName = "//div[@class='page-body']//div[@class='item-box']//a[text()='" + itemName + "']";
             var findName = Driver.FindElement(By.XPath(pathName)).GetAttribute("href");
-            string pathElement = "//div[@class='page-body']//div[@class='item-box']//div[@data-productid='14']//input[@type='button']";
+            string pathElement = "//div[@class='page-body']//div[@class='item-box']//div[@data-productid='14']//h2[normalize-space(a/text())='"
+                + itemName + "']/..//input[@type='button']";
             var findElement = Driver.FindElement(By.XPath(pathElement));
             findElement.Click();
             return findName;
@@ -115,7 +115,7 @@ namespace BrowserTesting
             var itemPrice = double.Parse(Driver.FindElement(By.XPath(pathItemPrice)).Text);
             var itemTotalPrice =double.Parse( Driver.FindElement(By.XPath(pathItemTotalPrice)).Text);
             var check = itemPrice * count;
-            Assert.IsTrue(check == (itemTotalPrice), "Неверное вычисление итоговой суммы к оплате за товар");
+            Assert.IsTrue(check == itemTotalPrice, "Неверное вычисление итоговой суммы к оплате за товар");
         }
         public void CheckItemNames(string itemName)
         {
@@ -126,7 +126,6 @@ namespace BrowserTesting
         [OneTimeTearDown]
         public void ChangeCultureToRU()
         {
-            CultureInfo temp_culture = Thread.CurrentThread.CurrentCulture;
             Thread.CurrentThread.CurrentCulture = CultureInfo.CreateSpecificCulture("ru-RU");
         }
         [OneTimeTearDown]
