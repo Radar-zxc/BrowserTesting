@@ -8,10 +8,10 @@ namespace BrowserTesting
 {
     public class Check_Search
     {
-        public static void Check(string keys , IWebDriver driver)
+        public static void Check(string keys , IWebDriver Driver)
         {
             string xpath_check = ".//*[text()='" + keys + "']";
-            var check = driver.FindElement(By.XPath(xpath_check));
+            var check = Driver.FindElement(By.XPath(xpath_check));
             Assert.IsTrue(check.Displayed, "Искомая информация не найдена");
         }
     }

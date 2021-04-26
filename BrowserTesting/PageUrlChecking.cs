@@ -12,7 +12,7 @@ namespace BrowserTesting
     {
         override public void DriverSetUp()
         {
-            driver.Navigate().GoToUrl("http://demowebshop.tricentis.com/");
+            Driver.Navigate().GoToUrl("http://demowebshop.tricentis.com/");
         }
         [Test, Description("Проверка вкладки Books"),Order(0)]
         public void CheckBooks()

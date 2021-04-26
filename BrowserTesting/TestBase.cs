@@ -8,11 +8,15 @@ using System.IO;
 using Newtonsoft.Json;
 using OpenQA.Selenium.Interactions;
 using BrowserTesting.Enums;
+using OpenQA.Selenium.Support;
+using OpenQA.Selenium.Support.UI;
+using System.Globalization;
+
 namespace BrowserTesting
 {
     public class TestBase
     {
-        protected IWebDriver driver;
+        protected IWebDriver Driver;
         [OneTimeSetUp]
         public void OpenBrowserWithJson()
         {
@@ -21,59 +25,114 @@ namespace BrowserTesting
             Browsers browser = (Browsers)Enum.Parse(typeof(Browsers),convertedBrowser.name);
             switch (browser){
                 case Browsers.Firefox:
-                    driver = new OpenQA.Selenium.Firefox.FirefoxDriver();
+                    Driver = new OpenQA.Selenium.Firefox.FirefoxDriver();
                     break;
                 case Browsers.Chrome:
-                    driver = new OpenQA.Selenium.Chrome.ChromeDriver();
+                    Driver = new OpenQA.Selenium.Chrome.ChromeDriver();
                     break;
                 case Browsers.IE:
-                    driver = new OpenQA.Selenium.IE.InternetExplorerDriver();
+                    Driver = new OpenQA.Selenium.IE.InternetExplorerDriver();
                     break;
                 case Browsers.Edge:
-                    driver = new OpenQA.Selenium.Edge.EdgeDriver();
+                    Driver = new OpenQA.Selenium.Edge.EdgeDriver();
                     break;
                 default:
                     throw new Exception("Неудалось определить тип браузера");
             }
-            driver.Manage().Window.Maximize();
+            Driver.Manage().Window.Maximize();
         }
         [OneTimeSetUp]
         virtual public void DriverSetUp()
         {
-            driver.Navigate().GoToUrl("https://www.google.ru/");
+            Driver.Navigate().GoToUrl("https://www.google.ru/");
+        }
+        [OneTimeSetUp]
+        public void ChangeCultureToUS()
+        {
+            CultureInfo temp_culture = Thread.CurrentThread.CurrentCulture;
+            Thread.CurrentThread.CurrentCulture = CultureInfo.CreateSpecificCulture("en-US");
         }
         public void UrlVerify(string necessaryUrl)
         {
-            string pageUrl = driver.Url;
+            string pageUrl = Driver.Url;
             Assert.IsTrue(pageUrl.Contains(necessaryUrl),
                 "Неверный Url после перехода на вкладку");
         }
         public void ContentVerify(string key)
         {
             string xpathCheck = "//div[@class='page-title']//h1[text()='" + key + "']";
-            var check = driver.FindElement(By.XPath(xpathCheck));
+            var check = Driver.FindElement(By.XPath(xpathCheck));
             Assert.IsTrue(check.Displayed, "Искомая информация не найдена");
         }
         public void OpenPage(string pageName )
         {
             string path = "//ul[@class='top-menu']//a[@href='/" + pageName + "']";
-            var find = driver.FindElement(By.XPath(path));
+            var find = Driver.FindElement(By.XPath(path));
             find.Click();
         }
         public void OpenPageWithList(string pageName,string pageElement)
         {
             string path = "//ul[@class='top-menu']//a[@href='/" + pageName + "']";
-            var find = driver.FindElement(By.XPath(path));
-            Actions actions = new Actions(driver);
+            var find = Driver.FindElement(By.XPath(path));
+            Actions actions = new Actions(Driver);
             actions.MoveToElement(find).Build().Perform();
             path = "//ul[@class='top-menu']//ul[@class='sublist firstLevel active']//a[@href='/" + pageElement + "']";
-            find = driver.FindElement(By.XPath(path));
+            find = Driver.FindElement(By.XPath(path));
             find.Click();
+        }
+        public string FindAddJewelryItem(string itemName)
+        {
+            string pathName = "//div[@class='page-body']//div[@class='item-box']//a[text()='" + itemName + "']";
+            var findName = Driver.FindElement(By.XPath(pathName)).GetAttribute("href");
+            string pathElement = "//div[@class='page-body']//div[@class='item-box']//div[@data-productid='14']//input[@type='button']";
+            var findElement = Driver.FindElement(By.XPath(pathElement));
+            findElement.Click();
+            return findName;
+        }
+        public string CheckCartItem()
+        {
+            string pathCart = "//div[@class='header-links-wrapper']//a[@class='ico-cart']//span[@class='cart-label']";
+            var findCart = Driver.FindElement(By.XPath(pathCart));
+            Actions move = new Actions(Driver);
+            move.MoveToElement(findCart).Perform();
+            findCart.Click();
+            string pathItemName = "//tr[@class='cart-item-row']//td[@class='product']//a[text()='Black & White Diamond Heart']";
+            var findName = Driver.FindElement(By.XPath(pathItemName)).GetAttribute("href");
+            return findName;
+        }
+        public void AddMoreItems(int count)
+        {
+            string pathItemCount = "//a[text()='Black & White Diamond Heart']/../..//input[@class='qty-input']";
+            var addItems = Driver.FindElement(By.XPath(pathItemCount));
+            addItems.Clear();
+            addItems.SendKeys(count.ToString());
+            addItems.SendKeys(Keys.Enter);
+        }
+        public void CheckManyItemPrice(int count)
+        {
+            string pathItemTotalPrice = "//a[text()='Black & White Diamond Heart']/../..//span[@class='product-subtotal']";
+            string pathItemPrice = "//a[text()='Black & White Diamond Heart']/../..//span[@class='product-unit-price']";
+            var itemPrice = double.Parse(Driver.FindElement(By.XPath(pathItemPrice)).Text);
+            var itemTotalPrice =double.Parse( Driver.FindElement(By.XPath(pathItemTotalPrice)).Text);
+            var check = itemPrice * count;
+            Assert.IsTrue(check == (itemTotalPrice), "Неверное вычисление итоговой суммы к оплате за товар");
+        }
+        public void CheckItemNames(string itemName)
+        {
+            Assert.IsTrue(FindAddJewelryItem(itemName) == CheckCartItem(), 
+                "Выбранный для добавления товар и товар ,добавленный в корзину, не совпадают");
+        }
+
+        [OneTimeTearDown]
+        public void ChangeCultureToRU()
+        {
+            CultureInfo temp_culture = Thread.CurrentThread.CurrentCulture;
+            Thread.CurrentThread.CurrentCulture = CultureInfo.CreateSpecificCulture("ru-RU");
         }
         [OneTimeTearDown]
         public void CloseBrowser()
         {
-            driver.Quit();
+            Driver.Quit();
         }
     }
 }
