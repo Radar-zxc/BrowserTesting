@@ -122,6 +122,38 @@ namespace BrowserTesting
             Assert.IsTrue(FindAddJewelryItem(itemName) == CheckCartItem(), 
                 "Выбранный для добавления товар и товар ,добавленный в корзину, не совпадают");
         }
+        public void RemoveCart(string itemName,int count)
+        {
+            string pathRemoveButton = "//tr[@class='cart-item-row']//a[normalize-space(text()='" + 
+                itemName + "')]//..//..//input[@value='" + count + "']//..//..//input[@type='checkbox']";
+            var removeButton = Driver.FindElement(By.XPath(pathRemoveButton));
+            removeButton.Click();
+            removeButton.SendKeys(Keys.Enter);
+        }
+        public string GoToJewelryItemPage(string itemName)
+        {
+            string pathItem = "//div[@class='page-body']//div[@class='item-box']//a[text()='" + itemName + "']";
+            var item = Driver.FindElement(By.XPath(pathItem));
+            var findName = Driver.FindElement(By.XPath(pathItem)).GetAttribute("href"); //это url по нему потом сравнить открывшуюся страницу и нажимаемую
+            item.Click();
+            return findName;
+        }
+        public void CheckItemNamesInItemPage(string itemName)
+        {
+            Assert.IsTrue(itemName == Driver.Url,
+               "Выбранный товар и страница с информацией о нем не совпадают");
+        }
+        public void AddItemFromPage()
+        {
+            string pathMultiplyItem = "//div[@class='center-2']//input [@class='qty-input']";
+            string pathAddButton = "//div[@class='center-2']//input[@type='button']";
+            var add = Driver.FindElement(By.XPath(pathMultiplyItem));
+            add.Clear();
+            add.SendKeys("50");
+            add.SendKeys(Keys.Enter);
+            add.FindElement(By.XPath(pathAddButton));
+            add.Click();
+        }
 
         [OneTimeTearDown]
         public void ChangeCultureToRU()
