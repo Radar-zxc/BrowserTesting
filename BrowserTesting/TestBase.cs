@@ -146,13 +146,13 @@ namespace BrowserTesting
         public void AddItemFromPage()
         {
             string pathMultiplyItem = "//div[@class='center-2']//input [@class='qty-input']";
-            string pathAddButton = "//div[@class='center-2']//input[@type='button']";
+            //string pathAddButton = "//div[@class='center-2']//input[@type='button']";
             var add = Driver.FindElement(By.XPath(pathMultiplyItem));
             add.Clear();
             add.SendKeys("50");
             add.SendKeys(Keys.Enter);
-            add.FindElement(By.XPath(pathAddButton));
-            add.Click();
+            //add.FindElement(By.XPath(pathAddButton));
+            //add.Click();
         }
 
         [OneTimeTearDown]
