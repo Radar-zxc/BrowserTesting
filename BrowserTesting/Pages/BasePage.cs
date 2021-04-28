@@ -17,53 +17,28 @@ namespace BrowserTesting
     abstract class BasePage
     {
         protected IWebDriver Driver ;
-        //public IWebElement Element;
         public BasePage(IWebDriver Driver )
         {
             this.Driver = Driver;
         }
-        /*public void RemoveCart(By itemRemoveButton)
+        public void RemoveCart(By removeButton)
         {
-            var remove = Driver.FindElement(itemRemoveButton);
-            remove.Click();
-            remove.SendKeys(Keys.Enter);
-        }*/
-        /*public void ChangeCountInCart(string itemName,int count)
-        {
-            string pathCountItem = $"//a[text()='{itemName}']/../..//input[@class='qty-input']";
-            var change = Driver.FindElement(By.XPath(pathCountItem));
-            change.Click();
-            change.SendKeys(count.ToString());
-            change.SendKeys(Keys.Enter);
-        }*/
-
-        /*public void ChangeCountInItemPage(By itemCountField ,int count)
-        {
-            //string pathCountItem = "//input[@class='qty-input']";
-            var change = Driver.FindElement(itemCountField);
-            change.Click();
-            change.SendKeys(count.ToString());
-            change.SendKeys(Keys.Enter);
-        }*/
-
-        /*public void Click()
-        {
-            Element.Click();
-        }*/
-        public void RemoveCart(IWebElement removeButton)
-        {
-            removeButton.Click();
+            var action = Driver.FindElement(removeButton);
+            action.Click();
+            action.SendKeys(Keys.Enter);
         }
-        public void ChangeCount(IWebElement countField ,int newCount)
+        public void ChangeCount(By countField ,int newCount)
         {
-            countField.Click();
-            countField.Clear();
-            countField.SendKeys(newCount.ToString());
-            countField.SendKeys(Keys.Enter);
+            var action = Driver.FindElement(countField);
+            action.Click();
+            action.Clear();
+            action.SendKeys(newCount.ToString());
+            action.SendKeys(Keys.Enter);
         }
-        public void AddItem(IWebElement addButton)
+        public void AddItem(By addButton)
         {
-            addButton.Click();
+            var action = Driver.FindElement(addButton);
+            action.Click();
         }
     }
 }

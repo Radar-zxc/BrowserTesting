@@ -9,6 +9,7 @@ using BrowserTesting.Pages;
 
 namespace BrowserTesting
 {
+    [TestFixture]
     class AddToCart:TestBase
     {
         override public void DriverSetUp()
@@ -22,17 +23,9 @@ namespace BrowserTesting
         [OneTimeSetUp]
         public void Prepare()
         {
-            //cart = new CartPage(Driver, itemName, itemCount);
-            //string itemName = "Black & White Diamond Heart";
-            //int itemCount = 50;
             cart = new CartPage(Driver);
             order = new OrderPage(Driver);
             explorer = new PageExplorer(Driver);
-            //cart.itemName = itemName;
-            //cart.itemCount = itemCount;
-            //order.itemName = itemName;
-            //order.itemCount = itemCount;
-
         }
 
         [Test, Description("Add jewelry to cart"), Order(0)]
@@ -44,49 +37,25 @@ namespace BrowserTesting
             CheckManyItemPrice(50);
            
         }
-        [Test, Order(1)]
+        [Test, Description("Clear cart - add many items in item page"), Order(1)]
         public void AddJewelry_MultiplyInItemPage()
         {
             cart.CreatePage();
-            cart.RemoveCart(cart.itemRemoveButton);
+            explorer.RemoveCart(cart.itemRemoveButton);
+            cart.CheckEmptyCart();
             explorer.OpenPage("jewelry");
             explorer.GoToItemPage(order.itemName);
+            order.CheckPageAndUrlContent(Driver.Url);
             order.CreatePage();
             explorer.ChangeCount(order.itemCountField, 60);
             explorer.AddItem(order.itemAddButton);
             explorer.OpenCart();
-            //cart.CreatePage();
-
-            //string itemName = "Black & White Diamond Heart";
-            //int itemCount = 50;
-            /* cart.itemName = itemName;
-             cart.itemCount = itemCount;
-             order.itemName = itemName;
-             order.itemCount = itemCount;*/
-
-            /*
-            cart.ChangeCountInCart("Black & White Diamond Heart", 20);
-            cart.RemoveCart(cart.RemoveCart());
-            //cart.RemoveCart();
-            explorer.OpenPage("jewelry");
-            explorer.GoToItemPage("Black & White Diamond Heart");
-            order.addItems();
-            order.checkPageAndUrlContent(Driver.Url);
-            explorer.OpenCart();
-
-            */
-            //RemoveCart("Black & White Diamond Heart", 50);
-            //OpenPage("jewelry");
-            //string s = GoToJewelryItemPage("Black & White Diamond Heart");
-            ///CheckItemNamesInItemPage(s);
-            //AddItemFromPage();
-            //CartPage cart = new CartPage(Driver,itemName,itemCount);
-            //cart.setFields(itemName,itemCount);
-            // removeCart(cart.itemRemoveButton);
-            //OpenPage("jewelry");
-            //GoToJewelryItemPage(cart.itemName);
-            //AddItemFromPage();
-            //cart.removeCart();
+            explorer.CheckCartTravel(cart.cartUrl);
+            cart.CreatePage();
+            cart.CheckCartItem(order.itemName);
+            cart.CheckPrice();
+            explorer.RemoveCart(cart.itemRemoveButton);
+            cart.CheckEmptyCart();
         }
     }
 }

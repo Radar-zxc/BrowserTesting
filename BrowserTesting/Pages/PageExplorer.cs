@@ -15,24 +15,22 @@ namespace BrowserTesting.Pages
 {
     class PageExplorer:BasePage
     {
-        
         public PageExplorer(IWebDriver Driver):base(Driver)
         {
-            this.Driver = Driver;
         }
         public void OpenPage(string pageName)
         {
-            string path = "//ul[@class='top-menu']//a[@href='/" + pageName + "']";
+            string path = $"//ul[@class='top-menu']//a[@href='/{pageName}']";
             var find = Driver.FindElement(By.XPath(path));
             find.Click();
         }
         public void OpenPageWithList(string pageName, string pageElement)
         {
-            string path = "//ul[@class='top-menu']//a[@href='/" + pageName + "']";
+            string path = $"//ul[@class='top-menu']//a[@href='/{ pageName}']";
             var find = Driver.FindElement(By.XPath(path));
             Actions actions = new Actions(Driver);
             actions.MoveToElement(find).Build().Perform();
-            path = "//ul[@class='top-menu']//ul[@class='sublist firstLevel active']//a[@href='/" + pageElement + "']";
+            path = $"//ul[@class='top-menu']//ul[@class='sublist firstLevel active']//a[@href='/{ pageElement}']";
             find = Driver.FindElement(By.XPath(path));
             find.Click();
         }
@@ -49,10 +47,13 @@ namespace BrowserTesting.Pages
         }
         public void GoToItemPage(string itemName)
         {
-            string pathItem = "//div[@class='page-body']//div[@class='item-box']//a[text()='" + itemName + "']";
+            string pathItem = $"//div[@class='page-body']//div[@class='item-box']//a[text()='{ itemName}']";
             var item = Driver.FindElement(By.XPath(pathItem));
             item.Click();
         }
-
+        public void CheckCartTravel(string url)
+        {
+            Assert.AreEqual(Driver.Url , url, "Осуществлен неверный переход при попытке перейти в корзину");
+        }
     }
 }
