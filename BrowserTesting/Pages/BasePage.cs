@@ -40,5 +40,10 @@ namespace BrowserTesting
             var action = Driver.FindElement(addButton);
             action.Click();
         }
+        public void RefreshCart(By updateButton)
+        {
+            var action = Driver.FindElement(updateButton);
+            action.Click();
+        }
     }
 }

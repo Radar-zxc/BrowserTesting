@@ -40,21 +40,22 @@ namespace BrowserTesting
         [Test, Description("Clear cart - add many items in item page"), Order(1)]
         public void AddJewelry_MultiplyInItemPage()
         {
-            cart.CreatePage();
-            explorer.RemoveCart(cart.itemRemoveButton);
+            string item = "Black & White Diamond Heart";
+            cart.CreateRow(item);
+            cart.RemoveItem(item);
             cart.CheckEmptyCart();
             explorer.OpenPage("jewelry");
-            explorer.GoToItemPage(order.itemName);
+            explorer.GoToItemPage(item);
             order.CheckPageAndUrlContent(Driver.Url);
-            order.CreatePage();
-            explorer.ChangeCount(order.itemCountField, 60);
-            explorer.AddItem(order.itemAddButton);
+            order.CreatePage(item);
+            order.ChangeItemCount(60);
+            order.AddItemToCart(item);
             explorer.OpenCart();
             explorer.CheckCartTravel(cart.cartUrl);
-            cart.CreatePage();
             cart.CheckCartItem(order.itemName);
             cart.CheckPrice();
-            explorer.RemoveCart(cart.itemRemoveButton);
+            cart.UpdateCart();
+            cart.RemoveItem(item);
             cart.CheckEmptyCart();
         }
     }

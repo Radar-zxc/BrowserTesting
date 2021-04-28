@@ -19,40 +19,41 @@ namespace BrowserTesting
         public int itemCount;
         public CartPage(IWebDriver Driver) : base(Driver)
         {
-            SetItemName("Black & White Diamond Heart");
-            SetItemCount(50);
+            //SetItemName("Black & White Diamond Heart");
+            SetItemCount(1);
         }
         public By itemRemoveButton;
         public string itemRefNameInCart;
         public double itemPrice;
         public double itemTotalPrice;
         public By itemCountField;
+        public By updateButton= By.XPath("//input[@class='button-2 update-cart-button']");
         
         public void SetItemName(string itemName)
         {
             this.itemName = itemName;
         }
-        public void SetRemoveButton()
+        public By SetRemoveButton(string itemName)
         {
             string path = $"//tr[@class='cart-item-row']//a[normalize-space(text()='{itemName}')]//..//..//input[@type='checkbox']";
-            itemRemoveButton = By.XPath(path);
+            return itemRemoveButton = By.XPath(path);
         }
-        public void SetPrice()
+        public void SetPrice(string itemName)
         {
             string pathItemPrice = $"//a[text()='{itemName}']/../..//span[@class='product-unit-price']";
             itemPrice = double.Parse(Driver.FindElement(By.XPath(pathItemPrice)).Text);
         }
-        public void SetTotalPrice()
+        public void SetTotalPrice(string itemName)
         {
             string pathItemTotalPrice = $"//a[text()='{itemName}']/../..//span[@class='product-subtotal']";
             itemTotalPrice = double.Parse(Driver.FindElement(By.XPath(pathItemTotalPrice)).Text);
         }
-        public void SetCountField()
+        public void SetCountField(string itemName)
         {
             string pathItemCount = $"//a[text()='{itemName}']/../..//input[@class='qty-input']";
             itemCountField = By.XPath(pathItemCount);
         }
-        public void SetRefNameInCart()
+        public void SetRefNameInCart(string itemName)
         {
             string pathItemName = $"//tr[@class='cart-item-row']//td[@class='product']//a[text()='{itemName}']";
             itemRefNameInCart = Driver.FindElement(By.XPath(pathItemName)).GetAttribute("href");
@@ -74,12 +75,26 @@ namespace BrowserTesting
         {
             itemCount = count;
         }
-        public void CreatePage()
+        public void ChangeItemCount(string item, int newCount)
         {
-            SetRemoveButton();
-            SetCountField();
-            SetTotalPrice();
-            SetPrice();
+            SetCountField(item);
+            ChangeCount(itemCountField, newCount);
+        }
+        public void UpdateCart()
+        {
+            RefreshCart(updateButton);
+        }
+        public void RemoveItem(string itemName)
+        {
+            RemoveCart(SetRemoveButton(itemName));
+        }
+        public void CreateRow(string itemName)
+        {
+            SetItemName(itemName);
+            SetRemoveButton(itemName);
+            SetCountField(itemName);
+            SetTotalPrice(itemName);
+            SetPrice(itemName);
         }
     }
 }

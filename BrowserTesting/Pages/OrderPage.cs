@@ -17,7 +17,7 @@ namespace BrowserTesting
         public int itemCount;
         public OrderPage (IWebDriver Driver):base(Driver)
         {
-            SetName("Black & White Diamond Heart");
+            //SetName("Black & White Diamond Heart");
             SetCount(50);
         }
         public string itemPageUrl = "http://demowebshop.tricentis.com/black-white-diamond-heart";
@@ -47,8 +47,17 @@ namespace BrowserTesting
             string path = "//span[@itemprop='price']";
             itemPrice = double.Parse(Driver.FindElement(By.XPath(path)).Text);
         }
-        public void CreatePage()
+        public void ChangeItemCount(int count)
         {
+            ChangeCount(itemCountField, count);
+        }
+        public void AddItemToCart(string item)
+        {
+            AddItem(itemAddButton);
+        }
+        public void CreatePage(string name)
+        {
+            SetName(name);
             SetItemAddButton();
             SetItemCountField();
             SetItemPrice();
