@@ -14,23 +14,16 @@ namespace BrowserTesting
     class OrderPage : BasePage
     {
         public string itemName;
-        public int itemCount;
         public OrderPage (IWebDriver Driver):base(Driver)
         {
-            //SetName("Black & White Diamond Heart");
-            SetCount(1);
+
         }
-        public string itemPageUrl = "http://demowebshop.tricentis.com/black-white-diamond-heart";
-        public double itemPrice;
+        public By itemPrice;
         public By itemAddButton;
         public By itemCountField;
         public void SetName (string itemName)
         {
             this.itemName = itemName;
-        }
-        public void SetCount(int itemCount)
-        {
-           this.itemCount = itemCount;
         }
         public void SetItemAddButton()
         {
@@ -42,29 +35,29 @@ namespace BrowserTesting
             string path = "//div[@class='center-2']//input [@class='qty-input']";
             itemCountField = By.XPath(path);
         }
-        public void SetItemPrice()
+        public double SetItemValuePrice()
         {
             string path = "//span[@itemprop='price']";
-            itemPrice = double.Parse(Driver.FindElement(By.XPath(path)).Text);
+            double price = double.Parse(Driver.FindElement(By.XPath(path)).Text);
+            return price;
+        }
+        public void SetItemPrice()
+        {
+            itemPrice = By.XPath("//span[@itemprop='price']");
         }
         public void ChangeItemCount(int count)
         {
             ChangeCount(itemCountField, count);
         }
-        public void AddItemToCart(string item)
+        public void AddItemToCart()
         {
             AddItem(itemAddButton);
         }
-        public void CreatePage(string name)
+        public void CreatePage()
         {
-            SetName(name);
             SetItemAddButton();
             SetItemCountField();
             SetItemPrice();
-        }
-        public bool CheckPageAndUrlContent(string Url)
-        {
-            return (Url == itemPageUrl);
         }
     }
 }

@@ -12,12 +12,12 @@ namespace BrowserTesting.Tests
     [TestFixture("Computing and Internet", "Fiction", "Health Book")]
     class AddManyItemsToCart:TestBase
     {
-        override public void DriverSetUp()
+        public override void DriverSetUp()
         {
             Driver.Navigate().GoToUrl("http://demowebshop.tricentis.com/");
         }
-        private CartPage[] cart =new CartPage[3];
-        private OrderPage[] order = new OrderPage[3];
+        private CartPage cart;
+        private OrderPage order;
         private PageExplorer explorer;
         private string item1;
         private string item2;
@@ -25,11 +25,8 @@ namespace BrowserTesting.Tests
         [OneTimeSetUp]
         public void Prepare()
         {
-            for (int i = 0; i < 3; i++)
-            {
-                cart[i] = new CartPage(Driver);
-                order[i] = new OrderPage(Driver);
-            }
+            order= new OrderPage(Driver);
+            cart = new CartPage(Driver);
             explorer = new PageExplorer(Driver);
         }
         public AddManyItemsToCart(string item1, string item2, string item3)
@@ -42,26 +39,23 @@ namespace BrowserTesting.Tests
         public void AddDifferentBooks_CheckRemove()
         {
             string[] items = new string[] { item1, item2, item3 };
-
+            order.CreatePage();
             for (int i = 0; i < items.Length; i++)
             {
                 OpenPage("books");
                 explorer.GoToItemPage(items[i]);
-                order[i].CheckPageAndUrlContent(Driver.Url);
-                order[i].CreatePage(items[i]);
-                order[i].ChangeItemCount(1);
-                order[i].AddItemToCart(items[i]);
+                order.ChangeItemCount(1);
+                order.AddItemToCart();
             }
             explorer.OpenCart();
             explorer.CheckCartTravel(CartPage.cartUrl);
             for (int i=0; i<items.Length;i++)
             {
-                cart[i].CreateRow(items[i]);
-                cart[i].CheckCartItem(order[i].itemName);
-                cart[i].CheckPrice();
-                cart[i].RemoveItem(items[i]);
+                cart.CheckCartItem(items[i]);
+                cart.RemoveItem(items[i]);
             }
-            cart[0].UpdateCart();
+            cart.UpdateCart();
+            cart.CheckEmptyCart();
             explorer.OpenStartPage();
         }
     }

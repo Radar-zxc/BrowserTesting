@@ -35,7 +35,6 @@ namespace BrowserTesting
             CheckItemNames("Black & White Diamond Heart");
             AddMoreItems(50);
             CheckManyItemPrice(50);
-           
         }
         [Test, Description("Clear cart - add many items in item page"), Order(1)]
         public void AddJewelry_MultiplyInItemPage()
@@ -43,19 +42,19 @@ namespace BrowserTesting
             string item = "Black & White Diamond Heart";
             cart.CreateRow(item);
             cart.RemoveItem(item);
+            cart.UpdateCart();
             cart.CheckEmptyCart();
             explorer.OpenPage("jewelry");
             explorer.GoToItemPage(item);
-            order.CheckPageAndUrlContent(Driver.Url);
-            order.CreatePage(item);
+            order.CreatePage();
             order.ChangeItemCount(60);
-            order.AddItemToCart(item);
+            order.AddItemToCart();
             explorer.OpenCart();
             explorer.CheckCartTravel(CartPage.cartUrl);
             cart.CheckCartItem(order.itemName);
             cart.CheckPrice();
-            cart.UpdateCart();
             cart.RemoveItem(item);
+            cart.UpdateCart();
             cart.CheckEmptyCart();
         }
     }

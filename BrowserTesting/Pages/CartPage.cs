@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections;
 using System.Text;
 using OpenQA.Selenium.Support.PageObjects;
 using NUnit.Framework;
@@ -19,15 +20,14 @@ namespace BrowserTesting
         public int itemCount;
         public CartPage(IWebDriver Driver) : base(Driver)
         {
-            //SetItemName("Black & White Diamond Heart");
-            SetItemCount(1);
+
         }
-        public By itemRemoveButton;
+        //public By itemRemoveButton;
         public string itemRefNameInCart;
         public double itemPrice;
         public double itemTotalPrice;
         public By itemCountField;
-        public By updateButton= By.XPath("//input[@class='button-2 update-cart-button']");
+        public By updateButton = By.XPath("//input[@class='button-2 update-cart-button']");
         
         public void SetItemName(string itemName)
         {
@@ -36,7 +36,8 @@ namespace BrowserTesting
         public By SetRemoveButton(string itemName)
         {
             string path = $"//tr[@class='cart-item-row']//a[normalize-space(text())='{itemName}']//..//..//input[@type='checkbox']";
-            return itemRemoveButton = By.XPath(path);
+            By itemRemoveButton = By.XPath(path);
+            return itemRemoveButton ;
         }
         public void SetPrice(string itemName)
         {
@@ -58,18 +59,19 @@ namespace BrowserTesting
             string pathItemName = $"//tr[@class='cart-item-row']//td[@class='product']//a[text()='{itemName}']";
             itemRefNameInCart = Driver.FindElement(By.XPath(pathItemName)).GetAttribute("href");
         }
-        public bool CheckPrice ()
+        public bool CheckPrice()
         {
             return ((itemPrice * itemCount) == itemTotalPrice);
         }
         public void CheckEmptyCart()
         {
-            var findMessage = Driver.FindElement(By.XPath("//div[@class='page-body']//div[normalize-space(text())='Your Shopping Cart is empty!']"));
-            Assert.IsTrue(findMessage.Displayed, "Корзина не очищена");
+            string path = "//div[@class='page-body']//div[normalize-space(text())='Your Shopping Cart is empty!']";
+            Assert.IsTrue(Driver.FindElement(By.XPath(path)).Displayed, "Корзина не очищена");
         }
-        public void CheckCartItem(string orderItemName)
+        public void CheckCartItem(string itemName)
         {
-            Assert.AreEqual(orderItemName, itemName, "Предмет, добавленный в корзину и оказавшийся в корзине не совпадают");
+            var findItem = Driver.FindElement(By.XPath($"//tr[@class='cart-item-row']//td[@class='product']//a[text()='{itemName}']"));
+            Assert.IsTrue(findItem.Displayed, $"Предмет {itemName} отсутствует в корзине ");
         }
         public void SetItemCount(int count)
         {
@@ -91,10 +93,10 @@ namespace BrowserTesting
         public void CreateRow(string itemName)
         {
             SetItemName(itemName);
-            SetRemoveButton(itemName);
-            SetCountField(itemName);
-            SetTotalPrice(itemName);
-            SetPrice(itemName);
+            //SetRemoveButton(itemName);
+            //SetCountField(itemName);
+            //SetTotalPrice(itemName);
+            //SetPrice(itemName);
         }
     }
 }

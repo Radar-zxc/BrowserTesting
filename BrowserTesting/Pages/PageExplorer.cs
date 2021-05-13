@@ -15,6 +15,7 @@ namespace BrowserTesting.Pages
 {
     class PageExplorer:BasePage
     {
+        public string newUrl;
         public PageExplorer(IWebDriver Driver):base(Driver)
         {
         }
@@ -45,7 +46,6 @@ namespace BrowserTesting.Pages
             var cart = Driver.FindElement(By.XPath("//div[@class='header-links-wrapper']//a[@class='ico-cart']//span[@class='cart-label']"));
             cart.Click();
         }
-
         public void GoToItemPage(string itemName)
         {
             string pathItem = $"//div[@class='page-body']//div[@class='item-box']//a[text()='{ itemName}']";
@@ -55,6 +55,12 @@ namespace BrowserTesting.Pages
         public void CheckCartTravel(string url)
         {
             Assert.AreEqual(Driver.Url , url, "Осуществлен неверный переход при попытке перейти в корзину");
+        }
+        public string GetItemPageUrl(string itemName)
+        {
+            string pageUrl = Driver.FindElement
+                (By.XPath($"//div[@class='item-box']//h2[@class='product-title']//a[normalize-space(text())='{itemName}']")).GetAttribute("href");
+            return newUrl = pageUrl;
         }
     }
 }
