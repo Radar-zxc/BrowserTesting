@@ -25,7 +25,6 @@ namespace BrowserTesting
         {
             var action = Driver.FindElement(removeButton);
             action.Click();
-            action.SendKeys(Keys.Enter);
         }
         public void ChangeCount(By countField ,int newCount)
         {

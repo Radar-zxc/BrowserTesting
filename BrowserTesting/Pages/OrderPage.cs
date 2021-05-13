@@ -18,7 +18,7 @@ namespace BrowserTesting
         public OrderPage (IWebDriver Driver):base(Driver)
         {
             //SetName("Black & White Diamond Heart");
-            SetCount(50);
+            SetCount(1);
         }
         public string itemPageUrl = "http://demowebshop.tricentis.com/black-white-diamond-heart";
         public double itemPrice;
