@@ -12,7 +12,7 @@ namespace BrowserTesting
     [TestFixture]
     class AddToCart:TestBase
     {
-        override public void DriverSetUp()
+        public override void DriverSetUp()
         {
             Driver.Navigate().GoToUrl("http://demowebshop.tricentis.com/");
         }
@@ -40,7 +40,6 @@ namespace BrowserTesting
         public void AddJewelry_MultiplyInItemPage()
         {
             string item = "Black & White Diamond Heart";
-            cart.CreateRow(item);
             cart.RemoveItem(item);
             cart.UpdateCart();
             cart.CheckEmptyCart();
@@ -51,8 +50,8 @@ namespace BrowserTesting
             order.AddItemToCart();
             explorer.OpenCart();
             explorer.CheckCartTravel(CartPage.cartUrl);
-            cart.CheckCartItem(order.itemName);
-            cart.CheckPrice();
+            cart.CheckCartItem(item);
+            cart.CheckPrice(item);
             cart.RemoveItem(item);
             cart.UpdateCart();
             cart.CheckEmptyCart();
