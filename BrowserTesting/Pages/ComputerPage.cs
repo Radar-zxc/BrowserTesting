@@ -9,7 +9,8 @@ using System.IO;
 using OpenQA.Selenium.Interactions;
 using OpenQA.Selenium.Support;
 using OpenQA.Selenium.Support.UI;
-
+using System.Collections;
+using System.Collections.ObjectModel;
 namespace BrowserTesting
 {
     class ComputerPage : OrderPage
@@ -42,80 +43,83 @@ namespace BrowserTesting
             string nameRAM = list.SelectedOption.Text;
             return nameRAM;
         }
+        public ReadOnlyCollection<IWebElement> HDD_Buttons()
+        {
+            string path = "//dl//dt//label[normalize-space(text())='HDD']//../following::dd[1]//li/input";
+            ReadOnlyCollection<IWebElement> list = Driver.FindElements(By.XPath(path));
+            return list;
+        }
         public string CheckDefault_HDD()
         {
-            //TODO: объеденить radio-button в кластер
-            string pathHDD1 = "//input[@id='product_attribute_16_3_6_18']";
-            string pathHDD2 = "//input[@id='product_attribute_16_3_6_19']";
-            bool checkSelection1 = Driver.FindElement(By.XPath(pathHDD1)).Selected;
-            bool checkSelection2 = Driver.FindElement(By.XPath(pathHDD2)).Selected;
-            string nameHDD="Значение по умолчанию для HDD не установлено";
-            if (checkSelection1)
+            string nameHDD = "Значение по умолчанию для HDD не установлено";
+            int count = 1;
+            foreach (IWebElement parameter in HDD_Buttons())
             {
-                nameHDD = Driver.FindElement(By.XPath(pathHDD1)).Text;
-            }
-            else if (checkSelection2)
-            {
-                nameHDD = Driver.FindElement(By.XPath(pathHDD2)).Text;
+                if (parameter.Selected)
+                {
+                    nameHDD = parameter.FindElement(
+                        By.XPath("(//dl//dt//label[normalize-space(text())='HDD']//../following::dd[1]//li/label)[{count}]"))
+                        .Text;
+                }
+                count++;
             }
             return nameHDD;
         }
+        public ReadOnlyCollection<IWebElement> OS_Buttons()
+        {
+            string path = "//dl//dt//label[normalize-space(text())='OS']//../following::dd[1]//li/input";
+            ReadOnlyCollection<IWebElement> list = Driver.FindElements(By.XPath(path));
+            return list;
+        }
         public string CheckDefault_OS()
         {
-            //TODO: объединить radio-button в кластер
-            string pathOS1 = "//input[@id='product_attribute_16_4_7_44']";
-            string pathOS2 = "//input[@id='product_attribute_16_4_7_20']";
-            string pathOS3 = "//input[@id='product_attribute_16_4_7_21']";
-            string label = "//..//label";
-            bool checkSelection1 = Driver.FindElement(By.XPath(pathOS1)).Selected;
-            bool checkSelection2 = Driver.FindElement(By.XPath(pathOS2)).Selected;
-            bool checkSelection3 = Driver.FindElement(By.XPath(pathOS3)).Selected;
             string nameOS = "Значение по умолчанию для OS не установлено";
-            if (checkSelection1)
+            int count = 1;
+            foreach (IWebElement parameter in OS_Buttons())
             {
-                nameOS = Driver.FindElement(By.XPath(pathOS1+label)).Text;
-            }
-            else if (checkSelection2)
-            {
-                nameOS = Driver.FindElement(By.XPath(pathOS2 + label)).Text;
-            }
-            else if (checkSelection3)
-            {
-                nameOS = Driver.FindElement(By.XPath(pathOS3 + label)).Text;
+                if (parameter.Selected)
+                {
+                    nameOS = parameter.FindElement(By.XPath
+                        ($"(//dl//dt//label[normalize-space(text())='OS']//../following::dd[1]//li/label)[{count}]"))
+                        .Text;
+                }
+                count++;
             }
             return nameOS;
         }
+        public ReadOnlyCollection<IWebElement> SoftwareList()
+        {
+            string path = "//dl//dt//label[normalize-space(text())='Software']//../following::dd[1]//li/input";
+            ReadOnlyCollection<IWebElement> list = Driver.FindElements(By.XPath(path));
+            return list;
+        }
         public List<string> CheckDefaultSoftware()
         {
-            //TODO: объединить чеклисты в кластер
-            string pathSoftware1 = "//input[@id='product_attribute_16_8_8_22']";
-            string pathSoftware2 = "//input[@id='product_attribute_16_8_8_23']";
-            string pathSoftware3 = "//input[@id='product_attribute_16_8_8_24']";
-            string label = "//..//label";
             List<string> defaultSoftware = new List<string>();
-            bool checkSelection1 = Driver.FindElement(By.XPath(pathSoftware1)).Selected;
-            bool checkSelection2 = Driver.FindElement(By.XPath(pathSoftware2)).Selected;
-            bool checkSelection3 = Driver.FindElement(By.XPath(pathSoftware3)).Selected;
-            if (checkSelection1)
+            int count = 1;
+            foreach(IWebElement parameter in SoftwareList())
             {
-                defaultSoftware.Add(Driver.FindElement(By.XPath(pathSoftware1 + label)).Text);
-            }
-            else if (checkSelection2)
-            {
-                defaultSoftware.Add(Driver.FindElement(By.XPath(pathSoftware2 + label)).Text);
-            }
-            else if (checkSelection3)
-            {
-                defaultSoftware.Add(Driver.FindElement(By.XPath(pathSoftware3 + label)).Text);
-            }
-            if (defaultSoftware.Count == 0)
-            {
-                defaultSoftware.Add("Значение по умолчанию для OS не установлено");
+                if (parameter.Selected)
+                {
+                    defaultSoftware.Add(Driver.FindElement
+                        (By.XPath($"(//dl//dt//label[normalize-space(text())='Software']//../following::dd[1]//li/label)[{count}]"))
+                        .Text);
+                }
             }
             return defaultSoftware;
         }
-        //TODO: добавить проверку количества по умолчанию
-        //TODO: проверить, что цвет цены предмета КРАСНЫЙ
+        public string CheckDefaultCount()
+        {
+            SetItemCountField();
+            string itemCount = Driver.FindElement(itemCountField).GetAttribute("value");
+            return itemCount;
+        }
+        public bool CheckPriceColor_RED()
+        {
+            String buttonTextColor = Driver.FindElement(By.XPath("//span[@itemprop='price']")).GetCssValue("color");
+            Assert.AreEqual(Colors.Red, buttonTextColor, "Цвет цены предмета не красный");
+            return buttonTextColor == Colors.Red;
+        }
         public void StartCheckDefaultParameters()
         {
             List<string> defaultParameters = new List<string>();
@@ -123,10 +127,12 @@ namespace BrowserTesting
             defaultParameters.Add(CheckDefault_RAM());
             defaultParameters.Add(CheckDefault_HDD());
             defaultParameters.Add(CheckDefault_OS());
+            defaultParameters.Add(CheckDefaultCount());
             foreach(string n in CheckDefaultSoftware())
             {
                 defaultParameters.Add(n);
             }
+            CheckPriceColor_RED();
         }
     }
 }
