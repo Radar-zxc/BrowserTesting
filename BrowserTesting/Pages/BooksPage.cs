@@ -11,6 +11,7 @@ using OpenQA.Selenium.Support;
 using OpenQA.Selenium.Support.UI;
 using System.Collections;
 using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace BrowserTesting
 {
@@ -73,6 +74,21 @@ namespace BrowserTesting
                 i++;
             }
             Assert.IsTrue(order, "Сортировка A to Z происходит неверно");
+            ////
+            LINQ_Sort(booksList);
+            List<string> str = new List<string>();
+            foreach (IWebElement e in booksList)
+            {
+                str.Add(e.Text);
+            }
+            var s = str.OrderBy(i=>i);
+            foreach(string st in s)
+            {
+                if (st == booksList[1].Text)
+                {
+                    int x = 0;
+                }
+            }
         }
         /// <summary>
         /// Метод проверки корректности проведения сортировки Z to A, 
@@ -148,6 +164,21 @@ namespace BrowserTesting
         private void ChangeSort(By newSort)
         {
             PickParameterInPopupList(popupList_Sort, newSort);
+        }
+        private void LINQ_Sort(ReadOnlyCollection<IWebElement> list)
+        {
+            List<string> str = new List<string>();
+            foreach (IWebElement elem in list)
+            {
+                str.Add(elem.Text);
+            }
+            var s = str.OrderBy(i => i);
+            s.GetType();
+            //return s;
+        }
+        private void CheckSortedLists()
+        {
+
         }
         /// <summary>
         /// Главная функция проверки требуемых сортировок на странице Books
