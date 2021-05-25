@@ -210,6 +210,6 @@ namespace BrowserTesting
             CheckDefaultSoftware();
             CheckPriceColor_RED();
             CheckPrice();
-        }
+        }  
     }
 }

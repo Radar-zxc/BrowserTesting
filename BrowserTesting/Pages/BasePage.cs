@@ -44,5 +44,13 @@ namespace BrowserTesting
             var action = Driver.FindElement(updateButton);
             action.Click();
         }
+        public void PickParameterInPopupList(By popupList, By popupParameter)
+        {
+            Actions move = new Actions(Driver);
+            var list = Driver.FindElement(popupList);
+            move.MoveToElement(list).Build().Perform();
+            list = Driver.FindElement(popupParameter);
+            list.Click();
+        }
     }
 }

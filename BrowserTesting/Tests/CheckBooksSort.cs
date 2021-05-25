@@ -9,11 +9,10 @@ using BrowserTesting.Pages;
 
 namespace BrowserTesting.Tests
 {
-
-    class CheckDefaultParameters : TestBase
+    class CheckBooksSort : TestBase
     {
         private PageExplorer explorer;
-        private ComputerPage computer;
+        private BooksPage books;
         public override void DriverSetUp()
         {
             Driver.Navigate().GoToUrl("http://demowebshop.tricentis.com/");
@@ -22,14 +21,13 @@ namespace BrowserTesting.Tests
         public void Prepare()
         {
             explorer = new PageExplorer(Driver);
-            computer = new ComputerPage(Driver);
+            books = new BooksPage(Driver);
         }
-        [Test, Description("Check default parameters on 'Build your own computer' page"), Order(0)]
-        public void CheckParameters()
+        [Test]
+        public void CheckSort()
         {
-            explorer.OpenPageWithList("computers", "desktops");
-            explorer.GoToItemPage("Build your own computer");
-            computer.StartCheckDefaultParameters();
+            explorer.OpenPage("books");
+            books.CheckSort();
             explorer.OpenStartPage();
         }
     }
