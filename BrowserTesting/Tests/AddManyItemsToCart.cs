@@ -10,7 +10,7 @@ using BrowserTesting.Pages;
 namespace BrowserTesting.Tests
 {
     [TestFixture("Computing and Internet", "Fiction", "Health Book")]
-    class AddManyItemsToCart:TestBase
+    class AddManyItemsToCart : TestBase
     {
         public override void DriverSetUp()
         {
@@ -42,7 +42,7 @@ namespace BrowserTesting.Tests
             order.CreatePage();
             for (int i = 0; i < items.Length; i++)
             {
-                OpenPage("books");
+                explorer.OpenPage("books");
                 explorer.GoToItemPage(items[i]);
                 order.ChangeItemCount(1);
                 order.AddItemToCart();

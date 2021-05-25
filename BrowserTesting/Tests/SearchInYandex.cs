@@ -7,7 +7,7 @@ using System.Threading;
 namespace BrowserTesting
 {
     [TestFixture]
-    public class SearchInYandex:TestBase
+    public class SearchInYandex : TestBase
     {
         private readonly By Input_Search = By.Id("text");
 

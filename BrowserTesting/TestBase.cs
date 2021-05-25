@@ -63,22 +63,6 @@ namespace BrowserTesting
             var check = Driver.FindElement(By.XPath(xpathCheck));
             Assert.IsTrue(check.Displayed, "Искомая информация не найдена");
         }
-        public void OpenPage(string pageName )
-        {
-            string path = "//ul[@class='top-menu']//a[@href='/" + pageName + "']";
-            var find = Driver.FindElement(By.XPath(path));
-            find.Click();
-        }
-        public void OpenPageWithList(string pageName,string pageElement)
-        {
-            string path = "//ul[@class='top-menu']//a[@href='/" + pageName + "']";
-            var find = Driver.FindElement(By.XPath(path));
-            Actions actions = new Actions(Driver);
-            actions.MoveToElement(find).Build().Perform();
-            path = "//ul[@class='top-menu']//ul[@class='sublist firstLevel active']//a[@href='/" + pageElement + "']";
-            find = Driver.FindElement(By.XPath(path));
-            find.Click();
-        }
         public string FindAddJewelryItem(string itemName)
         {
             string pathName = "//div[@class='page-body']//div[@class='item-box']//a[text()='" + itemName + "']";
@@ -134,7 +118,7 @@ namespace BrowserTesting
         {
             string pathItem = "//div[@class='page-body']//div[@class='item-box']//a[text()='" + itemName + "']";
             var item = Driver.FindElement(By.XPath(pathItem));
-            var findName = Driver.FindElement(By.XPath(pathItem)).GetAttribute("href"); //это url по нему потом сравнить открывшуюся страницу и нажимаемую
+            var findName = Driver.FindElement(By.XPath(pathItem)).GetAttribute("href");
             item.Click();
             return findName;
         }

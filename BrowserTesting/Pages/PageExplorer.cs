@@ -13,7 +13,7 @@ using OpenQA.Selenium.Support.UI;
 using System.Globalization;
 namespace BrowserTesting.Pages
 {
-    class PageExplorer:BasePage
+    class PageExplorer : BasePage
     {
         public string newUrl;
         public PageExplorer(IWebDriver Driver):base(Driver)

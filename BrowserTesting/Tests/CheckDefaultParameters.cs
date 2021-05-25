@@ -10,7 +10,7 @@ using BrowserTesting.Pages;
 namespace BrowserTesting.Tests
 {
 
-    class Check_Default_Parameters:TestBase
+    class CheckDefaultParameters : TestBase
     {
         private PageExplorer explorer;
         private ComputerPage computer;
@@ -25,9 +25,9 @@ namespace BrowserTesting.Tests
             computer = new ComputerPage(Driver);
         }
         [Test, Description("Check default parameters on 'Build your own computer' page"), Order(0)]
-        public void CheckDefaultParameters()
+        public void CheckParameters()
         {
-            OpenPageWithList("computers", "desktops");
+            explorer.OpenPageWithList("computers", "desktops");
             explorer.GoToItemPage("Build your own computer");
             computer.StartCheckDefaultParameters();
         }

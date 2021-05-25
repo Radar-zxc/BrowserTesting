@@ -10,7 +10,7 @@ using BrowserTesting.Pages;
 namespace BrowserTesting
 {
     [TestFixture]
-    class AddToCart:TestBase
+    class AddToCart : TestBase
     {
         public override void DriverSetUp()
         {
@@ -31,7 +31,7 @@ namespace BrowserTesting
         [Test, Description("Add jewelry to cart"), Order(0)]
         public void AddJewelry_MultiplyInCart()
         {
-            OpenPage("jewelry");
+            explorer.OpenPage("jewelry");
             CheckItemNames("Black & White Diamond Heart");
             AddMoreItems(50);
             CheckManyItemPrice(50);
