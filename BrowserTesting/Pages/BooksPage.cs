@@ -63,32 +63,9 @@ namespace BrowserTesting
         private void CheckSort_A_to_Z()
         {
             ReadOnlyCollection<IWebElement> booksList = BooksListName();
-            int i = 1;
-            bool order = true;
-            while(i < booksList.Count && order)
-            {
-                if (String.Compare(booksList[i-1].Text, booksList[i].Text) ==1)
-                {
-                    order = false;
-                }
-                i++;
-            }
-            Assert.IsTrue(order, "Сортировка A to Z происходит неверно");
-            ////
-            LINQ_Sort(booksList);
-            List<string> str = new List<string>();
-            foreach (IWebElement e in booksList)
-            {
-                str.Add(e.Text);
-            }
-            var s = str.OrderBy(i=>i);
-            foreach(string st in s)
-            {
-                if (st == booksList[1].Text)
-                {
-                    int x = 0;
-                }
-            }
+            bool order;
+            order = CheckListsSorting_DownUp(CreatePropertyList(booksList));
+            Assert.IsTrue(order, "Фактическая сортировка A to Z произведена неверно");
         }
         /// <summary>
         /// Метод проверки корректности проведения сортировки Z to A, 
@@ -97,17 +74,9 @@ namespace BrowserTesting
         private void CheckSort_Z_to_A()
         {
             ReadOnlyCollection<IWebElement> booksList = BooksListName();
-            int i = 1;
-            bool order = true;
-            while (i < booksList.Count && order)
-            {
-                if (String.Compare(booksList[i - 1].Text, booksList[i].Text) == -1)
-                {
-                    order = false;
-                }
-                i++;
-            }
-            Assert.IsTrue(order, "Сортировка Z to A происходит неверно");
+            bool order;
+            order = CheckListsSorting_UpDown(CreatePropertyList(booksList));
+            Assert.IsTrue(order, "Фактическая сортировка Z to A произведена неверно");
         }
         /// <summary>
         /// Метод проверки корректности проведения сортировки High to Low, 
@@ -116,17 +85,9 @@ namespace BrowserTesting
         private void CheckSort_HighToLow()
         {
             ReadOnlyCollection<IWebElement> booksList = BooksListPrice();
-            int i = 1;
-            bool order = true;
-            while (i < booksList.Count && order)
-            {
-                if (String.Compare(booksList[i - 1].Text, booksList[i].Text) == -1)
-                {
-                    order = false;
-                }
-                i++;
-            }
-            Assert.IsTrue(order, "Сортировка High to Low происходит неверно");
+            bool order;
+            order = CheckListsSorting_UpDown(CreatePropertyList(booksList));
+            Assert.IsTrue(order, "Фактическая сортировка High to Low происходит неверно");
         }
         /// <summary>
         /// Метод проверки корректности проведения сортировки Low to High, 
@@ -135,17 +96,9 @@ namespace BrowserTesting
         private void CheckSort_LowToHigh()
         {
             ReadOnlyCollection<IWebElement> booksList = BooksListPrice();
-            int i = 1;
-            bool order = true;
-            while (i < booksList.Count && order)
-            {
-                if (String.Compare(booksList[i - 1].Text, booksList[i].Text) == 1)
-                {
-                    order = false;
-                }
-                i++;
-            }
-            Assert.IsTrue(order, "Сортировка Low to High происходит неверно");
+            bool order;
+            order = CheckListsSorting_DownUp(CreatePropertyList(booksList));
+            Assert.IsTrue(order, "Фактическая сортировка Low to High происходит неверно");
         }
         /// <summary>
         /// Метод проверки соответствия фактической сортировки по умолчанию указанной в требованиях, 
@@ -165,20 +118,57 @@ namespace BrowserTesting
         {
             PickParameterInPopupList(popupList_Sort, newSort);
         }
-        private void LINQ_Sort(ReadOnlyCollection<IWebElement> list)
+        /// <summary>
+        /// Метод преобразования списка из элементов IWebElement в список из элементов string
+        /// </summary>
+        private List<string> CreatePropertyList(ReadOnlyCollection<IWebElement> list)
         {
-            List<string> str = new List<string>();
+            List<string> properties = new List<string>();
             foreach (IWebElement elem in list)
             {
-                str.Add(elem.Text);
+                properties.Add(elem.Text);
             }
-            var s = str.OrderBy(i => i);
-            s.GetType();
-            //return s;
+            return properties;
         }
-        private void CheckSortedLists()
+        /// <summary>
+        /// Метод соотношения упорядоченности по возрастанию списка, образованного из элементов страницы, 
+        /// со списком этих же элементов, но отсортированных по возрастанию с помощью LINQ
+        /// </summary>
+        private bool CheckListsSorting_DownUp(List<string> properties)
         {
-
+            int i = 0;
+            bool match = true;
+            IOrderedEnumerable<string> linqSorted = properties.OrderBy(i => i);
+            foreach (string elem in linqSorted)
+            {
+                if (elem != properties[i])
+                {
+                    match = false;
+                    break;
+                }
+                i++;
+            }
+            return match;
+        }
+        /// <summary>
+        /// Метод соотношения упорядоченности по убыванию списка, образованного из элементов страницы, 
+        /// со списком этих же элементов, но отсортированных по убыванию с помощью LINQ
+        /// </summary>
+        private bool CheckListsSorting_UpDown(List<string> properties)
+        {
+            int i = 0;
+            bool match = true;
+            IOrderedEnumerable<string> linqSorted = properties.OrderByDescending(i => i);
+            foreach (string elem in linqSorted)
+            {
+                if (elem != properties[i])
+                {
+                    match = false;
+                    break;
+                }
+                i++;
+            }
+            return match;
         }
         /// <summary>
         /// Главная функция проверки требуемых сортировок на странице Books
