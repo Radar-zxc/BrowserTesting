@@ -52,5 +52,16 @@ namespace BrowserTesting
             list = Driver.FindElement(popupParameter);
             list.Click();
         }
+        public void OpenPageRef(By page)
+        {
+            var elem = Driver.FindElement(page);
+            Actions newTab = new Actions(Driver);
+            newTab
+                .KeyDown(Keys.Control)
+                .KeyDown(Keys.Shift)
+                .Click(elem).KeyUp(Keys.Control).KeyUp(Keys.Shift)
+                .Build()
+                .Perform();
+        }
     }
 }

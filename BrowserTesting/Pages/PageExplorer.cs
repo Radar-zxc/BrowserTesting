@@ -11,11 +11,17 @@ using BrowserTesting.Enums;
 using OpenQA.Selenium.Support;
 using OpenQA.Selenium.Support.UI;
 using System.Globalization;
+using System.Collections;
+using System.Linq;
+
 namespace BrowserTesting.Pages
 {
     class PageExplorer : BasePage
     {
         public string newUrl;
+        //private IReadOnlyCollection<string> tabsList;
+        private IEnumerable<string> tabsList;
+        private List<string> tabsDescriptorList = new List<string>();
         public PageExplorer(IWebDriver Driver):base(Driver)
         {
         }
@@ -61,6 +67,42 @@ namespace BrowserTesting.Pages
             string pageUrl = Driver.FindElement
                 (By.XPath($"//div[@class='item-box']//h2[@class='product-title']//a[normalize-space(text())='{itemName}']")).GetAttribute("href");
             return newUrl = pageUrl;
+        }
+        public void OpenPageInNewTab(string pageName)
+        {
+            string path = $"//ul[@class='top-menu']//a[@href='/{pageName}']";
+            By newPage = By.XPath(path);
+            if (tabsList == null)
+            {
+                AddTabInDescriptorList();
+            }
+            OpenPageRef(newPage);
+            RefreshTabsList();
+            Driver.SwitchTo().Window(tabsList.Last());
+            OpenPage(pageName);
+            AddTabInDescriptorList();
+        }
+        private void AddTabInDescriptorList()
+        {
+            tabsDescriptorList.Add(Driver.CurrentWindowHandle);
+        }
+        private void RefreshTabsList()
+        {
+            tabsList = Driver.WindowHandles;
+        }
+        public void GoToTab(int tabNubmer)
+        {
+            RefreshTabsList();
+            Assert.IsTrue(tabNubmer < tabsDescriptorList.Count && tabNubmer >= 0,
+                "Попытка выхода за границу массива");
+            foreach (string tab in tabsList)
+            {
+                if (tab == (string)tabsDescriptorList[tabNubmer])
+                {
+                    Driver.SwitchTo().Window(tab);
+                    break;
+                }
+            }
         }
     }
 }

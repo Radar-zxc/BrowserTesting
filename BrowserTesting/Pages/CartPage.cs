@@ -16,6 +16,7 @@ namespace BrowserTesting
     class CartPage : BasePage
     {
         public static string cartUrl = "http://demowebshop.tricentis.com/cart";
+        private static int rowCount = 0;
         public CartPage(IWebDriver Driver) : base(Driver)
         {
 
@@ -66,6 +67,16 @@ namespace BrowserTesting
             var findItem = Driver.FindElement(By.XPath($"//tr[@class='cart-item-row']//td[@class='product']//a[text()='{itemName}']"));
             Assert.IsTrue(findItem.Displayed, $"Предмет {itemName} отсутствует в корзине ");
         }
+        public void CheckCartItemAbsence(string itemName)
+        {
+
+            var findItem = Driver.FindElements(By.XPath
+                ($"//tr[@class='cart-item-row']//td[@class='product']//a[text()='{itemName}']")).Count;
+            if (findItem != 0)
+            {
+                throw new Exception($"Предмет {itemName} присутствует в корзине ");
+            }
+        }
         public int GetItemCount(string itemName)
         {
             int itemCount = Int32.Parse(Driver.FindElement(SetCountField(itemName)).GetAttribute("value"));
@@ -82,6 +93,7 @@ namespace BrowserTesting
         public void RemoveItem(string itemName)
         {
             RemoveCart(SetRemoveButton(itemName));
+            rowCount--;
         }
         public void CreateRow(string itemName)
         {
