@@ -28,30 +28,27 @@ namespace BrowserTesting
         [Test, Description("Сhecking the synchronization of tabs"), Order(0)]
         public void СheckingSynchronization()
         {
+            string item1 = "Black & White Diamond Heart";
+            string item2 = "Computing and Internet";
             explorer.OpenPage("jewelry");
-            explorer.GoToItemPage("Black & White Diamond Heart");
+            explorer.GoToItemPage(item1);
             order.CreatePage();
             order.AddItemToCart();
             explorer.OpenCart();
-            cart.CheckCartItem("Black & White Diamond Heart");
+            cart.CheckCartItem(item1);
             explorer.OpenPageInNewTab("books");
-            explorer.GoToItemPage("Computing and Internet");
+            explorer.GoToItemPage(item2);
             order.AddItemToCart();
             explorer.GoToTab(0);
-            cart.CheckCartItemAbsence("Computing and Internet");
+            cart.CheckCartItemAbsence(item2);
             cart.UpdateCart();
-            cart.CheckCartItem("Black & White Diamond Heart");
-            cart.CheckCartItem("Computing and Internet");
-
-            /*var b = Driver.FindElement(By.XPath("//a[@href='/books']"));
-            Actions newTab = new Actions(Driver);
-            newTab
-                .KeyDown(Keys.Control)
-                .KeyDown(Keys.Shift)
-                .Click(b).KeyUp(Keys.Control).KeyUp(Keys.Shift)
-                .Build()
-                .Perform();*/
-            explorer.GoToTab(0);
+            cart.CheckCartItem(item1);
+            cart.CheckCartItem(item2);
+            cart.RemoveItem(item1);
+            cart.RemoveItem(item2);
+            cart.UpdateCart();
+            cart.CheckEmptyCart();
+            explorer.OpenStartPage();
         }
     }
 }

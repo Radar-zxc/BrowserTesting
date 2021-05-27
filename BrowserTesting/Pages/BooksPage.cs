@@ -15,6 +15,9 @@ using System.Linq;
 
 namespace BrowserTesting
 {
+    /// <summary>
+    /// Класс, содержащий свойства и методы, необходимые для проверки общей страницы Books
+    /// </summary>
     class BooksPage : OrderPage
     {
         private By popupList_Sort = By.Id("products-orderby");
@@ -32,19 +35,23 @@ namespace BrowserTesting
         /// <summary>
         /// Метод формирования списка книг на странице по Именам
         /// </summary>
-        private ReadOnlyCollection<IWebElement> BooksListName()
+        private List<string> BooksListName()
         {
             string path = "//h2[@class='product-title']";
-            ReadOnlyCollection<IWebElement> list = Driver.FindElements(By.XPath(path));
+            List<string> list = new List<string>();
+            list = (from i in Driver.FindElements(By.XPath(path))
+                select i.Text).ToList();
             return list;
         }
         /// <summary>
         /// Метод формирования списка книг на странице по Цене
         /// </summary>
-        private ReadOnlyCollection<IWebElement> BooksListPrice()
+        private List<string> BooksListPrice()
         {
             string path = "//span[@class='price actual-price']";
-            ReadOnlyCollection<IWebElement> list = Driver.FindElements(By.XPath(path));
+            List<string> list = new List<string>();
+            list = (from i in Driver.FindElements(By.XPath(path))
+                    select i.Text).ToList();
             return list;
         }
         /// <summary>
@@ -61,11 +68,10 @@ namespace BrowserTesting
         /// предусмотрен Assert при несоответствии требованиям
         /// </summary>
         private void CheckSort_A_to_Z()
-        {
-            ReadOnlyCollection<IWebElement> booksList = BooksListName();
-            bool order;
-            order = CheckListsSorting_DownUp(CreatePropertyList(booksList));
-            Assert.IsTrue(order, "Фактическая сортировка A to Z произведена неверно");
+        {;
+            IOrderedEnumerable<string> linqSorted = BooksListName().OrderBy(i => i);
+            Assert.AreEqual(linqSorted, BooksListName(),
+                "Фактическая сортировка A to Z произведена неверно");
         }
         /// <summary>
         /// Метод проверки корректности проведения сортировки Z to A, 
@@ -73,10 +79,9 @@ namespace BrowserTesting
         /// </summary>
         private void CheckSort_Z_to_A()
         {
-            ReadOnlyCollection<IWebElement> booksList = BooksListName();
-            bool order;
-            order = CheckListsSorting_UpDown(CreatePropertyList(booksList));
-            Assert.IsTrue(order, "Фактическая сортировка Z to A произведена неверно");
+            IOrderedEnumerable<string> linqSorted = BooksListName().OrderByDescending(i => i);
+            Assert.AreEqual(linqSorted, BooksListName(),
+                "Фактическая сортировка Z to A произведена неверно");
         }
         /// <summary>
         /// Метод проверки корректности проведения сортировки High to Low, 
@@ -84,10 +89,9 @@ namespace BrowserTesting
         /// </summary>
         private void CheckSort_HighToLow()
         {
-            ReadOnlyCollection<IWebElement> booksList = BooksListPrice();
-            bool order;
-            order = CheckListsSorting_UpDown(CreatePropertyList(booksList));
-            Assert.IsTrue(order, "Фактическая сортировка High to Low происходит неверно");
+            IOrderedEnumerable<string> linqSorted = BooksListPrice().OrderByDescending(i => i);
+            Assert.AreEqual(linqSorted, BooksListPrice(),
+                "Фактическая сортировка High to Low происходит неверно");
         }
         /// <summary>
         /// Метод проверки корректности проведения сортировки Low to High, 
@@ -95,10 +99,9 @@ namespace BrowserTesting
         /// </summary>
         private void CheckSort_LowToHigh()
         {
-            ReadOnlyCollection<IWebElement> booksList = BooksListPrice();
-            bool order;
-            order = CheckListsSorting_DownUp(CreatePropertyList(booksList));
-            Assert.IsTrue(order, "Фактическая сортировка Low to High происходит неверно");
+            IOrderedEnumerable<string> linqSorted = BooksListPrice().OrderBy(i => i);
+            Assert.AreEqual(linqSorted, BooksListPrice(),
+                "Фактическая сортировка Low to High происходит неверно");
         }
         /// <summary>
         /// Метод проверки соответствия фактической сортировки по умолчанию указанной в требованиях, 
@@ -118,58 +121,7 @@ namespace BrowserTesting
         {
             PickParameterInPopupList(popupList_Sort, newSort);
         }
-        /// <summary>
-        /// Метод преобразования списка из элементов IWebElement в список из элементов string
-        /// </summary>
-        private List<string> CreatePropertyList(ReadOnlyCollection<IWebElement> list)
-        {
-            List<string> properties = new List<string>();
-            foreach (IWebElement elem in list)
-            {
-                properties.Add(elem.Text);
-            }
-            return properties;
-        }
-        /// <summary>
-        /// Метод соотношения упорядоченности по возрастанию списка, образованного из элементов страницы, 
-        /// со списком этих же элементов, но отсортированных по возрастанию с помощью LINQ
-        /// </summary>
-        private bool CheckListsSorting_DownUp(List<string> properties)
-        {
-            int i = 0;
-            bool match = true;
-            IOrderedEnumerable<string> linqSorted = properties.OrderBy(i => i);
-            foreach (string elem in linqSorted)
-            {
-                if (elem != properties[i])
-                {
-                    match = false;
-                    break;
-                }
-                i++;
-            }
-            return match;
-        }
-        /// <summary>
-        /// Метод соотношения упорядоченности по убыванию списка, образованного из элементов страницы, 
-        /// со списком этих же элементов, но отсортированных по убыванию с помощью LINQ
-        /// </summary>
-        private bool CheckListsSorting_UpDown(List<string> properties)
-        {
-            int i = 0;
-            bool match = true;
-            IOrderedEnumerable<string> linqSorted = properties.OrderByDescending(i => i);
-            foreach (string elem in linqSorted)
-            {
-                if (elem != properties[i])
-                {
-                    match = false;
-                    break;
-                }
-                i++;
-            }
-            return match;
-        }
+
         /// <summary>
         /// Главная функция проверки требуемых сортировок на странице Books
         /// </summary>

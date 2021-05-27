@@ -23,7 +23,7 @@ namespace BrowserTesting.Tests
             explorer = new PageExplorer(Driver);
             books = new BooksPage(Driver);
         }
-        [Test]
+        [Test, Description("Check Sorts on books page"), Order(0)]
         public void CheckSort()
         {
             explorer.OpenPage("books");

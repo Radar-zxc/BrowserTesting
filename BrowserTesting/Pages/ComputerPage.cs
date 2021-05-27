@@ -13,6 +13,9 @@ using System.Collections;
 using System.Collections.ObjectModel;
 namespace BrowserTesting
 {
+    /// <summary>
+    /// Класс, содержащий свойства и методы, необходимые для обработки страницы Build your own computer
+    /// </summary>
     class ComputerPage : OrderPage
     {
         private readonly string defaultProcessor = "2.5 GHz Intel Pentium Dual-Core E2200 [+15.00]";
