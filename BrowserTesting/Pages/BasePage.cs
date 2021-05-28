@@ -15,7 +15,7 @@ using System.Globalization;
 namespace BrowserTesting
 {
     /// <summary>
-    /// Класс, содержащий общие методы для других классов страниц
+    /// /Класс, содержащий общие методы для других классов страниц
     /// </summary>
     abstract class BasePage
     {
