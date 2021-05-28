@@ -143,5 +143,14 @@ namespace BrowserTesting.Pages
             }
             Assert.IsTrue(found,"Попытка обращения к удаленнной вкладке");
         }
+        /// <summary>
+        /// Метод проверки того, что сайт прекратил свою работу
+        /// </summary>
+        public void BringDownCheck() 
+        {
+            Assert.IsTrue(Driver.FindElement(By.XPath
+                ("//body[text()='The resource you are looking for has been removed, had its name changed, or is temporarily unavailable.']")
+                ).Displayed, "Страница с сообщением о том, что сайт не работает, не отображена");
+        }
     }
 }

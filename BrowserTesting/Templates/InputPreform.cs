@@ -4,17 +4,17 @@ using System.Text;
 
 namespace BrowserTesting
 {
-    public class InputPreform
+    public static class InputPreform
     {
-        Dictionary<string, string> preforms = new Dictionary<string, string>()
+        public static Dictionary<string, string> preforms = new Dictionary<string, string>()
         {
-            ["normal"] = "Science",
-            ["Empty"] = "",
+            ["valid"] = "Science",
             ["lessThanMinValid"] = "bo",
             ["minValid"] = "boo",
             ["invalid"] = "zp9",
-            ["maxValid"] = "",
-            ["maxValid+1"] = "",
-        }
+            ["max"] = "",
+            ["validForSubCategory"] = "desk",
+            ["validDescription"] = "must",
+        };
     }
 }
