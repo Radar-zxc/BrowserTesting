@@ -12,6 +12,7 @@ namespace BrowserTesting.Tests
     class GlobalSearch : TestBase
     {
         private SearchPage search;
+        private Chain_SearchPage chainSearch;
         public override void DriverSetUp()
         {
             Driver.Navigate().GoToUrl("http://demowebshop.tricentis.com/search");
@@ -20,15 +21,23 @@ namespace BrowserTesting.Tests
         public void Prepare()
         {
             search = new SearchPage(Driver);
+            chainSearch = new Chain_SearchPage(Driver);
         }
         [Test, Description("Check valid request"), Order(0)]
         public void SimpleValid()
         {
             string validRequest = InputPreform.preforms["valid"];
-            search.AdvancedSearch_TurnOn();
-            search.NewRequest(validRequest);
-            search.UpdateSearch();
-            search.CheckReceivedItems(validRequest);
+            // OLD
+            // search.AdvancedSearch_TurnOn();
+            // search.NewRequest(validRequest);
+            // search.UpdateSearch();
+            // search.CheckReceivedItems(validRequest);
+
+            // NEW
+            chainSearch.AdvancedSearch_TurnOn()
+                .NewRequest(validRequest)
+                .UpdateSearch()
+                .CheckReceivedItems(validRequest);
         }
         [Test, Description("Check invalid request"), Order(1)]
         public void SimpleInvalid()
