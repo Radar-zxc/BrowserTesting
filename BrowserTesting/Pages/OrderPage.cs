@@ -16,7 +16,6 @@ namespace BrowserTesting
     /// </summary>
     class OrderPage : BasePage
     {
-        public string itemName;
         public OrderPage (IWebDriver Driver):base(Driver)
         {
 
@@ -41,15 +40,6 @@ namespace BrowserTesting
             itemCountField = By.XPath(path);
         }
         /// <summary>
-        /// Метод, возвращающий значение цены предмета в виде числа с плавающей точкой
-        /// </summary>
-        protected double SetItemValuePrice()
-        {
-            string path = "//span[@itemprop='price']";
-            double price = double.Parse(Driver.FindElement(By.XPath(path)).Text);
-            return price;
-        }
-        /// <summary>
         /// Метод записи локатора для цены предмета
         /// </summary>
         protected void SetItemPrice()
@@ -68,7 +58,7 @@ namespace BrowserTesting
         /// </summary>
         public void AddItemToCart()
         {
-            AddItem(itemAddButton);
+            ClickOnElement(itemAddButton);
         }
         /// <summary>
         /// Метод определения основных локаторов на странице заказа

@@ -25,17 +25,9 @@ namespace BrowserTesting
             this.Driver = Driver;
         }
         /// <summary>
-        /// Метод нажатия на кнопку удаления предмета из корзины по локатору кнопки
-        /// </summary>
-        protected void RemoveCart(By removeButton)
-        {
-            var action = Driver.FindElement(removeButton);
-            action.Click();
-        }
-        /// <summary>
         /// Метод изменения количества предметов по заданному локатору поля на заданное новое количество
         /// </summary>
-        protected void ChangeCount(By countField ,int newCount)
+        protected void ChangeCount(By countField, int newCount)
         {
             var action = Driver.FindElement(countField);
             action.Click();
@@ -44,20 +36,11 @@ namespace BrowserTesting
             action.SendKeys(Keys.Enter);
         }
         /// <summary>
-        /// Метод добавления предмета в корзину по заданному локатору кнопки добавления 
-        /// и последующего нажатия на нее
+        /// Метод нажатия на элемент по заданному локатору
         /// </summary>
-        protected void AddItem(By addButton)
+        protected void ClickOnElement(By elem)
         {
-            var action = Driver.FindElement(addButton);
-            action.Click();
-        }
-        /// <summary>
-        /// Метод нажатия кнопки Update shoping cart по заданному локатору
-        /// </summary>
-        protected void RefreshCart(By updateButton)
-        {
-            var action = Driver.FindElement(updateButton);
+            var action = Driver.FindElement(elem);
             action.Click();
         }
         /// <summary>

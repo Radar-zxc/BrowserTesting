@@ -22,7 +22,6 @@ namespace BrowserTesting.Pages
     /// </summary>
     class PageExplorer : BasePage
     {
-        public string newUrl;
         private IEnumerable<string> tabsList;
         private List<string> tabsDescriptorList = new List<string>();
         public PageExplorer(IWebDriver Driver):base(Driver)
@@ -34,8 +33,7 @@ namespace BrowserTesting.Pages
         public void OpenPage(string pageName)
         {
             string path = $"//ul[@class='top-menu']//a[@href='/{pageName}']";
-            var find = Driver.FindElement(By.XPath(path));
-            find.Click();
+            ClickOnElement(By.XPath(path));
         }
         /// <summary>
         /// Метод открытия страницы из заголовка сайта , находящейся в выпадающем списке 
@@ -47,8 +45,7 @@ namespace BrowserTesting.Pages
             Actions actions = new Actions(Driver);
             actions.MoveToElement(find).Build().Perform();
             path = $"//ul[@class='top-menu']//ul[@class='sublist firstLevel active']//a[@href='/{ pageElement}']";
-            find = Driver.FindElement(By.XPath(path));
-            find.Click();
+            ClickOnElement(By.XPath(path));
         }
         /// <summary>
         /// Метод открытия стартовой страницы сайта Tricentis Demo Web Shop путем нажатия на логотип
@@ -56,16 +53,15 @@ namespace BrowserTesting.Pages
         public void OpenStartPage()
         {
             string path = "//a[normalize-space(text()='Tricentis Demo Web Shop')]//img[@title='']";
-            var find = Driver.FindElement(By.XPath(path));
-            find.Click();
+            ClickOnElement(By.XPath(path));
         }
         /// <summary>
         /// Метод открытия страницы корзины
         /// </summary>
         public void OpenCart()
         {
-            var cart = Driver.FindElement(By.XPath("//div[@class='header-links-wrapper']//a[@class='ico-cart']//span[@class='cart-label']"));
-            cart.Click();
+            By cart = By.XPath("//div[@class='header-links-wrapper']//a[@class='ico-cart']//span[@class='cart-label']");
+            ClickOnElement(cart);
         }
         /// <summary>
         /// Метод открытия страницы товара из списка по заданому имени 
@@ -73,8 +69,7 @@ namespace BrowserTesting.Pages
         public void GoToItemPage(string itemName)
         {
             string pathItem = $"//div[@class='page-body']//div[@class='item-box']//a[text()='{ itemName}']";
-            var item = Driver.FindElement(By.XPath(pathItem));
-            item.Click();
+            ClickOnElement(By.XPath(pathItem));
         }
         /// <summary>
         /// Метод проверки перехода на страницу корзины 
@@ -82,15 +77,6 @@ namespace BrowserTesting.Pages
         public void CheckCartTravel(string url)
         {
             Assert.AreEqual(Driver.Url , url, "Осуществлен неверный переход при попытке перейти в корзину");
-        }
-        /// <summary>
-        /// Метод получения URL предмета по заданному имени
-        /// </summary>
-        public string GetItemPageUrl(string itemName)
-        {
-            string pageUrl = Driver.FindElement
-                (By.XPath($"//div[@class='item-box']//h2[@class='product-title']//a[normalize-space(text())='{itemName}']")).GetAttribute("href");
-            return newUrl = pageUrl;
         }
         /// <summary>
         /// Метод открытия страницы в новой вкладке по заданному имени
@@ -144,13 +130,23 @@ namespace BrowserTesting.Pages
             Assert.IsTrue(found,"Попытка обращения к удаленнной вкладке");
         }
         /// <summary>
-        /// Метод проверки того, что сайт прекратил свою работу
+        /// Метод, сравнивающий текущий URL с передаваемым в качестве параметра, 
+        /// предусмотрен Assert при несоответствии
         /// </summary>
-        public void BringDownCheck() 
+        public void UrlVerify(string necessaryUrl)
         {
-            Assert.IsTrue(Driver.FindElement(By.XPath
-                ("//body[text()='The resource you are looking for has been removed, had its name changed, or is temporarily unavailable.']")
-                ).Displayed, "Страница с сообщением о том, что сайт не работает, не отображена");
+            string pageUrl = Driver.Url;
+            Assert.IsTrue(pageUrl.Contains(necessaryUrl),
+                "Неверный Url после перехода на вкладку");
+        }
+        /// <summary>
+        /// Метод проверки открытия вкладки с заданным именем
+        /// </summary>
+        public void ContentVerify(string key)
+        {
+            string xpathCheck = "//div[@class='page-title']//h1[text()='" + key + "']";
+            var check = Driver.FindElement(By.XPath(xpathCheck));
+            Assert.IsTrue(check.Displayed, "Искомая информация не найдена");
         }
     }
 }

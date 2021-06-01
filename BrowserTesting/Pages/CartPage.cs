@@ -63,16 +63,6 @@ namespace BrowserTesting
             return itemCountField;
         }
         /// <summary>
-        /// Метод, возвращающий ссылку на предмет по заданному имени в корзине
-        /// </summary>
-
-        private string SetRefNameInCart(string itemName)
-        {
-            string pathItemName = $"//tr[@class='cart-item-row']//td[@class='product']//a[text()='{itemName}']";
-            string itemRefNameInCart = Driver.FindElement(By.XPath(pathItemName)).GetAttribute("href");
-            return itemRefNameInCart;
-        }
-        /// <summary>
         /// Метод, проверяющий итоговую цену предмета в корзине, 
         /// предусмотрен Assert при несоответствии
         /// </summary>
@@ -120,19 +110,11 @@ namespace BrowserTesting
             return itemCount;
         }
         /// <summary>
-        /// Метод изменения количества предметов в корзине, имеющих заданное имя,
-        /// на новое заданное значение
-        /// </summary>
-        public void ChangeItemCount(string item, int newCount)
-        {
-            ChangeCount(SetCountField(item), newCount);
-        }
-        /// <summary>
         /// Метод обновляющий страницу Cart, при помощи нажатия соответствующей кнопки на странице
         /// </summary>
         public void UpdateCart()
         {
-            RefreshCart(updateButton);
+            ClickOnElement(updateButton);
             Driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(3);
         }
         /// <summary>
@@ -140,7 +122,16 @@ namespace BrowserTesting
         /// </summary>
         public void RemoveItem(string itemName)
         {
-            RemoveCart(SetRemoveButton(itemName));
+            ClickOnElement(SetRemoveButton(itemName));
+        }
+        /// <summary>
+        /// Метод изменения количества предметов в корзине по заданному имени предмета
+        /// </summary>
+        public void ChangeCount(string itemName, int count)
+        {
+            By field = SetCountField(itemName);
+            Driver.FindElement(field).Clear();
+            Driver.FindElement(field).SendKeys(Convert.ToString(count));
         }
     }
 }
