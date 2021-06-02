@@ -6,6 +6,7 @@ using OpenQA.Selenium;
 using System.Threading;
 using OpenQA.Selenium.Interactions;
 using BrowserTesting.Pages;
+using BrowserTesting;
 
 namespace BrowserTesting.Tests
 {

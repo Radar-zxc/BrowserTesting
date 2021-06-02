@@ -12,6 +12,7 @@ using OpenQA.Selenium.Support.UI;
 using System.Collections;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Reflection.Metadata;
 
 namespace BrowserTesting
 {
@@ -119,6 +120,8 @@ namespace BrowserTesting
         private void ChangeSort(By newSort)
         {
             PickParameterInPopupList(popupList_Sort, newSort);
+            var wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(5));
+            wait.Until(driver => driver.FindElement(By.XPath("//h2[@class='product-title']")).Displayed);
         }
 
         /// <summary>

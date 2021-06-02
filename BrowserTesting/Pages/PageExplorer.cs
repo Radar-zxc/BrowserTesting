@@ -42,8 +42,7 @@ namespace BrowserTesting.Pages
         {
             string path = $"//ul[@class='top-menu']//a[@href='/{ pageName}']";
             var find = Driver.FindElement(By.XPath(path));
-            Actions actions = new Actions(Driver);
-            actions.MoveToElement(find).Build().Perform();
+            Driver.MoveToElement(find);
             path = $"//ul[@class='top-menu']//ul[@class='sublist firstLevel active']//a[@href='/{ pageElement}']";
             ClickOnElement(By.XPath(path));
         }
@@ -76,7 +75,7 @@ namespace BrowserTesting.Pages
         /// </summary>
         public void CheckCartTravel(string url)
         {
-            Assert.AreEqual(Driver.Url , url, "Осуществлен неверный переход при попытке перейти в корзину");
+            UrlVerify(url);
         }
         /// <summary>
         /// Метод открытия страницы в новой вкладке по заданному имени
@@ -92,7 +91,7 @@ namespace BrowserTesting.Pages
             OpenPageRef(newPage);
             RefreshTabsList();
             Driver.SwitchTo().Window(tabsList.Last());
-            OpenPage(pageName);
+            Driver.Manage().Window.Maximize();
             AddTabInDescriptorList();
         }
         /// <summary>
@@ -123,6 +122,7 @@ namespace BrowserTesting.Pages
                 if (tab == tabsDescriptorList[tabNubmer])
                 {
                     Driver.SwitchTo().Window(tab);
+                    Driver.FindElement(By.XPath("//body")).Click();
                     found = true;
                     break;
                 }
@@ -135,18 +135,14 @@ namespace BrowserTesting.Pages
         /// </summary>
         public void UrlVerify(string necessaryUrl)
         {
-            string pageUrl = Driver.Url;
-            Assert.IsTrue(pageUrl.Contains(necessaryUrl),
-                "Неверный Url после перехода на вкладку");
+            Asserts.UrlVerify(Driver, necessaryUrl);
         }
         /// <summary>
         /// Метод проверки открытия вкладки с заданным именем
         /// </summary>
         public void ContentVerify(string key)
         {
-            string xpathCheck = "//div[@class='page-title']//h1[text()='" + key + "']";
-            var check = Driver.FindElement(By.XPath(xpathCheck));
-            Assert.IsTrue(check.Displayed, "Искомая информация не найдена");
+            Asserts.ContentVerify(Driver, key);
         }
     }
 }

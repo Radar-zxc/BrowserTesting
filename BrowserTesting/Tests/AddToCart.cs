@@ -39,14 +39,14 @@ namespace BrowserTesting
             cart.ChangeCount("Black & White Diamond Heart",50);
             cart.UpdateCart();
             cart.CheckPrice("Black & White Diamond Heart");
+            cart.RemoveItem("Black & White Diamond Heart");
+            cart.UpdateCart();
+            cart.CheckEmptyCart();
         }
         [Test, Description("Clear cart - add many items in item page"), Order(1)]
         public void AddJewelry_MultiplyInItemPage()
         {
             string item = "Black & White Diamond Heart";
-            cart.RemoveItem(item);
-            cart.UpdateCart();
-            cart.CheckEmptyCart();
             explorer.OpenPage("jewelry");
             explorer.GoToItemPage(item);
             order.CreatePage();

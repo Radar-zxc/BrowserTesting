@@ -30,10 +30,8 @@ namespace BrowserTesting
         protected void ChangeCount(By countField, int newCount)
         {
             var action = Driver.FindElement(countField);
-            action.Click();
             action.Clear();
             action.SendKeys(newCount.ToString());
-            action.SendKeys(Keys.Enter);
         }
         /// <summary>
         /// Метод нажатия на элемент по заданному локатору
@@ -42,31 +40,23 @@ namespace BrowserTesting
         {
             var action = Driver.FindElement(elem);
             action.Click();
+            //для IE Driver.MoveToElement(action).Click();
         }
         /// <summary>
         /// Метод выбора определенного параметра в выпадающем списке по соответствующим локаторам
         /// </summary>
         protected void PickParameterInPopupList(By popupList, By popupParameter)
         {
-            Actions move = new Actions(Driver);
             var list = Driver.FindElement(popupList);
-            move.MoveToElement(list).Build().Perform();
-            list = Driver.FindElement(popupParameter);
-            list.Click();
+            Driver.MoveToElement(list).Click();
+            ClickOnElement(popupParameter);
         }
         /// <summary>
         /// Метод открытия страницы с заданным локатором в новой вкладке
         /// </summary>
         protected void OpenPageRef(By page)
         {
-            var elem = Driver.FindElement(page);
-            Actions newTab = new Actions(Driver);
-            newTab
-                .KeyDown(Keys.Control)
-                .KeyDown(Keys.Shift)
-                .Click(elem).KeyUp(Keys.Control).KeyUp(Keys.Shift)
-                .Build()
-                .Perform();
+            Driver.FindElement(page).SendKeys(Keys.Control + Keys.Shift + Keys.Enter);
         }
     }
 }

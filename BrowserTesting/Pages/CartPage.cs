@@ -40,7 +40,7 @@ namespace BrowserTesting
         public double GetPrice(string itemName)
         {
             string pathItemPrice = $"//a[text()='{itemName}']/../..//span[@class='product-unit-price']";
-            double itemPrice = double.Parse(Driver.FindElement(By.XPath(pathItemPrice)).Text);
+            double itemPrice = double.Parse(Driver.FindElement(By.XPath(pathItemPrice)).Text.Replace('.', ','));
             return itemPrice;
         }
         /// <summary>
@@ -50,7 +50,7 @@ namespace BrowserTesting
         public double GetTotalPrice(string itemName)
         {
             string pathItemTotalPrice = $"//a[text()='{itemName}']/../..//span[@class='product-subtotal']";
-            double itemTotalPrice = double.Parse(Driver.FindElement(By.XPath(pathItemTotalPrice)).Text);
+            double itemTotalPrice = double.Parse(Driver.FindElement(By.XPath(pathItemTotalPrice)).Text.Replace('.',','));
             return itemTotalPrice;
         }
         /// <summary>

@@ -15,7 +15,7 @@ using System.Globalization;
 namespace BrowserTesting
 {
     /// <summary>
-    /// Это класс, содержащий в себе базовые методы, необходимые для выполнения тестов
+    /// Класс, содержащий в себе базовые методы, необходимые для выполнения тестов
     /// </summary>
     public class TestBase
     {
@@ -54,22 +54,6 @@ namespace BrowserTesting
         virtual public void DriverSetUp()
         {
             Driver.Navigate().GoToUrl("https://www.google.ru/");
-        }
-        /// <summary>
-        /// Метод, изменяющий региональные особенности на en-US
-        /// </summary>
-        [OneTimeSetUp]
-        public void ChangeCultureToUS()
-        {
-            Thread.CurrentThread.CurrentCulture = CultureInfo.CreateSpecificCulture("en-US");
-        }
-        /// <summary>
-        /// Метод, изменяющий региональные особенности на ru-RU
-        /// </summary>
-        [OneTimeTearDown]
-        public void ChangeCultureToRU()
-        {
-            Thread.CurrentThread.CurrentCulture = CultureInfo.CreateSpecificCulture("ru-RU");
         }
         /// <summary>
         /// Метод завершения работы драйвера
