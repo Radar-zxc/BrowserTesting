@@ -4,6 +4,9 @@ using System.Text;
 
 namespace BrowserTesting
 {
+    /// <summary>
+    /// Класс, содержащий rgba строки различных цветов
+    /// </summary>
     public static class Colors
     {
         public static readonly string Red = "rgba(255, 1, 1, 1)";

@@ -12,6 +12,7 @@ using OpenQA.Selenium.Support.UI;
 using System.Collections;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Reflection.Metadata;
 
 namespace BrowserTesting
 {
@@ -21,7 +22,6 @@ namespace BrowserTesting
     class BooksPage : OrderPage
     {
         private By popupList_Sort = By.Id("products-orderby");
-        private By popupList_Sort_Position = By.XPath("//option[text()='Position']");
         private By popupList_Sort_A_to_Z = By.XPath("//option[text()='Name: A to Z']");
         private By popupList_Sort_Z_to_A = By.XPath("//option[text()='Name: Z to A']");
         private By popupList_Sort_HighToLow = By.XPath("//option[text()='Price: High to Low']");
@@ -120,6 +120,8 @@ namespace BrowserTesting
         private void ChangeSort(By newSort)
         {
             PickParameterInPopupList(popupList_Sort, newSort);
+            var wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(5));
+            wait.Until(driver => driver.FindElement(By.XPath("//h2[@class='product-title']")).Displayed);
         }
 
         /// <summary>

@@ -31,7 +31,7 @@ namespace BrowserTesting
         {
             var enter = Driver.FindElement(Input_Search);
             enter.Clear();
-            string search_term = "Audi";
+            string search_term = "мышь";
             enter.SendKeys(search_term);
             enter = Driver.FindElement(By.XPath("//button"));
             enter.Click();

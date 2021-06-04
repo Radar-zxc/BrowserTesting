@@ -14,6 +14,9 @@ using System.Linq;
 
 namespace BrowserTesting.Pages
 {
+    /// <summary>
+    /// Класс, содержащий свойства и методы, необходимые для работы со страницами поиска
+    /// </summary>
     class SearchPage : BasePage
     {
         public SearchPage(IWebDriver Driver) : base(Driver)
@@ -34,37 +37,41 @@ namespace BrowserTesting.Pages
         /// <summary>
         /// Метод обновления поиска путем нажатия на кнопку Search
         /// </summary>
-        public void UpdateSearch()
+        public SearchPage UpdateSearch()
         {
-            Driver.FindElement(SearchButton).Click();
+            ClickOnElement(SearchButton);
+            return this;
         }
         /// <summary>
         /// Метод обновления поиска путем нажатия на кнопку Search в заголовке сайта
         /// </summary>
-        public void UpdateSearch_Header()
+        public SearchPage UpdateSearch_Header()
         {
-            Driver.FindElement(SearchButtom_Header).Click();
+            ClickOnElement(SearchButtom_Header);
+            return this;
         }
         /// <summary>
         /// Метод добавления текста соответствующего запроса в поле для поиска
         /// </summary>
-        public void NewRequest(string request)
+        public SearchPage NewRequest(string request)
         {
             Driver.FindElement(SearchKeywordField).Clear();
             Driver.FindElement(SearchKeywordField).SendKeys(request);
+            return this;
         }
         /// <summary>
         /// Метод добавления текста соответствующего запроса в поле для поиска в заголовке страницы
         /// </summary>
-        public void NewRequest_Header(string request)
+        public SearchPage NewRequest_Header(string request)
         {
             Driver.FindElement(SearchField_Header).Clear();
             Driver.FindElement(SearchField_Header).SendKeys(request);
+            return this;
         }
         /// <summary>
         /// Переключение CheckBox в состояние Выбрано
         /// </summary>
-        public void CheckBox_TurnOn(By checkBox)
+        private void CheckBox_TurnOn(By checkBox)
         {
             IWebElement elem = Driver.FindElement(checkBox);
             if (!elem.Selected)
@@ -75,23 +82,13 @@ namespace BrowserTesting.Pages
         /// <summary>
         /// Переключение CheckBox в состояние Не выбрано
         /// </summary>
-        public void CheckBox_TurnOff(By checkBox)
+        private void CheckBox_TurnOff(By checkBox)
         {
             IWebElement elem = Driver.FindElement(checkBox);
             if (elem.Selected)
             {
                 elem.Click();
             }
-        }
-        /// <summary>
-        /// Метод создания списка из параметров Manufacturer
-        /// </summary>
-        public List<string> ListManufacturer()
-        {
-            List<string> list = new List<string>();
-            list.Add(Driver.FindElement(By.XPath("//select[@id='Mid']//option[text()='All']")).Text);
-            list.Add(Driver.FindElement(By.XPath("//select[@id='Mid']//option[text()='Tricentis']")).Text);
-            return list;
         }
         /// <summary>
         /// Метод изменения цены в поле From на новую
@@ -110,15 +107,16 @@ namespace BrowserTesting.Pages
         /// <summary>
         /// Метод изменения цен в полях From и To
         /// </summary>
-        public void ChangePrice(int priceFrom , int priceTo)
+        public SearchPage ChangePrice(int priceFrom , int priceTo)
         {
             ChangePrice_From(priceFrom);
             ChangePrice_To(priceTo);
+            return this;
         }
         /// <summary>
         /// Метод составления списка найденных предметов по соответствующему запросу
         /// </summary>
-        public List<IWebElement> GetReceivedItems(string request)
+        private List<IWebElement> GetReceivedItems(string request)
         {
             List<IWebElement> list = new List<IWebElement>();
             list = (from item in Driver.FindElements(By.XPath($"//div[@class='details']//a[contains(a,{request})]"))
@@ -128,98 +126,111 @@ namespace BrowserTesting.Pages
         /// <summary>
         /// Метод проверки наличия найденных предметов по соответствующему запросу
         /// </summary>
-        public void CheckReceivedItems(string request)
+        public SearchPage CheckReceivedItems(string request)
         {
             Assert.IsTrue(GetReceivedItems(request).Count != 0, "В результатах поиска отсутствуют элементы, удовлетворяющие валидному запросу");
+            return this;
         }
         /// <summary>
         /// Метод проверки отсутствия найденных предметов по соответствующему запросу
         /// </summary>
-        public void CheckReceivedItems_Absence(string request)
+        public SearchPage CheckReceivedItems_Absence(string request)
         {
             Assert.IsTrue(GetReceivedItems(request).Count == 0, "В результатах поиска присутствуют элементы, удовлетворяющие невалидному запросу");
+            return this;
         }
         /// <summary>
         /// Метод переключения параметра Advanced search в состояние Выбрано
         /// </summary>
-        public void AdvancedSearch_TurnOn()
+        public SearchPage AdvancedSearch_TurnOn()
         {
             CheckBox_TurnOn(AdvancedSearchCheckBox);
+            return this;
         }
         /// <summary>
         /// Метод переключения параметра Advanced search в состояние Не выбрано
         /// </summary>
-        public void AdvancedSearch_TurnOff()
+        public SearchPage AdvancedSearch_TurnOff()
         {
             CheckBox_TurnOff(AdvancedSearchCheckBox);
+            return this;
         }
         /// <summary>
         /// Метод переключения параметра Automatically search sub categories в состояние Выбрано
         /// </summary>
-        public void AutomaticallySearchSubCategories_TurnOn()
+        public SearchPage AutomaticallySearchSubCategories_TurnOn()
         {
             CheckBox_TurnOn(SupCategoriesCheckBox);
+            return this;
         }
         /// <summary>
         /// Метод переключения параметра Automatically search sub categories в состояние Не выбрано
         /// </summary>
-        public void AutomaticallySearchSubCategories_TurnOff()
+        public SearchPage AutomaticallySearchSubCategories_TurnOff()
         {
             CheckBox_TurnOff(SupCategoriesCheckBox);
+            return this;
         }
         /// <summary>
         /// Метод переключения параметра Search in product descriptions в состояние Выбрано
         /// </summary>
-        public void SearchInDescription_TurnOn()
+        public SearchPage SearchInDescription_TurnOn()
         {
             CheckBox_TurnOn(SearchInDecsriptionCheckBox);
+            return this;
         }
         /// <summary>
         /// Метод переключения параметра Search in product descriptions в состояние Не выбрано
         /// </summary>
-        public void SearchInDescription_TurnOff()
+        public SearchPage SearchInDescription_TurnOff()
         {
             CheckBox_TurnOff(SearchInDecsriptionCheckBox);
+            return this;
         }
         /// <summary>
         /// Метод переключения параметра из списка Category на выбранный другой
         /// </summary>
-        public void ChangeCategory(string newCategory)
+        public SearchPage ChangeCategory(string newCategory)
         {
             SelectElement s = new SelectElement(Driver.FindElement(CategoryPopUpList));
             s.SelectByText(newCategory);
+            return this;
         }
         /// <summary>
         /// Метод переключения параметра из списка Manufacturer на выбранный другой
         /// </summary>
-        public void ChangeManufacturer(string newManufacturer)
+        public SearchPage ChangeManufacturer(string newManufacturer)
         {
             SelectElement s = new SelectElement(Driver.FindElement(ManufacturerPopUpList));
             s.SelectByText(newManufacturer);
+            return this;
         }
         /// <summary>
         /// Метод очистки полей цены From и To
         /// </summary>
-        public void ClearPrice()
+        public SearchPage ClearPrice()
         {
             Driver.FindElement(PriceField_From).Clear();
             Driver.FindElement(PriceField_To).Clear();
+            return this;
         }
         /// <summary>
         /// Метод проверки обработки запроса, состоящего менее чем из 3 символов
         /// </summary>
-        public void CheckSmallRequest()
+        public SearchPage CheckSmallRequest()
         {
             Assert.IsTrue(Driver.FindElement(By.XPath("//strong[@class='warning']")).Displayed,
                 "Сообщение о недостаточной длине запроса не выведено на экран");
+            return this;
         }
         /// <summary>
         /// Метод закрытия всплывающего окна
         /// </summary>
-        public void PopupWindowWithMessageProcessing()
+        public SearchPage PopupWindowWithMessageProcessing()
         {
             IAlert alert = Driver.SwitchTo().Alert();
             alert.Accept();
+            return this;
         }
     }
 }

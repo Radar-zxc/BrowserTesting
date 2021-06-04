@@ -32,17 +32,21 @@ namespace BrowserTesting
         public void AddJewelry_MultiplyInCart()
         {
             explorer.OpenPage("jewelry");
-            CheckItemNames("Black & White Diamond Heart");
-            AddMoreItems(50);
-            CheckManyItemPrice(50);
+            explorer.GoToItemPage("Black & White Diamond Heart");
+            order.CreatePage();
+            order.AddItemToCart();
+            explorer.OpenCart();
+            cart.ChangeCount("Black & White Diamond Heart",50);
+            cart.UpdateCart();
+            cart.CheckPrice("Black & White Diamond Heart");
+            cart.RemoveItem("Black & White Diamond Heart");
+            cart.UpdateCart();
+            cart.CheckEmptyCart();
         }
         [Test, Description("Clear cart - add many items in item page"), Order(1)]
         public void AddJewelry_MultiplyInItemPage()
         {
             string item = "Black & White Diamond Heart";
-            cart.RemoveItem(item);
-            cart.UpdateCart();
-            cart.CheckEmptyCart();
             explorer.OpenPage("jewelry");
             explorer.GoToItemPage(item);
             order.CreatePage();
@@ -55,6 +59,7 @@ namespace BrowserTesting
             cart.RemoveItem(item);
             cart.UpdateCart();
             cart.CheckEmptyCart();
+            explorer.OpenStartPage();
         }
     }
 }
