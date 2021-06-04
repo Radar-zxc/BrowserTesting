@@ -91,7 +91,14 @@ namespace BrowserTesting.Pages
             OpenPageRef(newPage);
             RefreshTabsList();
             Driver.SwitchTo().Window(tabsList.Last());
-            Driver.Manage().Window.Maximize();
+            if (WindowOptions.WindowAutoMaxSize)
+            {
+                Driver.Manage().Window.Maximize();
+            }
+            else
+            {
+                Driver.Manage().Window.Size = new System.Drawing.Size(WindowOptions.Window_x, WindowOptions.Window_y);
+            }
             AddTabInDescriptorList();
         }
         /// <summary>

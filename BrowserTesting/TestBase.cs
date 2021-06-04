@@ -45,7 +45,14 @@ namespace BrowserTesting
                 default:
                     throw new Exception("Неудалось определить тип браузера");
             }
-            Driver.Manage().Window.Maximize();
+            if (WindowOptions.WindowAutoMaxSize)
+            {
+                Driver.Manage().Window.Maximize();
+            }
+            else
+            {
+                Driver.Manage().Window.Size = new System.Drawing.Size(WindowOptions.Window_x, WindowOptions.Window_y);
+            }
         }
         /// <summary>
         /// Метод открытия стартового сайта

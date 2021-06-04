@@ -17,7 +17,7 @@ namespace BrowserTesting
     /// <summary>
     /// /Класс, содержащий общие методы для других классов страниц
     /// </summary>
-    abstract class BasePage
+    abstract class BasePage 
     {
         protected IWebDriver Driver ;
         public BasePage(IWebDriver Driver )
@@ -43,7 +43,7 @@ namespace BrowserTesting
             //для IE Driver.MoveToElement(action).Click();
         }
         /// <summary>
-        /// Метод выбора определенного параметра в выпадающем списке по соответствующим локаторам
+        /// Метод выбора определенного параметра в выпадающем списке по соответствующим локаторам 
         /// </summary>
         protected void PickParameterInPopupList(By popupList, By popupParameter)
         {
