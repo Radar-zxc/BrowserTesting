@@ -11,6 +11,7 @@ using BrowserTesting.Enums;
 using OpenQA.Selenium.Support;
 using OpenQA.Selenium.Support.UI;
 using System.Globalization;
+using OpenQA.Selenium.Support.Extensions;
 
 namespace BrowserTesting
 {
