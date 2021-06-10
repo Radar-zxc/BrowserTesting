@@ -19,7 +19,6 @@ namespace BrowserTesting
     class PreOrderPage : BasePage
     {
         private string CurrentFilter;
-        private List<string> FiltersList;
         private By popupList_Sort = By.Id("products-orderby");
         private By popupList_Sort_A_to_Z = By.XPath("//option[text()='Name: A to Z']");
         private By popupList_Sort_Z_to_A = By.XPath("//option[text()='Name: Z to A']");
@@ -30,21 +29,6 @@ namespace BrowserTesting
         {
             string defaultSort = "Position";
             popupList_Sort_Default = By.XPath($"//option[text()='{defaultSort}']");
-        }
-        /// <summary>
-        /// Метод, формирующий список из имеющихся фильтров цены на странице
-        /// </summary>
-        private List<string> ConstructFiltersList()
-        {
-            FiltersList = new List<string>();
-            FiltersList = (from i in Driver.FindElements(By.XPath("//a[contains(@href,'price')]"))
-                       select i.GetAttribute("href")).ToList();
-            for (int i = 0; i < FiltersList.Count; i++)
-            {
-                int x = FiltersList[i].IndexOf('=');
-                FiltersList[i] = FiltersList[i].Remove(0, x+1);
-            }
-            return FiltersList;
         }
         /// <summary>
         /// Метод получения целочисленного значения левой границы цены 
@@ -80,19 +64,8 @@ namespace BrowserTesting
         /// </summary>
         public PreOrderPage ChooseFilter(string newFilter)
          {
-            ConstructFiltersList();
-            bool result = false;
-            foreach(string filter in FiltersList)
-            {
-                if (newFilter == filter)
-                {
-                    CurrentFilter = newFilter;
-                    ClickOnElement(By.XPath($"//a[contains(@href,'{CurrentFilter}')]"));
-                    result = true;
-                    break;
-                }
-            }
-            Assert.IsTrue(result, $"Введено неверное название фильтра - {newFilter}");
+            ClickOnElement(By.XPath($"//a[contains(@href,'{newFilter}')]"));
+            CurrentFilter = newFilter;
             return this;
         }
         /// <summary>
