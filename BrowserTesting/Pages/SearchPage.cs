@@ -22,17 +22,17 @@ namespace BrowserTesting.Pages
         public SearchPage(IWebDriver Driver) : base(Driver)
         {
         }
-        private readonly By SearchKeywordField = By.XPath("//input[@class='search-text']");
-        private readonly By AdvancedSearchCheckBox = By.XPath("//input[@id='As']");
-        private readonly By CategoryPopUpList = By.XPath("//select[@id='Cid']");
-        private readonly By SupCategoriesCheckBox = By.XPath("//input[@id='Isc']");
-        private readonly By ManufacturerPopUpList = By.XPath("//select[@id='Mid']");
-        private readonly By PriceField_From = By.XPath("//input[@id='Pf']");
-        private readonly By PriceField_To = By.XPath("//input[@id='Pt']");
-        private readonly By SearchInDecsriptionCheckBox = By.XPath("//input[@id='Sid']");
-        private readonly By SearchButton = By.XPath("//input[@class='button-1 search-button']");
-        private readonly By SearchField_Header = By.XPath("//input[@id='small-searchterms']");
-        private readonly By SearchButtom_Header = By.XPath("//input[@class='button-1 search-box-button']");
+        private readonly By SearchKeywordField = By.CssSelector(".search-text");
+        private readonly By AdvancedSearchCheckBox = By.CssSelector(@"[id=""As""]");
+        private readonly By CategoryPopUpList = By.CssSelector(@"[id=""Cid""]");
+        private readonly By SupCategoriesCheckBox = By.CssSelector(@"[id=""Isc""]");
+        private readonly By ManufacturerPopUpList = By.CssSelector(@"[id=""Mid""]");
+        private readonly By PriceField_From = By.CssSelector(@"[id=""Pf""]");
+        private readonly By PriceField_To = By.CssSelector(@"[id=""Pt""]");
+        private readonly By SearchInDecsriptionCheckBox = By.CssSelector(@"[id=""Sid""]");
+        private readonly By SearchButton = By.CssSelector(".search-button");
+        private readonly By SearchField_Header = By.CssSelector(".search-box-text");
+        private readonly By SearchButtom_Header = By.CssSelector(".search-box-button");
 
         /// <summary>
         /// Метод обновления поиска путем нажатия на кнопку Search
@@ -55,8 +55,8 @@ namespace BrowserTesting.Pages
         /// </summary>
         public SearchPage NewRequest(string request)
         {
-            Driver.FindElement(SearchKeywordField).Clear();
-            Driver.FindElement(SearchKeywordField).SendKeys(request);
+            Driver.EFindElement(SearchKeywordField).Clear();
+            Driver.EFindElement(SearchKeywordField).ESendKeys(request);
             return this;
         }
         /// <summary>
@@ -64,8 +64,8 @@ namespace BrowserTesting.Pages
         /// </summary>
         public SearchPage NewRequest_Header(string request)
         {
-            Driver.FindElement(SearchField_Header).Clear();
-            Driver.FindElement(SearchField_Header).SendKeys(request);
+            Driver.EFindElement(SearchField_Header).Clear();
+            Driver.EFindElement(SearchField_Header).ESendKeys(request);
             return this;
         }
         /// <summary>
@@ -73,7 +73,7 @@ namespace BrowserTesting.Pages
         /// </summary>
         private void CheckBox_TurnOn(By checkBox)
         {
-            IWebElement elem = Driver.FindElement(checkBox);
+            IWebElement elem = Driver.EFindElement(checkBox);
             if (!elem.Selected)
             {
                 elem.Click();
@@ -84,7 +84,7 @@ namespace BrowserTesting.Pages
         /// </summary>
         private void CheckBox_TurnOff(By checkBox)
         {
-            IWebElement elem = Driver.FindElement(checkBox);
+            IWebElement elem = Driver.EFindElement(checkBox);
             if (elem.Selected)
             {
                 elem.Click();
@@ -192,7 +192,7 @@ namespace BrowserTesting.Pages
         /// </summary>
         public SearchPage ChangeCategory(string newCategory)
         {
-            SelectElement s = new SelectElement(Driver.FindElement(CategoryPopUpList));
+            SelectElement s = new SelectElement(Driver.EFindElement(CategoryPopUpList));
             s.SelectByText(newCategory);
             return this;
         }
@@ -201,7 +201,7 @@ namespace BrowserTesting.Pages
         /// </summary>
         public SearchPage ChangeManufacturer(string newManufacturer)
         {
-            SelectElement s = new SelectElement(Driver.FindElement(ManufacturerPopUpList));
+            SelectElement s = new SelectElement(Driver.EFindElement(ManufacturerPopUpList));
             s.SelectByText(newManufacturer);
             return this;
         }
@@ -210,8 +210,8 @@ namespace BrowserTesting.Pages
         /// </summary>
         public SearchPage ClearPrice()
         {
-            Driver.FindElement(PriceField_From).Clear();
-            Driver.FindElement(PriceField_To).Clear();
+            Driver.EFindElement(PriceField_From).Clear();
+            Driver.EFindElement(PriceField_To).Clear();
             return this;
         }
         /// <summary>
@@ -219,7 +219,7 @@ namespace BrowserTesting.Pages
         /// </summary>
         public SearchPage CheckSmallRequest()
         {
-            Assert.IsTrue(Driver.FindElement(By.XPath("//strong[@class='warning']")).Displayed,
+            Assert.IsTrue(Driver.EFindElement(By.XPath("//strong[@class='warning']")).Displayed,
                 "Сообщение о недостаточной длине запроса не выведено на экран");
             return this;
         }

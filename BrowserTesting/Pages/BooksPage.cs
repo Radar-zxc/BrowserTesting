@@ -60,7 +60,7 @@ namespace BrowserTesting
         private IWebElement SortList()
         {
             string path = "//select[@id='products-orderby']";
-            IWebElement list = Driver.FindElement(By.XPath(path));
+            IWebElement list = Driver.EFindElement(By.XPath(path));
             return list;
         }
         /// <summary>
@@ -111,7 +111,7 @@ namespace BrowserTesting
         {
             SelectElement sortList = new SelectElement(SortList());
             string nameSort = sortList.SelectedOption.Text;
-            Assert.AreEqual(Driver.FindElement(popupList_Sort_Default).Text, nameSort,
+            Assert.AreEqual(Driver.EFindElement(popupList_Sort_Default).Text, nameSort,
                 "Фактическая сортировка не соответствует требуемой по умолчанию");
         }
         /// <summary>
@@ -121,7 +121,7 @@ namespace BrowserTesting
         {
             PickParameterInPopupList(popupList_Sort, newSort);
             var wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(5));
-            wait.Until(driver => driver.FindElement(By.XPath("//h2[@class='product-title']")).Displayed);
+            wait.Until(driver => driver.EFindElement(By.XPath("//h2[@class='product-title']")).Displayed);
         }
 
         /// <summary>

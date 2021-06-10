@@ -29,7 +29,7 @@ namespace BrowserTesting
         /// </summary>
         private IWebElement GetElem(string path)
         {
-            return Driver.FindElement(By.XPath(path));
+            return Driver.EFindElement(By.XPath(path));
         }
         /// <summary>
         /// Метод передвижения элемента к другому элементу
@@ -137,7 +137,7 @@ namespace BrowserTesting
         {
             IJavaScriptExecutor executor = (IJavaScriptExecutor)Driver;
             Driver.SwitchTo().DefaultContent();
-            executor.ExecuteScript("arguments[0].click();", Driver.FindElement(By.XPath("//a[@id='menuButton']")));
+            executor.ExecuteScript("arguments[0].click();", Driver.EFindElement(By.XPath("//a[@id='menuButton']")));
         }
     }
 }

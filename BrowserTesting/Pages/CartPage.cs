@@ -40,7 +40,7 @@ namespace BrowserTesting
         public double GetPrice(string itemName)
         {
             string pathItemPrice = $"//a[text()='{itemName}']/../..//span[@class='product-unit-price']";
-            double itemPrice = double.Parse(Driver.FindElement(By.XPath(pathItemPrice)).Text.Replace('.', ','));
+            double itemPrice = double.Parse(Driver.EFindElement(By.XPath(pathItemPrice)).Text.Replace('.', ','));
             return itemPrice;
         }
         /// <summary>
@@ -50,7 +50,7 @@ namespace BrowserTesting
         public double GetTotalPrice(string itemName)
         {
             string pathItemTotalPrice = $"//a[text()='{itemName}']/../..//span[@class='product-subtotal']";
-            double itemTotalPrice = double.Parse(Driver.FindElement(By.XPath(pathItemTotalPrice)).Text.Replace('.',','));
+            double itemTotalPrice = double.Parse(Driver.EFindElement(By.XPath(pathItemTotalPrice)).Text.Replace('.',','));
             return itemTotalPrice;
         }
         /// <summary>
@@ -77,7 +77,7 @@ namespace BrowserTesting
         public void CheckEmptyCart()
         {
             string path = "//div[@class='page-body']//div[normalize-space(text())='Your Shopping Cart is empty!']";
-            Assert.IsTrue(Driver.FindElement(By.XPath(path)).Displayed, "Корзина не очищена");
+            Assert.IsTrue(Driver.EFindElement(By.XPath(path)).Displayed, "Корзина не очищена");
         }
         /// <summary>
         /// Метод, проверяющий наличие предмета в корзине по заданному имени,
@@ -85,7 +85,7 @@ namespace BrowserTesting
         /// </summary>
         public void CheckCartItem(string itemName)
         {
-            var findItem = Driver.FindElement(By.XPath($"//tr[@class='cart-item-row']//td[@class='product']//a[text()='{itemName}']"));
+            var findItem = Driver.EFindElement(By.XPath($"//tr[@class='cart-item-row']//td[@class='product']//a[text()='{itemName}']"));
             Assert.IsTrue(findItem.Displayed, $"Предмет {itemName} отсутствует в корзине ");
         }
         /// <summary>
@@ -106,7 +106,7 @@ namespace BrowserTesting
         /// </summary>
         public int GetItemCount(string itemName)
         {
-            int itemCount = Int32.Parse(Driver.FindElement(SetCountField(itemName)).GetAttribute("value"));
+            int itemCount = Int32.Parse(Driver.EFindElement(SetCountField(itemName)).GetAttribute("value"));
             return itemCount;
         }
         /// <summary>
@@ -130,8 +130,8 @@ namespace BrowserTesting
         public void ChangeCount(string itemName, int count)
         {
             By field = SetCountField(itemName);
-            Driver.FindElement(field).Clear();
-            Driver.FindElement(field).SendKeys(Convert.ToString(count));
+            Driver.EFindElement(field).Clear();
+            Driver.EFindElement(field).ESendKeys(Convert.ToString(count));
         }
     }
 }

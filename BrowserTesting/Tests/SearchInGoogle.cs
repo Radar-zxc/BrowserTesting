@@ -19,21 +19,21 @@ namespace BrowserTesting
         [Test, Description("Search_with_enter"), Order(0)]
         public void Search_with_enter()
         {
-            var enter = Driver.FindElement(Input_Search);
+            var enter = Driver.EFindElement(Input_Search);
             enter.Click();
-            enter.SendKeys("ABOBA");
-            enter.SendKeys(Keys.Enter);
-            var check = Driver.FindElement(By.XPath("//div[@id='rso']//*[text()='ABOBA']"));
+            enter.ESendKeys("ABOBA");
+            enter.ESendKeys(Keys.Enter);
+            var check = Driver.EFindElement(By.XPath("//div[@id='rso']//*[text()='ABOBA']"));
             Assert.IsTrue(check.Displayed, "Искомая информация не найдена");
         }
         [Test, Description("Search_with_button"), Order(1)]
         public void Search_with_button()
         {
-            var enter = Driver.FindElement(Input_Search);
+            var enter = Driver.EFindElement(Input_Search);
             enter.Clear();
             string search_term = "мышь";
-            enter.SendKeys(search_term);
-            enter = Driver.FindElement(By.XPath("//button"));
+            enter.ESendKeys(search_term);
+            enter = Driver.EFindElement(By.XPath("//button"));
             enter.Click();
             Check_Search.Check(search_term, Driver);
         }

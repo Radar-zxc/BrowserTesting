@@ -32,7 +32,7 @@ namespace BrowserTesting
         public static void ContentVerify(IWebDriver Driver ,string key)
         {
             string xpathCheck = "//div[@class='page-title']//h1[text()='" + key + "']";
-            var check = Driver.FindElement(By.XPath(xpathCheck));
+            var check = Driver.EFindElement(By.XPath(xpathCheck));
             Assert.IsTrue(check.Displayed, "Искомая информация не найдена");
         }
     }

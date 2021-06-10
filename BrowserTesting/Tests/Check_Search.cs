@@ -11,7 +11,7 @@ namespace BrowserTesting
         public static void Check(string keys , IWebDriver Driver)
         {
             string xpath_check = ".//*[text()='" + keys + "']";
-            var check = Driver.FindElement(By.XPath(xpath_check));
+            var check = Driver.EFindElement(By.XPath(xpath_check));
             Assert.IsTrue(check.Displayed, "Искомая информация не найдена");
         }
     }

@@ -36,7 +36,7 @@ namespace BrowserTesting
         private IWebElement ProcessorList()
         {
             string path = "//div[@class='attributes']//select[@id='product_attribute_16_5_4']";
-            IWebElement list = Driver.FindElement(By.XPath(path));
+            IWebElement list = Driver.EFindElement(By.XPath(path));
             return list;
         }
         /// <summary>
@@ -45,7 +45,7 @@ namespace BrowserTesting
         private IWebElement RAM_List()
         {
             string path = "//div[@class='attributes']//select[@id='product_attribute_16_6_5']";
-            IWebElement list = Driver.FindElement(By.XPath(path));
+            IWebElement list = Driver.EFindElement(By.XPath(path));
             return list;
         }
         /// <summary>
@@ -91,7 +91,7 @@ namespace BrowserTesting
             {
                 if (listHDD[i].Selected)
                 {
-                    nameHDD = listHDD[i].FindElement(
+                    nameHDD = listHDD[i].EFindElement(
                         By.XPath($"(//dl//dt//label[normalize-space(text())='HDD']//../following::dd[1]//li/label)[{i+1}]"))
                         .Text;
                     Assert.AreEqual(defaultHDD, nameHDD, "Фактический HDD не соответствует требуемому по умолчанию");
@@ -123,7 +123,7 @@ namespace BrowserTesting
             {
                 if (listOS[i].Selected)
                 {
-                    nameOS = listOS[i].FindElement(
+                    nameOS = listOS[i].EFindElement(
                         By.XPath($"(//dl//dt//label[normalize-space(text())='OS']//../following::dd[1]//li/label)[{i + 1}]"))
                         .Text;
                     Assert.AreEqual(defaultOS, nameOS, "Фактическая OS не соответствует требуемой по умолчанию");
@@ -154,7 +154,7 @@ namespace BrowserTesting
             {
                 if (parameter.Selected)
                 {
-                    listSoftware.Add(Driver.FindElement
+                    listSoftware.Add(Driver.EFindElement
                         (By.XPath($"(//dl//dt//label[normalize-space(text())='Software']//../following::dd[1]//li/label)[{count}]"))
                         .Text);
                 }
@@ -176,7 +176,7 @@ namespace BrowserTesting
         public void CheckDefaultCount()
         {
             SetItemCountField();
-            string itemCount = Driver.FindElement(itemCountField).GetAttribute("value");
+            string itemCount = Driver.EFindElement(itemCountField).GetAttribute("value");
             Assert.AreEqual(defaultCount, itemCount,
                 "Фактическое значение параметра Qty не соответствует требуемому по умолчанию");
         }
@@ -186,7 +186,7 @@ namespace BrowserTesting
         /// </summary>
         public void CheckPriceColor_RED()
         {
-            String buttonTextColor = Driver.FindElement(By.XPath("//span[@itemprop='price']")).GetCssValue("color");
+            String buttonTextColor = Driver.EFindElement(By.XPath("//span[@itemprop='price']")).GetCssValue("color");
             Assert.AreEqual(defaultPriceColor, buttonTextColor, "Цвет цены предмета не красный");
         }
         /// <summary>
@@ -196,7 +196,7 @@ namespace BrowserTesting
         public void CheckPrice()
         {
             SetItemPrice();
-            string price = Driver.FindElement(itemPrice).Text;
+            string price = Driver.EFindElement(itemPrice).Text;
             Assert.AreEqual(defaultPrice, price, "Фактическая цена не соответствует требуемой по умолчанию");
         }
         ///<summary>

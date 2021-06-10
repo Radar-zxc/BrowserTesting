@@ -29,17 +29,17 @@ namespace BrowserTesting
         /// </summary>
         protected void ChangeCount(By countField, int newCount)
         {
-            var action = Driver.FindElement(countField);
+            var action = Driver.EFindElement(countField);
             action.Clear();
-            action.SendKeys(newCount.ToString());
+            action.ESendKeys(newCount.ToString());
         }
         /// <summary>
         /// Метод нажатия на элемент по заданному локатору
         /// </summary>
         protected void ClickOnElement(By elem)
         {
-            var action = Driver.FindElement(elem);
-            action.Click();
+            var action = Driver.EFindElement(elem);
+            Driver.EClick(action);
             //для IE Driver.MoveToElement(action).Click();
         }
         /// <summary>
@@ -47,7 +47,7 @@ namespace BrowserTesting
         /// </summary>
         protected void PickParameterInPopupList(By popupList, By popupParameter)
         {
-            var list = Driver.FindElement(popupList);
+            var list = Driver.EFindElement(popupList);
             Driver.MoveToElement(list).Click();
             ClickOnElement(popupParameter);
         }
@@ -56,7 +56,7 @@ namespace BrowserTesting
         /// </summary>
         protected void OpenPageRef(By page)
         {
-            Driver.FindElement(page).SendKeys(Keys.Control + Keys.Shift + Keys.Enter);
+            Driver.EFindElement(page).ESendKeys(Keys.Control + Keys.Shift + Keys.Enter);
         }
     }
 }

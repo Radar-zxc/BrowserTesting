@@ -28,23 +28,23 @@ namespace BrowserTesting
         /// </summary>
         protected void SetItemAddButton()
         {
-            string path = "//div[@class='center-2']//input[@type='button']";
-            itemAddButton = By.XPath(path);
+            string path = "input.add-to-cart-button";
+            itemAddButton = By.CssSelector(path);
         }
         /// <summary>
         /// Метод записи локатора для поля количества товаров
         /// </summary>
         protected void SetItemCountField()
         {
-            string path = "//div[@class='center-2']//input [@class='qty-input']";
-            itemCountField = By.XPath(path);
+            string path = "input.qty-input";
+            itemCountField = By.CssSelector(path);
         }
         /// <summary>
         /// Метод записи локатора для цены предмета
         /// </summary>
         protected void SetItemPrice()
         {
-            itemPrice = By.XPath("//span[@itemprop='price']");
+            itemPrice = By.CssSelector(@".product-price>span[""itemprop=price""]");
         }
         /// <summary>
         /// Метод изменения количества предметов на заданное
@@ -59,6 +59,7 @@ namespace BrowserTesting
         public void AddItemToCart()
         {
             ClickOnElement(itemAddButton);
+            WaitLoadingCircle();
         }
         /// <summary>
         /// Метод определения основных локаторов на странице заказа
@@ -68,6 +69,14 @@ namespace BrowserTesting
             SetItemAddButton();
             SetItemCountField();
             SetItemPrice();
+        }
+        /// <summary>
+        /// Метод ожидания скрытия колеса загрузки на странице
+        /// </summary>
+        protected void WaitLoadingCircle()
+        {
+            WebDriverWait wait = new WebDriverWait(Driver,TimeSpan.FromSeconds(3) );
+            wait.Until(ExpectedConditions.InvisibilityOfElementLocated(By.CssSelector(".loading-image")));
         }
     }
 }

@@ -32,34 +32,34 @@ namespace BrowserTesting.Pages
         /// </summary>
         public void OpenPage(string pageName)
         {
-            string path = $"//ul[@class='top-menu']//a[@href='/{pageName}']";
-            ClickOnElement(By.XPath(path));
+            string path = $@".top-menu a[href=""/{ pageName}""]";
+            ClickOnElement(By.CssSelector(path));
         }
         /// <summary>
         /// Метод открытия страницы из заголовка сайта , находящейся в выпадающем списке 
         /// </summary>
         public void OpenPageWithList(string pageName, string pageElement)
         {
-            string path = $"//ul[@class='top-menu']//a[@href='/{ pageName}']";
-            var find = Driver.FindElement(By.XPath(path));
+            string path = $@".top-menu a[href=""/{ pageName}""]";
+            var find = Driver.EFindElement(By.CssSelector(path));
             Driver.MoveToElement(find);
-            path = $"//ul[@class='top-menu']//ul[@class='sublist firstLevel active']//a[@href='/{ pageElement}']";
-            ClickOnElement(By.XPath(path));
+            path = @$"ul.active a[href=""/{ pageElement}""]";
+            ClickOnElement(By.CssSelector(path));
         }
         /// <summary>
         /// Метод открытия стартовой страницы сайта Tricentis Demo Web Shop путем нажатия на логотип
         /// </summary>
         public void OpenStartPage()
         {
-            string path = "//a[normalize-space(text()='Tricentis Demo Web Shop')]//img[@title='']";
-            ClickOnElement(By.XPath(path));
+            string path = @"img[alt=""Tricentis Demo Web Shop""]";
+            ClickOnElement(By.CssSelector(path));
         }
         /// <summary>
         /// Метод открытия страницы корзины
         /// </summary>
         public void OpenCart()
         {
-            By cart = By.XPath("//div[@class='header-links-wrapper']//a[@class='ico-cart']//span[@class='cart-label']");
+            By cart = By.CssSelector("a.ico-cart>span.cart-label");
             ClickOnElement(cart);
         }
         /// <summary>
@@ -67,8 +67,8 @@ namespace BrowserTesting.Pages
         /// </summary>
         public void GoToItemPage(string itemName)
         {
-            string pathItem = $"//div[@class='page-body']//div[@class='item-box']//a[text()='{ itemName}']";
-            ClickOnElement(By.XPath(pathItem));
+            string pathItem = @$"img[alt*=""{itemName}""]";
+            ClickOnElement(By.CssSelector(pathItem));
         }
         /// <summary>
         /// Метод проверки перехода на страницу корзины 
@@ -82,8 +82,8 @@ namespace BrowserTesting.Pages
         /// </summary>
         public void OpenPageInNewTab(string pageName)
         {
-            string path = $"//ul[@class='top-menu']//a[@href='/{pageName}']";
-            By newPage = By.XPath(path);
+            string path = $@".top-menu a[href=""/{ pageName}""]";
+            By newPage = By.CssSelector(path);
             if (tabsList == null)
             {
                 AddTabInDescriptorList();
@@ -129,7 +129,7 @@ namespace BrowserTesting.Pages
                 if (tab == tabsDescriptorList[tabNubmer])
                 {
                     Driver.SwitchTo().Window(tab);
-                    Driver.FindElement(By.XPath("//body")).Click();
+                    Driver.EFindElement(By.CssSelector("body")).Click();
                     found = true;
                     break;
                 }
