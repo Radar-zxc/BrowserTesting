@@ -91,7 +91,7 @@ namespace BrowserTesting
             {
                 if (listHDD[i].Selected)
                 {
-                    nameHDD = listHDD[i].EFindElement(
+                    nameHDD = Driver.EFindElement(
                         By.XPath($"(//dl//dt//label[normalize-space(text())='HDD']//../following::dd[1]//li/label)[{i+1}]"))
                         .Text;
                     Assert.AreEqual(defaultHDD, nameHDD, "Фактический HDD не соответствует требуемому по умолчанию");
@@ -123,7 +123,7 @@ namespace BrowserTesting
             {
                 if (listOS[i].Selected)
                 {
-                    nameOS = listOS[i].EFindElement(
+                    nameOS = Driver.EFindElement(
                         By.XPath($"(//dl//dt//label[normalize-space(text())='OS']//../following::dd[1]//li/label)[{i + 1}]"))
                         .Text;
                     Assert.AreEqual(defaultOS, nameOS, "Фактическая OS не соответствует требуемой по умолчанию");

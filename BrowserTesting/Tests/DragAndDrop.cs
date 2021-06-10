@@ -24,7 +24,7 @@ namespace BrowserTesting
         {
             elements = new DraggableElements(Driver);
         }
-        [Test]
+        [Test, Description("Check Drag and Drop functionality on special site")]
         public void CheckDragAndDrop()
         {
             elements.StartCheck();

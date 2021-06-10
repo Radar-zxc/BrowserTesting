@@ -12,7 +12,7 @@ namespace BrowserTesting.Tests
     class CheckBooksSort : TestBase
     {
         private PageExplorer explorer;
-        private BooksPage books;
+        private PreOrderPage page;
         public override void DriverSetUp()
         {
             Driver.Navigate().GoToUrl("http://demowebshop.tricentis.com/");
@@ -21,13 +21,13 @@ namespace BrowserTesting.Tests
         public void Prepare()
         {
             explorer = new PageExplorer(Driver);
-            books = new BooksPage(Driver);
+            page = new PreOrderPage(Driver);
         }
         [Test, Description("Check Sorts on books page"), Order(0)]
         public void CheckSort()
         {
             explorer.OpenPage("books");
-            books.CheckSort();
+            page.CheckSort();
             explorer.OpenStartPage();
         }
     }
