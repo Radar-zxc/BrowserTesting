@@ -63,7 +63,7 @@ namespace BrowserTesting
         /// Метод изменения текущего фильтра цены на заданный другой
         /// </summary>
         public PreOrderPage ChooseFilter(string newFilter)
-         {
+        {
             ClickOnElement(By.XPath($"//a[contains(@href,'{newFilter}')]"));
             CurrentFilter = newFilter;
             return this;
