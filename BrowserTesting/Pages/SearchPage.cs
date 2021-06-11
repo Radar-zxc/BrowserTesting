@@ -1,14 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections;
-using System.Text;
-using OpenQA.Selenium.Support.PageObjects;
+﻿using System.Collections.Generic;
 using NUnit.Framework;
 using OpenQA.Selenium;
-using System.Threading;
-using System.IO;
-using OpenQA.Selenium.Interactions;
-using OpenQA.Selenium.Support;
 using OpenQA.Selenium.Support.UI;
 using System.Linq;
 
@@ -23,13 +15,13 @@ namespace BrowserTesting.Pages
         {
         }
         private readonly By SearchKeywordField = By.CssSelector(".search-text");
-        private readonly By AdvancedSearchCheckBox = By.CssSelector(@"[id=""As""]");
-        private readonly By CategoryPopUpList = By.CssSelector(@"[id=""Cid""]");
-        private readonly By SupCategoriesCheckBox = By.CssSelector(@"[id=""Isc""]");
-        private readonly By ManufacturerPopUpList = By.CssSelector(@"[id=""Mid""]");
-        private readonly By PriceField_From = By.CssSelector(@"[id=""Pf""]");
-        private readonly By PriceField_To = By.CssSelector(@"[id=""Pt""]");
-        private readonly By SearchInDecsriptionCheckBox = By.CssSelector(@"[id=""Sid""]");
+        private readonly By AdvancedSearchCheckBox = By.Id("As");
+        private readonly By CategoryPopUpList = By.Id(@"Cid");
+        private readonly By SupCategoriesCheckBox = By.Id("Isc");
+        private readonly By ManufacturerPopUpList = By.Id("Mid");
+        private readonly By PriceField_From = By.Id("Pf");
+        private readonly By PriceField_To = By.Id("Pt");
+        private readonly By SearchInDecsriptionCheckBox = By.Id("Sid");
         private readonly By SearchButton = By.CssSelector(".search-button");
         private readonly By SearchField_Header = By.CssSelector(".search-box-text");
         private readonly By SearchButtom_Header = By.CssSelector(".search-box-button");
@@ -107,7 +99,7 @@ namespace BrowserTesting.Pages
         /// <summary>
         /// Метод изменения цен в полях From и To
         /// </summary>
-        public SearchPage ChangePrice(int priceFrom , int priceTo)
+        public SearchPage ChangePrice(int priceFrom, int priceTo)
         {
             ChangePrice_From(priceFrom);
             ChangePrice_To(priceTo);
@@ -120,7 +112,7 @@ namespace BrowserTesting.Pages
         {
             List<IWebElement> list = new List<IWebElement>();
             list = (from item in Driver.FindElements(By.XPath($"//div[@class='details']//a[contains(a,{request})]"))
-                   select item).ToList();
+                    select item).ToList();
             return list;
         }
         /// <summary>
@@ -220,7 +212,7 @@ namespace BrowserTesting.Pages
         public SearchPage CheckSmallRequest()
         {
             Assert.IsTrue(Driver.EFindElement(By.XPath("//strong[@class='warning']")).Displayed,
-                "Сообщение о недостаточной длине запроса не выведено на экран");
+            "Сообщение о недостаточной длине запроса не выведено на экран");
             return this;
         }
         /// <summary>

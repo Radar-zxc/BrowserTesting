@@ -32,7 +32,7 @@ namespace BrowserTesting.Pages
         /// </summary>
         public void OpenPage(string pageName)
         {
-            string path = $@".top-menu a[href=""/{ pageName}""]";
+            string path = $".top-menu a[href='/{ pageName}']";
             ClickOnElement(By.CssSelector(path));
         }
         /// <summary>
@@ -40,10 +40,10 @@ namespace BrowserTesting.Pages
         /// </summary>
         public void OpenPageWithList(string pageName, string pageElement)
         {
-            string path = $@".top-menu a[href=""/{ pageName}""]";
+            string path = $".top-menu a[href='/{ pageName}']";
             var find = Driver.EFindElement(By.CssSelector(path));
             Driver.MoveToElement(find);
-            path = @$"ul.active a[href=""/{ pageElement}""]";
+            path = $"ul.active a[href='/{ pageElement}']";
             ClickOnElement(By.CssSelector(path));
         }
         /// <summary>
@@ -51,7 +51,7 @@ namespace BrowserTesting.Pages
         /// </summary>
         public void OpenStartPage()
         {
-            string path = @"img[alt=""Tricentis Demo Web Shop""]";
+            string path = "img[alt='Tricentis Demo Web Shop']";
             ClickOnElement(By.CssSelector(path));
         }
         /// <summary>
@@ -67,7 +67,7 @@ namespace BrowserTesting.Pages
         /// </summary>
         public void GoToItemPage(string itemName)
         {
-            string pathItem = @$"img[alt*=""{itemName}""]";
+            string pathItem = $"img[alt*='{itemName}']";
             ClickOnElement(By.CssSelector(pathItem));
         }
         /// <summary>
@@ -82,7 +82,7 @@ namespace BrowserTesting.Pages
         /// </summary>
         public void OpenPageInNewTab(string pageName)
         {
-            string path = $@".top-menu a[href=""/{ pageName}""]";
+            string path = $".top-menu a[href='/{ pageName}']";
             By newPage = By.CssSelector(path);
             if (tabsList == null)
             {

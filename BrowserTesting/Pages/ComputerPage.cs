@@ -73,7 +73,7 @@ namespace BrowserTesting
         /// </summary>
         private ReadOnlyCollection<IWebElement> HDD_Buttons()
         {
-            string path = "//dl//dt//label[normalize-space(text())='HDD']//../following::dd[1]//li/input";
+            string path = "//label[normalize-space(text())='HDD']//../following::dd[1]//input";
             ReadOnlyCollection<IWebElement> list = Driver.FindElements(By.XPath(path));
             return list;
         }
@@ -92,7 +92,7 @@ namespace BrowserTesting
                 if (listHDD[i].Selected)
                 {
                     nameHDD = Driver.EFindElement(
-                        By.XPath($"(//dl//dt//label[normalize-space(text())='HDD']//../following::dd[1]//li/label)[{i+1}]"))
+                        By.XPath($"(//label[normalize-space(text())='HDD']//../following::dd[1]//label)[{i+1}]"))
                         .Text;
                     Assert.AreEqual(defaultHDD, nameHDD, "Фактический HDD не соответствует требуемому по умолчанию");
                     check = false;
@@ -105,7 +105,7 @@ namespace BrowserTesting
         /// </summary>
         private ReadOnlyCollection<IWebElement> OS_Buttons()
         {
-            string path = "//dl//dt//label[normalize-space(text())='OS']//../following::dd[1]//li/input";
+            string path = "//label[normalize-space(text())='OS']//../following::dd[1]//input";
             ReadOnlyCollection<IWebElement> list = Driver.FindElements(By.XPath(path));
             return list;
         }
@@ -124,7 +124,7 @@ namespace BrowserTesting
                 if (listOS[i].Selected)
                 {
                     nameOS = Driver.EFindElement(
-                        By.XPath($"(//dl//dt//label[normalize-space(text())='OS']//../following::dd[1]//li/label)[{i + 1}]"))
+                        By.XPath($"(//label[normalize-space(text())='OS']//../following::dd[1]//label)[{i + 1}]"))
                         .Text;
                     Assert.AreEqual(defaultOS, nameOS, "Фактическая OS не соответствует требуемой по умолчанию");
                     check = false;
@@ -137,7 +137,7 @@ namespace BrowserTesting
         /// </summary>
         private ReadOnlyCollection<IWebElement> SoftwareList()
         {
-            string path = "//dl//dt//label[normalize-space(text())='Software']//../following::dd[1]//li/input";
+            string path = "//label[normalize-space(text())='Software']//../following::dd[1]//input";
             ReadOnlyCollection<IWebElement> list = Driver.FindElements(By.XPath(path));
             return list;
         }
@@ -155,7 +155,7 @@ namespace BrowserTesting
                 if (parameter.Selected)
                 {
                     listSoftware.Add(Driver.EFindElement
-                        (By.XPath($"(//dl//dt//label[normalize-space(text())='Software']//../following::dd[1]//li/label)[{count}]"))
+                        (By.XPath($"(//label[normalize-space(text())='Software']//../following::dd[1]//label)[{count}]"))
                         .Text);
                 }
             }

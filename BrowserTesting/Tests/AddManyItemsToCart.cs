@@ -1,12 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using NUnit.Framework;
-using OpenQA.Selenium;
-using System.Threading;
-using OpenQA.Selenium.Interactions;
+﻿using NUnit.Framework;
 using BrowserTesting.Pages;
-using BrowserTesting;
 
 namespace BrowserTesting.Tests
 {

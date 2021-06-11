@@ -1,16 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections;
-using System.Text;
-using OpenQA.Selenium.Support.PageObjects;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using OpenQA.Selenium;
-using System.Threading;
-using System.IO;
 using OpenQA.Selenium.Interactions;
-using OpenQA.Selenium.Support;
-using OpenQA.Selenium.Support.UI;
-using System.Linq;
 using System.Drawing;
 
 namespace BrowserTesting

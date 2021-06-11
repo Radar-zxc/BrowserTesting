@@ -1,17 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using NUnit.Framework;
 using OpenQA.Selenium;
-using System.Threading;
-using System.IO;
-using Newtonsoft.Json;
 using OpenQA.Selenium.Interactions;
-using BrowserTesting.Enums;
-using OpenQA.Selenium.Support;
-using OpenQA.Selenium.Support.UI;
-using System.Globalization;
-using OpenQA.Selenium.Support.Extensions;
 
 namespace BrowserTesting
 {
@@ -29,7 +18,7 @@ namespace BrowserTesting
         /// <summary>
         /// Метод, добавляющий в FindElement внутреннюю обработку исключений 
         /// </summary>
-        public static IWebElement EFindElement(this IWebDriver Driver, By elem)
+        public  static IWebElement EFindElement(this IWebDriver Driver, By elem)
         {
             IWebElement result = null;
             try

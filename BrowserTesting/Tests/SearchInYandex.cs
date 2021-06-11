@@ -1,42 +1,32 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using OpenQA.Selenium;
-using System.Threading;
 namespace BrowserTesting
 {
     [TestFixture]
     public class SearchInYandex : TestBase
     {
-        private readonly By Input_Search = By.Id("text");
+        private readonly By InputSearch = By.Id("text");
 
-        [OneTimeSetUp]
-        public void driver_set_up()
+        [Test,Description("Search with enter"),Order(0)]
+        public void SearchWithEnter()
         {
-            Driver.Navigate().GoToUrl("https://yandex.ru/");
-            
-        }
-        [Test,Description("Search_with_enter"),Order(0)]
-        public void Search_with_enter()
-        {
-            var enter = Driver.EFindElement(Input_Search);
+            var enter = Driver.EFindElement(InputSearch);
             enter.Click();
             enter.ESendKeys("ABOBA");
             enter.ESendKeys(Keys.Enter);
             var check = Driver.EFindElement(By.XPath("//ul[@id='search-result']//*[text()='ABOBA']"));
             Assert.IsTrue(check.Displayed, "Искомая информация не найдена");
         }
-        [Test , Description("Search_with_button"),Order(1)]
-        public void Search_with_button()
+        [Test , Description("Search with button"),Order(1)]
+        public void SearchWithButton()
         {
             var enter = Driver.EFindElement(By.XPath("//input[@name='text']"));
             enter.Clear();
-            string search_term = "Audi";
-            enter.ESendKeys(search_term);
+            string searchTerm = "Audi";
+            enter.ESendKeys(searchTerm);
             enter = Driver.EFindElement(By.ClassName("websearch-button__text"));
             enter.Click();
-            Check_Search.Check(search_term, Driver);
+            CheckSearch.Check(searchTerm, Driver);
         }
     }
 }
