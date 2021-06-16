@@ -1,14 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using OpenQA.Selenium.Support.PageObjects;
-using NUnit.Framework;
-using OpenQA.Selenium;
-using System.Threading;
-using System.IO;
-using OpenQA.Selenium.Interactions;
-using OpenQA.Selenium.Support;
-using OpenQA.Selenium.Support.UI;
+﻿using OpenQA.Selenium;
 namespace BrowserTesting
 {
     /// <summary>
@@ -69,14 +59,6 @@ namespace BrowserTesting
             SetItemAddButton();
             SetItemCountField();
             SetItemPrice();
-        }
-        /// <summary>
-        /// Метод ожидания скрытия колеса загрузки на странице
-        /// </summary>
-        protected void WaitLoadingCircle()
-        {
-            WebDriverWait wait = new WebDriverWait(Driver,TimeSpan.FromSeconds(3) );
-            wait.Until(ExpectedConditions.InvisibilityOfElementLocated(By.CssSelector(".loading-image")));
         }
     }
 }

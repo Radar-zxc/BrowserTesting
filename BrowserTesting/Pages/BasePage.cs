@@ -1,21 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using NUnit.Framework;
 using OpenQA.Selenium;
-using System.Threading;
-using System.IO;
-using Newtonsoft.Json;
-using OpenQA.Selenium.Interactions;
-using BrowserTesting.Enums;
-using OpenQA.Selenium.Support;
 using OpenQA.Selenium.Support.UI;
-using System.Globalization;
 
 namespace BrowserTesting
 {
     /// <summary>
-    /// /Класс, содержащий общие методы для других классов страниц
+    /// Класс, содержащий общие методы для других классов страниц
     /// </summary>
     abstract class BasePage 
     {
@@ -57,6 +47,14 @@ namespace BrowserTesting
         protected void OpenPageRef(By page)
         {
             Driver.EFindElement(page).ESendKeys(Keys.Control + Keys.Shift + Keys.Enter);
+        }
+        /// <summary>
+        /// Метод ожидания скрытия колеса загрузки на странице
+        /// </summary>
+        protected void WaitLoadingCircle()
+        {
+            WebDriverWait wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(3));
+            wait.Until(ExpectedConditions.InvisibilityOfElementLocated(By.CssSelector(".loading-image")));
         }
     }
 }

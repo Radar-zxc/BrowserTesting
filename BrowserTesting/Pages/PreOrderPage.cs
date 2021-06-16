@@ -25,6 +25,15 @@ namespace BrowserTesting
             popupList_Sort_Default = By.XPath($"//option[text()='{defaultSort}']");
         }
         /// <summary>
+        /// Метод, добавляющий заданный предмет в корзину
+        /// </summary>
+        public PreOrderPage AddItem(string item)
+        {
+            ClickOnElement(By.XPath($"//a[text()='{item}']//..//..//input"));
+            WaitLoadingCircle();
+            return this;
+        }
+        /// <summary>
         /// Метод получения целочисленного значения левой границы цены 
         /// </summary>
         private int GetPrice_From(string range)
