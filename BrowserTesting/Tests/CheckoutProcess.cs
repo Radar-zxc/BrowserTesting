@@ -31,10 +31,10 @@ namespace BrowserTesting
             checkout.CheckoutAsGuest()
                 .WriteBillingInfo()
                 .WriteShippingInfo()
-                .ChoosePayment("Cash On Delivery")
+                .ChooseShipping()
+                .ChoosePayment()
                 .PaymentInfonmation()
-                .ConfirmOrder()
-                .CheckConfirm();
+                .ConfirmOrder();
             explorer.OpenStartPage();
         }
     }
