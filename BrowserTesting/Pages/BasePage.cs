@@ -49,6 +49,28 @@ namespace BrowserTesting
             Driver.EFindElement(page).ESendKeys(Keys.Control + Keys.Shift + Keys.Enter);
         }
         /// <summary>
+        /// Переключение CheckBox в состояние Выбрано
+        /// </summary>
+        public void CheckBox_TurnOn(By checkBox)
+        {
+            IWebElement elem = Driver.EFindElement(checkBox);
+            if (!elem.Selected)
+            {
+                Driver.EClick(elem);
+            }
+        }
+        /// <summary>
+        /// Переключение CheckBox в состояние Не выбрано
+        /// </summary>
+        public void CheckBox_TurnOff(By checkBox)
+        {
+            IWebElement elem = Driver.EFindElement(checkBox);
+            if (elem.Selected)
+            {
+                Driver.EClick(elem);
+            }
+        }
+        /// <summary>
         /// Метод ожидания скрытия колеса загрузки на странице
         /// </summary>
         protected void WaitLoadingCircle()

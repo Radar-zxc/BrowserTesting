@@ -11,8 +11,7 @@ namespace BrowserTesting.Pages
     /// </summary>
     class PageExplorer : BasePage
     {
-        private IEnumerable<string> tabsList;
-        private List<string> tabsDescriptorList = new List<string>();
+        private List<string> tabsList;
         public PageExplorer(IWebDriver Driver):base(Driver)
         {
         }
@@ -52,6 +51,13 @@ namespace BrowserTesting.Pages
             ClickOnElement(cart);
         }
         /// <summary>
+        /// Метод открытия страницы Wishlist
+        /// </summary>
+        public void OpenWishlist()
+        {
+            ClickOnElement(By.CssSelector("a.ico-wishlist>span.cart-label"));
+        }
+        /// <summary>
         /// Метод открытия страницы товара из списка по заданому имени 
         /// </summary>
         public void GoToItemPage(string itemName)
@@ -62,20 +68,29 @@ namespace BrowserTesting.Pages
         /// <summary>
         /// Метод проверки перехода на страницу корзины 
         /// </summary>
-        public void CheckCartTravel(string url)
+        public void CheckCartTravel()
         {
-            UrlVerify(url);
+            UrlVerify(CartPage.cartUrl);
         }
         /// <summary>
         /// Метод открытия страницы в новой вкладке по заданному имени
         /// </summary>
         public void OpenPageInNewTab(string pageName)
         {
-            string path = $".top-menu a[href='/{ pageName}']";
-            By newPage = By.CssSelector(path);
-            if (tabsList == null)
+            By newPage = null;
+            if (Driver.FindElements(By.XPath($"//div[@class='header-links']//a[contains(@href,'{pageName}')]")).Count != 0)
             {
-                AddTabInDescriptorList();
+                newPage = By.XPath($"//div[@class='header-links']//a[contains(@href,'{pageName}')]");
+            }else if (Driver.FindElements(By.XPath($"//ul[@class='top-menu']//a[contains(@href,'{pageName}')]")).Count != 0)
+            {
+                newPage = By.XPath($"//ul[@class='top-menu']//a[contains(@href,'{pageName}')]");
+            }else if (Driver.FindElements(By.XPath($"//div[@class='center-1']//a[@class='{pageName}']")).Count != 0)
+            {
+                newPage = By.XPath($"//div[@class='center-1']//a[@class='{pageName}']");
+            }
+            else
+            {
+                throw new System.Exception($"Объект с именем {pageName} не найден на странице ");
             }
             OpenPageRef(newPage);
             RefreshTabsList();
@@ -88,21 +103,29 @@ namespace BrowserTesting.Pages
             {
                 Driver.Manage().Window.Size = new System.Drawing.Size(WindowOptions.Window_x, WindowOptions.Window_y);
             }
-            AddTabInDescriptorList();
         }
-        /// <summary>
-        /// Метод добавляющий новую открытую вкладку в список
-        /// </summary>
-        private void AddTabInDescriptorList()
+        public void OpenTopMenuInNewTab(string pageName)
         {
-            tabsDescriptorList.Add(Driver.CurrentWindowHandle);
+            string path = $"//div[@class='header-links']//a[contains(@href,'{pageName}')]";
+            By newPage = By.XPath(path);
+            OpenPageRef(newPage);
+            RefreshTabsList();
+            Driver.SwitchTo().Window(tabsList.Last());
+            if (WindowOptions.WindowAutoMaxSize)
+            {
+                Driver.Manage().Window.Maximize();
+            }
+            else
+            {
+                Driver.Manage().Window.Size = new System.Drawing.Size(WindowOptions.Window_x, WindowOptions.Window_y);
+            }
         }
         /// <summary>
         /// Метод обновляющий весь список открытых вкладок
         /// </summary>
         private void RefreshTabsList()
         {
-            tabsList = Driver.WindowHandles;
+            tabsList = Driver.WindowHandles.ToList();
         }
         /// <summary>
         /// Метод перехода на вкладку с заданной очередностью ее открытия
@@ -110,12 +133,12 @@ namespace BrowserTesting.Pages
         public void GoToTab(int tabNubmer)
         {
             RefreshTabsList();
-            Assert.IsTrue(tabNubmer < tabsDescriptorList.Count && tabNubmer >= 0,
+            Assert.IsTrue(tabNubmer < tabsList.Count && tabNubmer >= 0,
                 "Попытка обращения к вкладке, которая не могла существовать");
             bool found=false;
             foreach (string tab in tabsList)
             {
-                if (tab == tabsDescriptorList[tabNubmer])
+                if (tab == tabsList[tabNubmer])
                 {
                     Driver.SwitchTo().Window(tab);
                     Driver.EFindElement(By.CssSelector("body")).Click();
@@ -139,6 +162,41 @@ namespace BrowserTesting.Pages
         public void ContentVerify(string key)
         {
             Asserts.ContentVerify(Driver, key);
+        }
+        /// <summary>
+        /// Метод закрытия текущего окна браузера
+        /// </summary>
+        public void CloseCurrentWindow()
+        {
+            var lastActiveWindow = Driver.CurrentWindowHandle;
+            Driver.Close();
+            if (tabsList.Count == tabsList.IndexOf(lastActiveWindow) + 1)
+            {
+                Driver.SwitchTo().Window(tabsList[tabsList.IndexOf(lastActiveWindow) - 1]);
+            }
+            else
+            {
+                Driver.SwitchTo().Window(tabsList[tabsList.IndexOf(lastActiveWindow) + 1]);
+            }
+            tabsList.Remove(lastActiveWindow);
+        }
+        /// <summary>
+        /// Метод закрытия окна браузера по заданному номеру 
+        /// </summary>
+        public void CloseWindow(int number)
+        {
+            var lastActiveWindow = Driver.CurrentWindowHandle;
+            if (tabsList.IndexOf(lastActiveWindow) == number)
+            {
+                CloseCurrentWindow();
+            }
+            else
+            {
+                Driver.SwitchTo().Window(tabsList[number]);
+                Driver.Close();
+                tabsList.Remove(tabsList[number]);
+                Driver.SwitchTo().Window(lastActiveWindow);
+            }
         }
     }
 }

@@ -42,7 +42,7 @@ namespace BrowserTesting.Tests
                 order.AddItemToCart();
             }
             explorer.OpenCart();
-            explorer.CheckCartTravel(CartPage.cartUrl);
+            explorer.CheckCartTravel();
             for (int i=0; i<items.Length;i++)
             {
                 cart.CheckCartItem(items[i]);

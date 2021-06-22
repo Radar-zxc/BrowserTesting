@@ -52,6 +52,14 @@ namespace BrowserTesting
             WaitLoadingCircle();
         }
         /// <summary>
+        /// Метод добавления предмета в Wishlist
+        /// </summary>
+        public void AddItemToWishlist()
+        {
+            ClickOnElement(By.CssSelector(".add-to-wishlist-button"));
+            WaitLoadingCircle();
+        }
+        /// <summary>
         /// Метод определения основных локаторов на странице заказа
         /// </summary>
         public void CreatePage()

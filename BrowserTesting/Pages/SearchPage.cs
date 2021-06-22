@@ -61,28 +61,6 @@ namespace BrowserTesting.Pages
             return this;
         }
         /// <summary>
-        /// Переключение CheckBox в состояние Выбрано
-        /// </summary>
-        private void CheckBox_TurnOn(By checkBox)
-        {
-            IWebElement elem = Driver.EFindElement(checkBox);
-            if (!elem.Selected)
-            {
-                elem.Click();
-            }
-        }
-        /// <summary>
-        /// Переключение CheckBox в состояние Не выбрано
-        /// </summary>
-        private void CheckBox_TurnOff(By checkBox)
-        {
-            IWebElement elem = Driver.EFindElement(checkBox);
-            if (elem.Selected)
-            {
-                elem.Click();
-            }
-        }
-        /// <summary>
         /// Метод изменения цены в поле From на новую
         /// </summary>
         private void ChangePrice_From(int newPrice)

@@ -47,7 +47,7 @@ namespace BrowserTesting
             order.ChangeItemCount(60);
             order.AddItemToCart();
             explorer.OpenCart();
-            explorer.CheckCartTravel(CartPage.cartUrl);
+            explorer.CheckCartTravel();
             cart.CheckCartItem(item);
             cart.CheckPrice(item);
             cart.RemoveItem(item);

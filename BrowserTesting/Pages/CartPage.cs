@@ -1,6 +1,7 @@
 ﻿using System;
 using NUnit.Framework;
 using OpenQA.Selenium;
+using System.Linq;
 
 namespace BrowserTesting
 {
@@ -114,6 +115,17 @@ namespace BrowserTesting
         public void RemoveItem(string itemName)
         {
             ClickOnElement(SetRemoveButton(itemName));
+        }
+        /// <summary>
+        /// Метод активирования CheckBox remove у всех предметов в корзине
+        /// </summary>
+        public void RemoveAllItems()
+        {
+            var a = Driver.FindElements(By.Name("removefromcart"));
+            foreach (IWebElement i in a)
+            {
+                Driver.EClick(i);
+            }
         }
         /// <summary>
         /// Метод изменения количества предметов в корзине по заданному имени предмета
