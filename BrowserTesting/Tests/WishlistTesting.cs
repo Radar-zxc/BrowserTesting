@@ -80,7 +80,7 @@ namespace BrowserTesting.Tests
                 .CheckEmptyWishlist();
         }
         [AutomatedTest(7)]
-        [Test, Description("Simultaneous deletion and addition of item from Wishlist"), Order(6)]
+        [Test, Description("Simultaneous deletion and addition of item from Wishlist"), Order(5)]
         public void CheckDeleteAdd()
         {
             explorer.OpenPage("jewelry");
@@ -97,7 +97,7 @@ namespace BrowserTesting.Tests
             cart.UpdateCart();
         }
         [AutomatedTest(8)]
-        [Test, Description("Simultaneous deletion and addition of item from Wishlist in different tabs"), Order(5)]
+        [Test, Description("Simultaneous deletion and addition of item from Wishlist in different tabs"), Order(6)]
         public void CheckDeleteAdd_InDiffTabs()
         {
             explorer.OpenPage("jewelry");
