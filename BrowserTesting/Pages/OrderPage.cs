@@ -48,6 +48,7 @@ namespace BrowserTesting
         /// </summary>
         public void AddItemToCart()
         {
+            SetItemAddButton();
             ClickOnElement(itemAddButton);
             WaitLoadingCircle();
         }

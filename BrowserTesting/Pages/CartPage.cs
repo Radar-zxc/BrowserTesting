@@ -144,5 +144,27 @@ namespace BrowserTesting
             ClickOnElement(By.CssSelector("#termsofservice[type='checkbox']"));
             ClickOnElement(By.CssSelector("#checkout.button-1"));
         }
+        /// <summary>
+        /// Метод проверки соответствия информации у предмета, той, которая была введена при добавлении в корзину
+        /// </summary>
+        public void CheckCardInfo(GiftCardInputInfo info)
+        {
+            var note = Driver.FindElement(By.XPath("//tr[@class='cart-item-row']//a[text()='$25 Virtual Gift Card']/../..//div[@class='attributes']")).Text.Split("\r\n");
+            string sendName = note[0].Substring(note[0].IndexOf(' ')+1, note[0].IndexOf('<')- note[0].IndexOf(' ')-2);
+            string sendEmail = note[0].Substring(note[0].IndexOf('<')+1 , note[0].IndexOf('>') - note[0].IndexOf('<') - 1);
+            string recName = note[1].Substring(note[1].IndexOf(' ') + 1, note[1].IndexOf('<') - note[1].IndexOf(' ') - 2);
+            string recEmail = note[1].Substring(note[1].IndexOf('<') + 1, note[1].IndexOf('>') - note[1].IndexOf('<') - 1);
+            Assert.AreEqual(sendName,info.sendName);
+            Assert.AreEqual(sendEmail, info.sendEmail);
+            Assert.AreEqual(recName, info.recName);
+            Assert.AreEqual(recEmail,info.recEmail);
+        }
+        /// <summary>
+        /// Метод нажатия кнопки Edit для предмета с заданным именем 
+        /// </summary>
+        public void StartEditItem(string itemName)
+        {
+            ClickOnElement(By.XPath($"//tr[@class='cart-item-row']//a[contains(text(),'{itemName}')]//..//..//a[contains(text(),'Edit')]"));
+        }
     }
 }

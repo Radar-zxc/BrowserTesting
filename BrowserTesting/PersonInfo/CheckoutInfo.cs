@@ -5,7 +5,7 @@ using System.Text;
 namespace BrowserTesting
 {
     /// <summary>
-    /// Класс, хранящий входные данные для страницы Checkout
+    /// Класс, хранящий различные входные данные 
     /// </summary>
     public static class CheckoutInfo
     {
@@ -21,5 +21,7 @@ namespace BrowserTesting
         public static string paymentMethod = "Cash On Delivery (COD)";
         public static string shippingMethod = "Ground";
         public static bool inStorePickUp = true;
+        public static string validEmail1 = "lolalo@gmail.com";
+        public static string validComplexName = "Ivanov Ivan Ivanovich";
     }
 }
