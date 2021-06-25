@@ -8,6 +8,8 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{1B50111A-E0F3-44A5-AE78-C66B5A213C5A}"
 	ProjectSection(SolutionItems) = preProject
 		BrowserTesting\bin\Debug\netcoreapp3.0\Appsettings.json = BrowserTesting\bin\Debug\netcoreapp3.0\Appsettings.json
+		Report.html = Report.html
+		..\..\..\Downloads\Книга.xlsx = ..\..\..\Downloads\Книга.xlsx
 	EndProjectSection
 EndProject
 Global

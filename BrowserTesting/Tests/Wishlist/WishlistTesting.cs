@@ -1,6 +1,12 @@
 ﻿using NUnit.Framework;
 using BrowserTesting.Pages;
 using System;
+using AventStack.ExtentReports;
+using AventStack.ExtentReports.Reporter;
+using AventStack.ExtentReports.Reporter.Configuration;
+using OpenQA.Selenium.Interactions;
+using OpenQA.Selenium;
+using NUnit.Framework.Interfaces;
 
 namespace BrowserTesting.Tests.Wishlist
 {
@@ -12,6 +18,7 @@ namespace BrowserTesting.Tests.Wishlist
         protected CartPage cart;
         protected WishlistPage wishlist;
         protected string itemName;
+
         public WishlistTesting(string item1)
         {
             itemName = item1;
@@ -24,25 +31,29 @@ namespace BrowserTesting.Tests.Wishlist
         [OneTimeSetUp]
         public void Prepare()
         {
+
             explorer = new PageExplorer(Driver);
             order = new OrderPage(Driver);
             cart = new CartPage(Driver);
             wishlist = new WishlistPage(Driver);
         }
+
         [AutomatedTest(3)]
         [Test, Description("Add item to wishlist"), Order(0)]
         public void AddToWishlist()
         {
+            test = extent.CreateTest("Test-case №" + AutomatedTestAttribute.value + '\n' + DescriptionAttribute.value);
             explorer.OpenPage("jewelry");
             explorer.GoToItemPage(itemName);
             order.AddItemToWishlist();
             explorer.OpenWishlist();
             wishlist.CheckItem(itemName);
         }
-        [AutomatedTest(6)]
+        [AutomatedTest(6)][Ignore("test")]
         [Test, Description("Check item price in wishlist"), Order(1)]
         public void CalculatePrice()
         {
+            test = extent.CreateTest("Test-case №" + AutomatedTestAttribute.value + '\n' + DescriptionAttribute.value);
             wishlist.CheckPrice(itemName)
                 .ChangeCount(itemName, 10)
                 .UpdateWishlist()
@@ -52,6 +63,7 @@ namespace BrowserTesting.Tests.Wishlist
         [Test, Description("Check move item from Wishlist -> Cart"), Order(2)]
         public void CheckMoving()
         {
+            test = extent.CreateTest("Test-case №" + AutomatedTestAttribute.value + '\n' + DescriptionAttribute.value);
             wishlist.AddToCart_CheckBox_On(itemName)
                 .AddToCart();
             cart.CheckCartItem(itemName);
@@ -62,6 +74,7 @@ namespace BrowserTesting.Tests.Wishlist
         [Test, Description("Check delete item from Wishlist"), Order(3)]
         public void CheckDelete()
         {
+            test = extent.CreateTest("Test-case №" + AutomatedTestAttribute.value + '\n' + DescriptionAttribute.value);
             explorer.OpenPage("jewelry");
             explorer.GoToItemPage(itemName);
             order.AddItemToWishlist();

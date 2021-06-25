@@ -1,6 +1,11 @@
 ﻿using NUnit.Framework;
 using BrowserTesting.Pages;
 using System;
+using AventStack.ExtentReports;
+using NUnit.Framework.Interfaces;
+using System.Runtime.CompilerServices;
+using System.Threading;
+
 namespace BrowserTesting.Tests.Wishlist
 {
     [TestFixture("Black & White Diamond Heart")]
@@ -28,10 +33,11 @@ namespace BrowserTesting.Tests.Wishlist
         {
             itemName = item1;
         }
-        [AutomatedTest(7)]
+        [AutomatedTest(7)][MethodImpl(MethodImplOptions.Synchronized)]
         [Test, Description("Checking the simultaneous deletion and addition of an item to the cart from the Wishlist page via the CheckBox"), Order(0)]
         public void StartChecking()
         {
+            test = extent.CreateTest("Test-case №" + AutomatedTestAttribute.value + '\n' + DescriptionAttribute.value);
             explorer.OpenPage("jewelry");
             explorer.GoToItemPage(itemName);
             order.AddItemToWishlist();

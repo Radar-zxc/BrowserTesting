@@ -4,6 +4,11 @@ using OpenQA.Selenium;
 using System.IO;
 using Newtonsoft.Json;
 using BrowserTesting.Enums;
+using AventStack.ExtentReports;
+using AventStack.ExtentReports.Reporter;
+using AventStack.ExtentReports.Reporter.Configuration;
+using OpenQA.Selenium.Interactions;
+using NUnit.Framework.Interfaces;
 
 namespace BrowserTesting
 {
@@ -13,16 +18,25 @@ namespace BrowserTesting
     public class TestBase
     {
         protected IWebDriver Driver;
+        public static ExtentHtmlReporter htmlReporter;
+        public static ExtentReports extent;
+        public ExtentTest test;
         /// <summary>
         /// Метод получения информации из Json файла о том, какой драйвер будет использован для выполнения тестов
         /// </summary>
         [OneTimeSetUp]
         public void OpenBrowserWithJson()
         {
+            string reportFile = @"C:\Users\v.travin\Source\Repos\BrowserTesting\Report.html";
+            htmlReporter = new ExtentHtmlReporter(reportFile);
+            extent = new ExtentReports();
+            extent.AttachReporter(htmlReporter);
+            extent.AddSystemInfo("OS", "Windows");
             var jsonText = File.ReadAllText("Appsettings.json");
             var convertedBrowser = JsonConvert.DeserializeObject<Browser>(jsonText);
-            Browsers browser = (Browsers)Enum.Parse(typeof(Browsers),convertedBrowser.name);
-            switch (browser){
+            Browsers browser = (Browsers)Enum.Parse(typeof(Browsers), convertedBrowser.name);
+            switch (browser)
+            {
                 case Browsers.Firefox:
                     Driver = new OpenQA.Selenium.Firefox.FirefoxDriver();
                     break;
@@ -47,6 +61,34 @@ namespace BrowserTesting
                 Driver.Manage().Window.Size = new System.Drawing.Size(WindowOptions.Window_x, WindowOptions.Window_y);
             }
         }
+        [TearDown]
+        virtual public void LogTest()
+        {
+            var status = TestContext.CurrentContext.Result.Outcome.Status;
+            Status logStatus;
+            switch (status)
+            {
+                case TestStatus.Failed:
+                    logStatus = Status.Fail;
+                    break;
+                case TestStatus.Inconclusive:
+                    logStatus = Status.Warning;
+                    break;
+                case TestStatus.Skipped:
+                    logStatus = Status.Skip;
+                    break;
+                default:
+                    logStatus = Status.Pass;
+                    break;
+            }
+            test.Log(logStatus, "Test ended with " + logStatus + '\r' + '\n' + TestContext.CurrentContext.Result.StackTrace);
+            if (logStatus != Status.Pass)
+            {
+                test.Log(logStatus, TestContext.CurrentContext.Result.Message);
+            }
+            test.Info("Start time: " + test.Extent.ReportStartDateTime.ToString());
+            test.Info("End time: " + test.Extent.ReportEndDateTime.ToString());
+        }
         /// <summary>
         /// Метод открытия стартового сайта
         /// </summary>
@@ -61,6 +103,7 @@ namespace BrowserTesting
         [OneTimeTearDown]
         public void CloseBrowser()
         {
+            extent.Flush();
             Driver.Quit();
         }
     }

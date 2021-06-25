@@ -33,6 +33,7 @@ namespace BrowserTesting.Tests.Wishlist
         [Test, Description("Check Wishlist URL for sharing function"), Order(0)]
         public void StartChecking()
         {
+            test = extent.CreateTest("Test-case №" + AutomatedTestAttribute.value + '\n' + DescriptionAttribute.value);
             explorer.OpenPage("jewelry");
             explorer.GoToItemPage(itemName);
             order.AddItemToWishlist();

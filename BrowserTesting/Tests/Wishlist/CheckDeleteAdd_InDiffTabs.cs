@@ -33,6 +33,7 @@ namespace BrowserTesting.Tests.Wishlist
         [Test, Description("Removing one item from the Wishlist and adding it to Cart in different browser tabs"), Order(0)]
         public void StartChecking()
         {
+            test = extent.CreateTest("Test-case №" + AutomatedTestAttribute.value + '\n' + DescriptionAttribute.value);
             explorer.OpenPage("jewelry");
             explorer.GoToItemPage(itemName);
             order.AddItemToWishlist();
