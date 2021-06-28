@@ -7,6 +7,8 @@ using AventStack.ExtentReports.Reporter.Configuration;
 using OpenQA.Selenium.Interactions;
 using OpenQA.Selenium;
 using NUnit.Framework.Interfaces;
+using System.Diagnostics;
+using System.Runtime.CompilerServices;
 
 namespace BrowserTesting.Tests.Wishlist
 {
@@ -36,12 +38,35 @@ namespace BrowserTesting.Tests.Wishlist
             order = new OrderPage(Driver);
             cart = new CartPage(Driver);
             wishlist = new WishlistPage(Driver);
-        }
 
+        }
+        [OneTimeSetUp]
+        public void InitReport()
+        {
+            string className = (typeof(WishlistTesting).Name).ToString();
+            string pth = System.Reflection.Assembly.GetCallingAssembly().CodeBase;
+            string actualPath = pth.Substring(0, pth.LastIndexOf("bin"));
+            string projectPath = new Uri(actualPath).LocalPath;
+            string reportPath = projectPath + "Reports\\"+$"{className} {DateTime.Now.Date.ToShortDateString()}.html";
+            htmlReporter = new ExtentV3HtmlReporter(reportPath);
+            //htmlReporter = new ExtentV3HtmlReporter
+            //  (@"C:\Users\Family\Source\Repos\BrowserTesting\BrowserTesting\Reports\zxc.html");
+            extent = new ExtentReports();
+            extent.AttachReporter(htmlReporter);
+        }
         [AutomatedTest(3)]
         [Test, Description("Add item to wishlist"), Order(0)]
         public void AddToWishlist()
         {
+            //var stacktrace = new StackTrace();
+           // var prevframe = stacktrace.GetFrame(1);
+            //var method = prevframe.GetMethod();
+            //string a = method.ReflectedType.Name;
+            //string z = WishlistTesting.GetCallerName();
+            
+
+            //var b = GetCallerName();
+
             test = extent.CreateTest("Test-case №" + AutomatedTestAttribute.value + '\n' + DescriptionAttribute.value);
             explorer.OpenPage("jewelry");
             explorer.GoToItemPage(itemName);

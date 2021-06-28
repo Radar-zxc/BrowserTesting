@@ -7,8 +7,11 @@ using BrowserTesting.Enums;
 using AventStack.ExtentReports;
 using AventStack.ExtentReports.Reporter;
 using AventStack.ExtentReports.Reporter.Configuration;
+using AventStack.ExtentReports.Core;
+using AventStack.ExtentReports.Configuration;
 using OpenQA.Selenium.Interactions;
 using NUnit.Framework.Interfaces;
+using System.Diagnostics;
 
 namespace BrowserTesting
 {
@@ -18,7 +21,7 @@ namespace BrowserTesting
     public class TestBase
     {
         protected IWebDriver Driver;
-        public static ExtentHtmlReporter htmlReporter;
+        public static ExtentV3HtmlReporter htmlReporter;
         public static ExtentReports extent;
         public ExtentTest test;
         /// <summary>
@@ -27,11 +30,14 @@ namespace BrowserTesting
         [OneTimeSetUp]
         public void OpenBrowserWithJson()
         {
-            string reportFile = @"C:\Users\v.travin\Source\Repos\BrowserTesting\Report.html";
+            //string reportFile = @"C:\Users\v.travin\Source\Repos\BrowserTesting\Report.html";
+
+            /////
+            /*string reportFile = @"C:\Users\Family\Source\Repos\BrowserTesting\Aboba.html";
             htmlReporter = new ExtentHtmlReporter(reportFile);
             extent = new ExtentReports();
-            extent.AttachReporter(htmlReporter);
-            extent.AddSystemInfo("OS", "Windows");
+            extent.AttachReporter(htmlReporter);*/
+            //extent.AddSystemInfo("OS", "Windows");
             var jsonText = File.ReadAllText("Appsettings.json");
             var convertedBrowser = JsonConvert.DeserializeObject<Browser>(jsonText);
             Browsers browser = (Browsers)Enum.Parse(typeof(Browsers), convertedBrowser.name);
@@ -61,6 +67,7 @@ namespace BrowserTesting
                 Driver.Manage().Window.Size = new System.Drawing.Size(WindowOptions.Window_x, WindowOptions.Window_y);
             }
         }
+
         [TearDown]
         virtual public void LogTest()
         {
@@ -81,13 +88,32 @@ namespace BrowserTesting
                     logStatus = Status.Pass;
                     break;
             }
-            test.Log(logStatus, "Test ended with " + logStatus + '\r' + '\n' + TestContext.CurrentContext.Result.StackTrace);
+
+            //To take screenshot
+            Screenshot file = ((ITakesScreenshot)Driver).GetScreenshot();
+
+            //To save screenshot
+            file.SaveAsFile(@"C:\Users\Family\Source\Repos\BrowserTesting\BrowserTesting\Reports" + ".png", ScreenshotImageFormat.Png);
+
+            //To log screenshot
+            test.Info("Details", MediaEntityBuilder.CreateScreenCaptureFromPath(@"C:\Users\Family\Source\Repos\BrowserTesting\BrowserTesting\Reports" + ".png").Build());
+
+
+            //test.Log(logStatus, "Test ended with " + logStatus + '\r' + '\n' + TestContext.CurrentContext.Result.StackTrace);
+            
+            //test.Fail("details", MediaEntityBuilder.CreateScreenCaptureFromPath("screenshot.png").Build());
+            //test.Fail("details",
+   // MediaEntityBuilder.CreateScreenCaptureFromBase64String("base64String").Build());
+            // test with snapshot
+            //test.AddScreenCaptureFromPath("screenshot.png");
+
+
             if (logStatus != Status.Pass)
             {
                 test.Log(logStatus, TestContext.CurrentContext.Result.Message);
             }
-            test.Info("Start time: " + test.Extent.ReportStartDateTime.ToString());
-            test.Info("End time: " + test.Extent.ReportEndDateTime.ToString());
+            //test.Info("Start time: " + test.Extent.ReportStartDateTime.ToString());
+           // test.Info("End time: " + test.Extent.ReportEndDateTime.ToString());
         }
         /// <summary>
         /// Метод открытия стартового сайта
