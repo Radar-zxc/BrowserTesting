@@ -13,7 +13,7 @@ using OpenQA.Selenium.Interactions;
 using NUnit.Framework.Interfaces;
 using System.Diagnostics;
 using Microsoft.Office.Interop.Excel;
-
+using System.Drawing;
 
 namespace BrowserTesting
 {
@@ -71,11 +71,7 @@ namespace BrowserTesting
             string actualPath = pth.Substring(0, pth.LastIndexOf("bin"));
             string projectPath = new Uri(actualPath).LocalPath;
             string reportPath = projectPath + "Reports\\" + $"{className} {DateTime.Now.Date.ToShortDateString()}.html";
-            //using (StreamWriter writer = File.AppendText(reportPath))
-            //file = new StreamWriter(reportPath, true);
-            // writer.WriteLine("line");
             htmlReporter = new ExtentV3HtmlReporter(reportPath);
-            //extent = new ExtentReports();
             extent.AttachReporter(htmlReporter);
         }
         [TearDown]
@@ -95,8 +91,11 @@ namespace BrowserTesting
                 test.Log(Status.Fail, "Test ended with " + Status.Fail + '\r' + '\n' + TestContext.CurrentContext.Result.StackTrace);
                 //test.Fail("Fail screenshot: ",
                 //MediaEntityBuilder.CreateScreenCaptureFromPath(screenshotName).Build());
-                test.Log(Status.Fail, "details",
-                    MediaEntityBuilder.CreateScreenCaptureFromBase64String("base64String").Build());
+
+                Screenshot screenshot = (Driver as ITakesScreenshot).GetScreenshot();
+                string a = screenshot.AsBase64EncodedString;
+                test.Log(Status.Fail, "Fail screenshot",
+                    MediaEntityBuilder.CreateScreenCaptureFromBase64String(a).Build());  
             }
         }
         /// <summary>
@@ -143,9 +142,6 @@ namespace BrowserTesting
         [OneTimeTearDown]
         public void CloseBrowser()
         {
-            //file.Write(extent);
-            //file.Close();
-            //extent.Flush();
             Driver.Quit();
         }
     }

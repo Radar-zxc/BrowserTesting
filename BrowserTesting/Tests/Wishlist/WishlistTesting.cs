@@ -10,7 +10,7 @@ using NUnit.Framework.Interfaces;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 
-namespace BrowserTesting
+namespace BrowserTesting.Wishlist
 {
     [TestFixture ("Black & White Diamond Heart")]
     class WishlistTesting : TestBase

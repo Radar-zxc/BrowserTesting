@@ -8,7 +8,7 @@ using System.Threading;
 using AventStack.ExtentReports.Reporter;
 using OpenQA.Selenium;
 
-namespace BrowserTesting
+namespace BrowserTesting.Wishlist
 {
     [TestFixture("Black & White Diamond Heart")]
     class CheckDeleteAdd :TestBase

@@ -6,7 +6,7 @@ using AventStack.ExtentReports.Reporter;
 using NUnit.Framework.Interfaces;
 using OpenQA.Selenium;
 
-namespace BrowserTesting
+namespace BrowserTesting.Wishlist
 {
     [TestFixture("Black & White Diamond Heart")]
     class CheckDeleteAdd_InDiffTabs : TestBase

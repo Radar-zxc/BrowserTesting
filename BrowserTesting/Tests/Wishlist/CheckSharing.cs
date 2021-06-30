@@ -6,7 +6,7 @@ using AventStack.ExtentReports;
 using OpenQA.Selenium;
 using NUnit.Framework.Interfaces;
 
-namespace BrowserTesting
+namespace BrowserTesting.Wishlist
 {
     [TestFixture("Black & White Diamond Heart")]
     class CheckSharing :TestBase
