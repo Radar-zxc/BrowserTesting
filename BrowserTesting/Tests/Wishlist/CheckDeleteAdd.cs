@@ -6,6 +6,7 @@ using NUnit.Framework.Interfaces;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using AventStack.ExtentReports.Reporter;
+using OpenQA.Selenium;
 
 namespace BrowserTesting.Tests.Wishlist
 {
@@ -37,18 +38,35 @@ namespace BrowserTesting.Tests.Wishlist
         [OneTimeSetUp]
         public void InitReport()
         {
-            string className = (typeof(WishlistTesting).Name).ToString();
+            string className = (typeof(CheckDeleteAdd).Name).ToString();
             string pth = System.Reflection.Assembly.GetCallingAssembly().CodeBase;
             string actualPath = pth.Substring(0, pth.LastIndexOf("bin"));
             string projectPath = new Uri(actualPath).LocalPath;
             string reportPath = projectPath + "Reports\\" + $"{className} {DateTime.Now.Date.ToShortDateString()}.html";
             htmlReporter = new ExtentV3HtmlReporter(reportPath);
-            //htmlReporter = new ExtentV3HtmlReporter
-            //  (@"C:\Users\Family\Source\Repos\BrowserTesting\BrowserTesting\Reports\zxc.html");
             extent = new ExtentReports();
             extent.AttachReporter(htmlReporter);
         }
-        [AutomatedTest(7)][MethodImpl(MethodImplOptions.Synchronized)]
+        [TearDown]
+        public void GetScreenshotWhenFail()
+        {
+            var status = TestContext.CurrentContext.Result.Outcome.Status;
+            if (status == TestStatus.Failed)
+            {
+                string className = (typeof(CheckDeleteAdd).Name).ToString();
+                string pth = System.Reflection.Assembly.GetCallingAssembly().CodeBase;
+                string actualPath = pth.Substring(0, pth.LastIndexOf("bin"));
+                string projectPath = new Uri(actualPath).LocalPath;
+                string screenshotName = $"{className} {DateTime.Now.Date.ToShortDateString()}.png";
+                string screenshotPath = projectPath + "Reports\\" + screenshotName;
+                Screenshot file = ((ITakesScreenshot)Driver).GetScreenshot();
+                file.SaveAsFile(screenshotPath, ScreenshotImageFormat.Png);
+                test.Log(Status.Fail, "Test ended with " + Status.Fail + '\r' + '\n' + TestContext.CurrentContext.Result.StackTrace);
+                test.Fail("Fail screenshot: ",
+                MediaEntityBuilder.CreateScreenCaptureFromPath(screenshotName).Build());
+            }
+        }
+        [AutomatedTest(7)]
         [Test, Description("Checking the simultaneous deletion and addition of an item to the cart from the Wishlist page via the CheckBox"), Order(0)]
         public void StartChecking()
         {

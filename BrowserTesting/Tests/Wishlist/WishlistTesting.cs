@@ -33,12 +33,10 @@ namespace BrowserTesting.Tests.Wishlist
         [OneTimeSetUp]
         public void Prepare()
         {
-
             explorer = new PageExplorer(Driver);
             order = new OrderPage(Driver);
             cart = new CartPage(Driver);
             wishlist = new WishlistPage(Driver);
-
         }
         [OneTimeSetUp]
         public void InitReport()
@@ -49,24 +47,32 @@ namespace BrowserTesting.Tests.Wishlist
             string projectPath = new Uri(actualPath).LocalPath;
             string reportPath = projectPath + "Reports\\"+$"{className} {DateTime.Now.Date.ToShortDateString()}.html";
             htmlReporter = new ExtentV3HtmlReporter(reportPath);
-            //htmlReporter = new ExtentV3HtmlReporter
-            //  (@"C:\Users\Family\Source\Repos\BrowserTesting\BrowserTesting\Reports\zxc.html");
             extent = new ExtentReports();
             extent.AttachReporter(htmlReporter);
+        }
+        [TearDown]
+        public void GetScreenshotWhenFail()
+        {
+            var status = TestContext.CurrentContext.Result.Outcome.Status;
+            if (status == TestStatus.Failed)
+            {
+                string className = (typeof(WishlistTesting).Name).ToString();
+                string pth = System.Reflection.Assembly.GetCallingAssembly().CodeBase;
+                string actualPath = pth.Substring(0, pth.LastIndexOf("bin"));
+                string projectPath = new Uri(actualPath).LocalPath;
+                string screenshotName = $"{className} {DateTime.Now.Date.ToShortDateString()}.png";
+                string screenshotPath = projectPath + "Reports\\" + screenshotName;
+                Screenshot file = ((ITakesScreenshot)Driver).GetScreenshot();
+                file.SaveAsFile(screenshotPath, ScreenshotImageFormat.Png);
+                test.Log(Status.Fail, "Test ended with " + Status.Fail + '\r' + '\n' + TestContext.CurrentContext.Result.StackTrace);
+                test.Fail("Fail screenshot: ",
+                MediaEntityBuilder.CreateScreenCaptureFromPath(screenshotName).Build());
+            }
         }
         [AutomatedTest(3)]
         [Test, Description("Add item to wishlist"), Order(0)]
         public void AddToWishlist()
         {
-            //var stacktrace = new StackTrace();
-           // var prevframe = stacktrace.GetFrame(1);
-            //var method = prevframe.GetMethod();
-            //string a = method.ReflectedType.Name;
-            //string z = WishlistTesting.GetCallerName();
-            
-
-            //var b = GetCallerName();
-
             test = extent.CreateTest("Test-case №" + AutomatedTestAttribute.value + '\n' + DescriptionAttribute.value);
             explorer.OpenPage("jewelry");
             explorer.GoToItemPage(itemName);
@@ -74,11 +80,12 @@ namespace BrowserTesting.Tests.Wishlist
             explorer.OpenWishlist();
             wishlist.CheckItem(itemName);
         }
-        [AutomatedTest(6)][Ignore("test")]
+        [AutomatedTest(6)]
         [Test, Description("Check item price in wishlist"), Order(1)]
         public void CalculatePrice()
-        {
+        {  
             test = extent.CreateTest("Test-case №" + AutomatedTestAttribute.value + '\n' + DescriptionAttribute.value);
+            Assert.Ignore("Check ignore in report");
             wishlist.CheckPrice(itemName)
                 .ChangeCount(itemName, 10)
                 .UpdateWishlist()
