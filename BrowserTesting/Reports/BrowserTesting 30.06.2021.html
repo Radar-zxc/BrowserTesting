@@ -42,7 +42,7 @@
 		<span class='report-name'></span>
 		<span class='report-headline'></span>
 		<ul id='nav-mobile' class='right hide-on-med-and-down nav-right'>
-			<a href='#!'><span class='label blue darken-3 suite-start-time'>30.06.2021 9:55:33</span></a>
+			<a href='#!'><span class='label blue darken-3 suite-start-time'>30.06.2021 13:31:43</span></a>
 		</ul>
 	</div>
 </nav>
@@ -59,7 +59,8 @@
 				</a>
 				<ul id='tests-toggle' class='dropdown-content'>
 					<li status='pass'><a href='#!'>Pass <i class='material-icons green-text'>check_circle</i></a></li>
-																														<li status='skip'><a href='#!'>Skip <i class='material-icons cyan-text'>redo</i></a></li>
+															<li status='fail'><a href='#!'>Fail <i class='material-icons red-text'>cancel</i></a></li>
+																				<li status='skip'><a href='#!'>Skip <i class='material-icons cyan-text'>redo</i></a></li>
 					<li class='divider'></li>
 					<li status='clear' clear='true'><a href='#!'>Clear Filters <i class='material-icons'>clear</i></a></li>
 				</ul>
@@ -104,11 +105,11 @@
                     <canvas id='parent-analysis' width='90' height='80'></canvas>
                 </div>
                 <div class='block text-small'>
-                    <span class='tooltipped' data-position='top' data-tooltip='75%'><span class='strong'>3</span> tests passed</span>
+                    <span class='tooltipped' data-position='top' data-tooltip='50%'><span class='strong'>3</span> tests passed</span>
                 </div>
                 <div class='block text-small'>
-                    <span class='tooltipped' data-position='top' data-tooltip='0%'><span class='strong'>0</span> failed,</span>
-					<span class='tooltipped' data-position='top' data-tooltip='25%'><span class='strong'>1</span> skipped, </span>
+                    <span class='tooltipped' data-position='top' data-tooltip='33,33333333333333%'><span class='strong'>2</span> failed,</span>
+					<span class='tooltipped' data-position='top' data-tooltip='16,666666666666664%'><span class='strong'>1</span> skipped, </span>
 					<span class='tooltipped' data-position='top' data-tooltip='0%'><span class='strong'>0</span> others</span>
                 </div>
             </div>
@@ -118,18 +119,165 @@
 	<div class='subview-left left'>
 		<div class='view-summary'>
 			<ul id='test-collection' class='test-collection'>
-				<li class='test displayed active  pass' status='pass' test-id='4'>
+				<li class='test displayed active  fail' status='fail' test-id='1'>
+					<div class='test-heading'>
+						<span class='test-name'>Test-case №7
+Checking the simultaneous deletion and addition of an item to the cart from the Wishlist page via the CheckBox</span>
+						<span class='test-time'>30.06.2021 13:31:02</span>
+						<span class='test-status right fail'>Fail</span>
+					</div>
+					<div class='test-content hide'>
+						<div class='test-time-info'>
+							<span class='label start-time'>30.06.2021 13:31:02</span>
+							<span class='label end-time'>30.06.2021 13:31:10</span>
+							<span class='label time-taken grey lighten-1 white-text'>0h:0m:7s.333ms</span>
+						</div>
+							<div class='test-steps'>
+								<table class='bordered table-results'>
+									<thead>
+										<tr>
+											<th>Status</th>
+											<th>Timestamp</th>
+											<th>Details</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr class='log' status='fail'>
+											<td class='status fail' title='Fail' alt='Fail'>
+												<i class='material-icons'>cancel</i>
+											</td>
+											<td class='timestamp'>13:31:09</td>
+											<td class='step-details'>
+System.Exception : Искомый элемент отсутствует на странице 
+ no such element: Unable to locate element: {"method":"xpath","selector":"//tr[@class='cart-item-row']//td[@class='product']//a[text()='Black & White Diamond Heart']"}
+  (Session info: chrome=91.0.4472.114)																							</td>
+										</tr>
+										<tr class='log' status='info'>
+											<td class='status info' title='Info' alt='Info'>
+												<i class='material-icons'>info_outline</i>
+											</td>
+											<td class='timestamp'>13:31:09</td>
+											<td class='step-details'>
+Start time: 30.06.2021 13:31:00																							</td>
+										</tr>
+										<tr class='log' status='info'>
+											<td class='status info' title='Info' alt='Info'>
+												<i class='material-icons'>info_outline</i>
+											</td>
+											<td class='timestamp'>13:31:09</td>
+											<td class='step-details'>
+End time: 30.06.2021 13:31:09																							</td>
+										</tr>
+										<tr class='log' status='fail'>
+											<td class='status fail' title='Fail' alt='Fail'>
+												<i class='material-icons'>cancel</i>
+											</td>
+											<td class='timestamp'>13:31:10</td>
+											<td class='step-details'>
+Test ended with Fail
+   at BrowserTesting.Extensions.EFindElement(IWebDriver Driver, By elem) in C:\Users\v.travin\Source\Repos\BrowserTesting\BrowserTesting\Extensions.cs:line 30
+   at BrowserTesting.CartPage.CheckCartItem(String itemName) in C:\Users\v.travin\Source\Repos\BrowserTesting\BrowserTesting\Pages\CartPage.cs:line 80
+   at BrowserTesting.CheckDeleteAdd.StartChecking() in C:\Users\v.travin\Source\Repos\BrowserTesting\BrowserTesting\Tests\Wishlist\CheckDeleteAdd.cs:line 83																							</td>
+										</tr>
+										<tr class='log' status='fail'>
+											<td class='status fail' title='Fail' alt='Fail'>
+												<i class='material-icons'>cancel</i>
+											</td>
+											<td class='timestamp'>13:31:10</td>
+											<td class='step-details'>
+details												<a href='data:image/png;base64,base64String' data-featherlight='image'><span class='label grey badge white-text text-white'>base64-img</span></a>											</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+					</div>
+				</li>
+				<li class='test displayed active  fail' status='fail' test-id='2'>
+					<div class='test-heading'>
+						<span class='test-name'>Test-case №8
+Removing one item from the Wishlist and adding it to Cart in different browser tabs</span>
+						<span class='test-time'>30.06.2021 13:31:15</span>
+						<span class='test-status right fail'>Fail</span>
+					</div>
+					<div class='test-content hide'>
+						<div class='test-time-info'>
+							<span class='label start-time'>30.06.2021 13:31:15</span>
+							<span class='label end-time'>30.06.2021 13:31:23</span>
+							<span class='label time-taken grey lighten-1 white-text'>0h:0m:7s.347ms</span>
+						</div>
+							<div class='test-steps'>
+								<table class='bordered table-results'>
+									<thead>
+										<tr>
+											<th>Status</th>
+											<th>Timestamp</th>
+											<th>Details</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr class='log' status='fail'>
+											<td class='status fail' title='Fail' alt='Fail'>
+												<i class='material-icons'>cancel</i>
+											</td>
+											<td class='timestamp'>13:31:22</td>
+											<td class='step-details'>
+Неверный Url после перехода на страницу
+  Expected: True
+  But was:  False																							</td>
+										</tr>
+										<tr class='log' status='info'>
+											<td class='status info' title='Info' alt='Info'>
+												<i class='material-icons'>info_outline</i>
+											</td>
+											<td class='timestamp'>13:31:22</td>
+											<td class='step-details'>
+Start time: 30.06.2021 13:31:00																							</td>
+										</tr>
+										<tr class='log' status='info'>
+											<td class='status info' title='Info' alt='Info'>
+												<i class='material-icons'>info_outline</i>
+											</td>
+											<td class='timestamp'>13:31:22</td>
+											<td class='step-details'>
+End time: 30.06.2021 13:31:22																							</td>
+										</tr>
+										<tr class='log' status='fail'>
+											<td class='status fail' title='Fail' alt='Fail'>
+												<i class='material-icons'>cancel</i>
+											</td>
+											<td class='timestamp'>13:31:23</td>
+											<td class='step-details'>
+Test ended with Fail
+   at BrowserTesting.Asserts.UrlVerify(IWebDriver Driver, String necessaryUrl) in C:\Users\v.travin\Source\Repos\BrowserTesting\BrowserTesting\Asserts.cs:line 15
+   at BrowserTesting.Pages.PageExplorer.UrlVerify(String necessaryUrl) in C:\Users\v.travin\Source\Repos\BrowserTesting\BrowserTesting\Pages\PageExplorer.cs:line 157
+   at BrowserTesting.Pages.PageExplorer.CheckCartTravel() in C:\Users\v.travin\Source\Repos\BrowserTesting\BrowserTesting\Pages\PageExplorer.cs:line 73
+   at BrowserTesting.CheckDeleteAdd_InDiffTabs.StartChecking() in C:\Users\v.travin\Source\Repos\BrowserTesting\BrowserTesting\Tests\Wishlist\CheckDeleteAdd_InDiffTabs.cs:line 83																							</td>
+										</tr>
+										<tr class='log' status='fail'>
+											<td class='status fail' title='Fail' alt='Fail'>
+												<i class='material-icons'>cancel</i>
+											</td>
+											<td class='timestamp'>13:31:23</td>
+											<td class='step-details'>
+details												<a href='data:image/png;base64,base64String' data-featherlight='image'><span class='label grey badge white-text text-white'>base64-img</span></a>											</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+					</div>
+				</li>
+				<li class='test displayed active  pass' status='pass' test-id='3'>
 					<div class='test-heading'>
 						<span class='test-name'>Test-case №3
 Add item to wishlist</span>
-						<span class='test-time'>30.06.2021 9:55:33</span>
+						<span class='test-time'>30.06.2021 13:31:29</span>
 						<span class='test-status right pass'>Pass</span>
 					</div>
 					<div class='test-content hide'>
 						<div class='test-time-info'>
-							<span class='label start-time'>30.06.2021 9:55:33</span>
-							<span class='label end-time'>30.06.2021 9:55:38</span>
-							<span class='label time-taken grey lighten-1 white-text'>0h:0m:4s.920ms</span>
+							<span class='label start-time'>30.06.2021 13:31:29</span>
+							<span class='label end-time'>30.06.2021 13:31:33</span>
+							<span class='label time-taken grey lighten-1 white-text'>0h:0m:4s.557ms</span>
 						</div>
 							<div class='test-steps'>
 								<table class='bordered table-results'>
@@ -145,34 +293,34 @@ Add item to wishlist</span>
 											<td class='status info' title='Info' alt='Info'>
 												<i class='material-icons'>info_outline</i>
 											</td>
-											<td class='timestamp'>09:55:38</td>
+											<td class='timestamp'>13:31:33</td>
 											<td class='step-details'>
-Start time: 30.06.2021 9:55:33																							</td>
+Start time: 30.06.2021 13:31:00																							</td>
 										</tr>
 										<tr class='log' status='info'>
 											<td class='status info' title='Info' alt='Info'>
 												<i class='material-icons'>info_outline</i>
 											</td>
-											<td class='timestamp'>09:55:38</td>
+											<td class='timestamp'>13:31:33</td>
 											<td class='step-details'>
-End time: 30.06.2021 9:55:38																							</td>
+End time: 30.06.2021 13:31:33																							</td>
 										</tr>
 									</tbody>
 								</table>
 							</div>
 					</div>
 				</li>
-				<li class='test displayed active  skip' status='skip' test-id='5'>
+				<li class='test displayed active  skip' status='skip' test-id='4'>
 					<div class='test-heading'>
 						<span class='test-name'>Test-case №6
 Check item price in wishlist</span>
-						<span class='test-time'>30.06.2021 9:55:38</span>
+						<span class='test-time'>30.06.2021 13:31:33</span>
 						<span class='test-status right skip'>Skip</span>
 					</div>
 					<div class='test-content hide'>
 						<div class='test-time-info'>
-							<span class='label start-time'>30.06.2021 9:55:38</span>
-							<span class='label end-time'>30.06.2021 9:55:38</span>
+							<span class='label start-time'>30.06.2021 13:31:33</span>
+							<span class='label end-time'>30.06.2021 13:31:33</span>
 							<span class='label time-taken grey lighten-1 white-text'>0h:0m:0s.003ms</span>
 						</div>
 							<div class='test-steps'>
@@ -189,7 +337,7 @@ Check item price in wishlist</span>
 											<td class='status skip' title='Skip' alt='Skip'>
 												<i class='material-icons'>redo</i>
 											</td>
-											<td class='timestamp'>09:55:38</td>
+											<td class='timestamp'>13:31:33</td>
 											<td class='step-details'>
 Check ignore in report																							</td>
 										</tr>
@@ -197,17 +345,61 @@ Check ignore in report																							</td>
 											<td class='status info' title='Info' alt='Info'>
 												<i class='material-icons'>info_outline</i>
 											</td>
-											<td class='timestamp'>09:55:38</td>
+											<td class='timestamp'>13:31:33</td>
 											<td class='step-details'>
-Start time: 30.06.2021 9:55:33																							</td>
+Start time: 30.06.2021 13:31:00																							</td>
 										</tr>
 										<tr class='log' status='info'>
 											<td class='status info' title='Info' alt='Info'>
 												<i class='material-icons'>info_outline</i>
 											</td>
-											<td class='timestamp'>09:55:38</td>
+											<td class='timestamp'>13:31:33</td>
 											<td class='step-details'>
-End time: 30.06.2021 9:55:38																							</td>
+End time: 30.06.2021 13:31:33																							</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+					</div>
+				</li>
+				<li class='test displayed active  pass' status='pass' test-id='5'>
+					<div class='test-heading'>
+						<span class='test-name'>Test-case №4
+Check move item from Wishlist -> Cart</span>
+						<span class='test-time'>30.06.2021 13:31:33</span>
+						<span class='test-status right pass'>Pass</span>
+					</div>
+					<div class='test-content hide'>
+						<div class='test-time-info'>
+							<span class='label start-time'>30.06.2021 13:31:33</span>
+							<span class='label end-time'>30.06.2021 13:31:35</span>
+							<span class='label time-taken grey lighten-1 white-text'>0h:0m:1s.912ms</span>
+						</div>
+							<div class='test-steps'>
+								<table class='bordered table-results'>
+									<thead>
+										<tr>
+											<th>Status</th>
+											<th>Timestamp</th>
+											<th>Details</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr class='log' status='info'>
+											<td class='status info' title='Info' alt='Info'>
+												<i class='material-icons'>info_outline</i>
+											</td>
+											<td class='timestamp'>13:31:35</td>
+											<td class='step-details'>
+Start time: 30.06.2021 13:31:00																							</td>
+										</tr>
+										<tr class='log' status='info'>
+											<td class='status info' title='Info' alt='Info'>
+												<i class='material-icons'>info_outline</i>
+											</td>
+											<td class='timestamp'>13:31:35</td>
+											<td class='step-details'>
+End time: 30.06.2021 13:31:35																							</td>
 										</tr>
 									</tbody>
 								</table>
@@ -216,60 +408,16 @@ End time: 30.06.2021 9:55:38																							</td>
 				</li>
 				<li class='test displayed active  pass' status='pass' test-id='6'>
 					<div class='test-heading'>
-						<span class='test-name'>Test-case №4
-Check move item from Wishlist -> Cart</span>
-						<span class='test-time'>30.06.2021 9:55:38</span>
-						<span class='test-status right pass'>Pass</span>
-					</div>
-					<div class='test-content hide'>
-						<div class='test-time-info'>
-							<span class='label start-time'>30.06.2021 9:55:38</span>
-							<span class='label end-time'>30.06.2021 9:55:40</span>
-							<span class='label time-taken grey lighten-1 white-text'>0h:0m:1s.861ms</span>
-						</div>
-							<div class='test-steps'>
-								<table class='bordered table-results'>
-									<thead>
-										<tr>
-											<th>Status</th>
-											<th>Timestamp</th>
-											<th>Details</th>
-										</tr>
-									</thead>
-									<tbody>
-										<tr class='log' status='info'>
-											<td class='status info' title='Info' alt='Info'>
-												<i class='material-icons'>info_outline</i>
-											</td>
-											<td class='timestamp'>09:55:40</td>
-											<td class='step-details'>
-Start time: 30.06.2021 9:55:33																							</td>
-										</tr>
-										<tr class='log' status='info'>
-											<td class='status info' title='Info' alt='Info'>
-												<i class='material-icons'>info_outline</i>
-											</td>
-											<td class='timestamp'>09:55:40</td>
-											<td class='step-details'>
-End time: 30.06.2021 9:55:40																							</td>
-										</tr>
-									</tbody>
-								</table>
-							</div>
-					</div>
-				</li>
-				<li class='test displayed active  pass' status='pass' test-id='7'>
-					<div class='test-heading'>
 						<span class='test-name'>Test-case №5
 Check delete item from Wishlist</span>
-						<span class='test-time'>30.06.2021 9:55:40</span>
+						<span class='test-time'>30.06.2021 13:31:35</span>
 						<span class='test-status right pass'>Pass</span>
 					</div>
 					<div class='test-content hide'>
 						<div class='test-time-info'>
-							<span class='label start-time'>30.06.2021 9:55:40</span>
-							<span class='label end-time'>30.06.2021 9:55:45</span>
-							<span class='label time-taken grey lighten-1 white-text'>0h:0m:5s.078ms</span>
+							<span class='label start-time'>30.06.2021 13:31:35</span>
+							<span class='label end-time'>30.06.2021 13:31:40</span>
+							<span class='label time-taken grey lighten-1 white-text'>0h:0m:5s.087ms</span>
 						</div>
 							<div class='test-steps'>
 								<table class='bordered table-results'>
@@ -285,17 +433,17 @@ Check delete item from Wishlist</span>
 											<td class='status info' title='Info' alt='Info'>
 												<i class='material-icons'>info_outline</i>
 											</td>
-											<td class='timestamp'>09:55:45</td>
+											<td class='timestamp'>13:31:40</td>
 											<td class='step-details'>
-Start time: 30.06.2021 9:55:33																							</td>
+Start time: 30.06.2021 13:31:00																							</td>
 										</tr>
 										<tr class='log' status='info'>
 											<td class='status info' title='Info' alt='Info'>
 												<i class='material-icons'>info_outline</i>
 											</td>
-											<td class='timestamp'>09:55:45</td>
+											<td class='timestamp'>13:31:40</td>
 											<td class='step-details'>
-End time: 30.06.2021 9:55:45																							</td>
+End time: 30.06.2021 13:31:40																							</td>
 										</tr>
 									</tbody>
 								</table>
@@ -339,7 +487,7 @@ End time: 30.06.2021 9:55:45																							</td>
 			<div class='col s2'>
 				<div class='card-panel r'>
           Tests
-          <div class='panel-lead'>4</div>
+          <div class='panel-lead'>6</div>
 				</div>
 			</div>
 			<div class='col s2'>
@@ -351,19 +499,19 @@ End time: 30.06.2021 9:55:45																							</td>
 			<div class='col s2'>
 				<div class='card-panel r'>
 					Start
-					<div class='panel-lead'>30.06.2021 9:55:33</div>
+					<div class='panel-lead'>30.06.2021 13:31:43</div>
 				</div>
 			</div>
 			<div class='col s2'>
 				<div class='card-panel r'>
 			 		End
-			 		<div class='panel-lead'>30.06.2021 9:55:45</div>
+			 		<div class='panel-lead'>30.06.2021 13:31:56</div>
 				</div>
 			</div>
 			<div class='col s2'>
 				<div class='card-panel r'>
 					Time Taken
-					<div class='panel-lead'>00:00:11.8825284</div>
+					<div class='panel-lead'>00:00:12.5139260</div>
 				</div>
 			</div>
 					</div>
@@ -376,14 +524,14 @@ End time: 30.06.2021 9:55:45																							</td>
 		<!-- container -->
 		<script>
 			var statusGroup = {
-                parentCount: 4,
+                parentCount: 6,
 				passParent: 3,
-				failParent: 0,
+				failParent: 2,
 				fatalParent: 0,
 				errorParent: 0,
 				warningParent: 0,
 				skipParent: 1,
-				exceptionsParent: 1,
+				exceptionsParent: 3,
 				childCount: 0,
 				passChild: 0,
 				failChild: 0,

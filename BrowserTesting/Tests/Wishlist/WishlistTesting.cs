@@ -10,7 +10,7 @@ using NUnit.Framework.Interfaces;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 
-namespace BrowserTesting.Tests.Wishlist
+namespace BrowserTesting
 {
     [TestFixture ("Black & White Diamond Heart")]
     class WishlistTesting : TestBase
@@ -37,7 +37,7 @@ namespace BrowserTesting.Tests.Wishlist
             order = new OrderPage(Driver);
             cart = new CartPage(Driver);
             wishlist = new WishlistPage(Driver);
-        }
+        }/*
         [OneTimeSetUp]
         public void InitReport()
         {
@@ -68,7 +68,7 @@ namespace BrowserTesting.Tests.Wishlist
                 test.Fail("Fail screenshot: ",
                 MediaEntityBuilder.CreateScreenCaptureFromPath(screenshotName).Build());
             }
-        }
+        }*/
         [AutomatedTest(3)]
         [Test, Description("Add item to wishlist"), Order(0)]
         public void AddToWishlist()

@@ -6,7 +6,7 @@ using AventStack.ExtentReports.Reporter;
 using NUnit.Framework.Interfaces;
 using OpenQA.Selenium;
 
-namespace BrowserTesting.Tests.Wishlist
+namespace BrowserTesting
 {
     [TestFixture("Black & White Diamond Heart")]
     class CheckDeleteAdd_InDiffTabs : TestBase
@@ -20,7 +20,7 @@ namespace BrowserTesting.Tests.Wishlist
         {
             Driver.Navigate().GoToUrl("http://demowebshop.tricentis.com/");
         }
-
+        
         [OneTimeSetUp]
         public void Prepare()
         {
@@ -32,7 +32,7 @@ namespace BrowserTesting.Tests.Wishlist
         public CheckDeleteAdd_InDiffTabs(string item1)
         {
             itemName = item1;
-        }
+        }/*
         [OneTimeSetUp]
         public void InitReport()
         {
@@ -63,7 +63,7 @@ namespace BrowserTesting.Tests.Wishlist
                 test.Fail("Fail screenshot: ",
                 MediaEntityBuilder.CreateScreenCaptureFromPath(screenshotName).Build());
             }
-        }
+        }*/
         [AutomatedTest(8)]
         [Test, Description("Removing one item from the Wishlist and adding it to Cart in different browser tabs"), Order(0)]
         public void StartChecking()

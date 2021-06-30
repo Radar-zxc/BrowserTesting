@@ -8,7 +8,7 @@ using System.Threading;
 using AventStack.ExtentReports.Reporter;
 using OpenQA.Selenium;
 
-namespace BrowserTesting.Tests.Wishlist
+namespace BrowserTesting
 {
     [TestFixture("Black & White Diamond Heart")]
     class CheckDeleteAdd :TestBase
@@ -34,7 +34,7 @@ namespace BrowserTesting.Tests.Wishlist
         public CheckDeleteAdd(string item1)
         {
             itemName = item1;
-        }
+        }/*
         [OneTimeSetUp]
         public void InitReport()
         {
@@ -65,7 +65,7 @@ namespace BrowserTesting.Tests.Wishlist
                 test.Fail("Fail screenshot: ",
                 MediaEntityBuilder.CreateScreenCaptureFromPath(screenshotName).Build());
             }
-        }
+        }*/
         [AutomatedTest(7)]
         [Test, Description("Checking the simultaneous deletion and addition of an item to the cart from the Wishlist page via the CheckBox"), Order(0)]
         public void StartChecking()

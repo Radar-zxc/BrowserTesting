@@ -14,17 +14,20 @@ using NUnit.Framework.Interfaces;
 using System.Diagnostics;
 using Microsoft.Office.Interop.Excel;
 
+
 namespace BrowserTesting
 {
     /// <summary>
     /// Класс, содержащий в себе базовые методы, необходимые для выполнения тестов
     /// </summary>
+    [TestFixtureSource("asd")]
     public class TestBase
     {
         protected IWebDriver Driver;
         public static ExtentV3HtmlReporter htmlReporter;
-        public static ExtentReports extent;
-        public ExtentTest test;
+        public static ExtentReports extent = new ExtentReports();
+        public static ExtentTest test;
+        StreamWriter file;
         /// <summary>
         /// Метод получения информации из Json файла о том, какой драйвер будет использован для выполнения тестов
         /// </summary>
@@ -58,6 +61,42 @@ namespace BrowserTesting
             else
             {
                 Driver.Manage().Window.Size = new System.Drawing.Size(WindowOptions.Window_x, WindowOptions.Window_y);
+            }
+        }
+        [OneTimeSetUp]
+        public void InitReport()
+        {
+            string className = "BrowserTesting";//(typeof(BrowserTesting).Name).ToString();
+            string pth = System.Reflection.Assembly.GetCallingAssembly().CodeBase;
+            string actualPath = pth.Substring(0, pth.LastIndexOf("bin"));
+            string projectPath = new Uri(actualPath).LocalPath;
+            string reportPath = projectPath + "Reports\\" + $"{className} {DateTime.Now.Date.ToShortDateString()}.html";
+            //using (StreamWriter writer = File.AppendText(reportPath))
+            //file = new StreamWriter(reportPath, true);
+            // writer.WriteLine("line");
+            htmlReporter = new ExtentV3HtmlReporter(reportPath);
+            //extent = new ExtentReports();
+            extent.AttachReporter(htmlReporter);
+        }
+        [TearDown]
+        public void GetScreenshotWhenFail()
+        {
+            var status = TestContext.CurrentContext.Result.Outcome.Status;
+            if (status == TestStatus.Failed)
+            {
+                string className = "BrowserTesting";//(typeof(WishlistTesting).Name).ToString();
+                string pth = System.Reflection.Assembly.GetCallingAssembly().CodeBase;
+                string actualPath = pth.Substring(0, pth.LastIndexOf("bin"));
+                string projectPath = new Uri(actualPath).LocalPath;
+                string screenshotName = $"{className} {DateTime.Now.Date.ToShortDateString()}.png";
+                string screenshotPath = projectPath + "Reports\\" + screenshotName;
+                Screenshot file = ((ITakesScreenshot)Driver).GetScreenshot();
+                //file.SaveAsFile(screenshotPath, ScreenshotImageFormat.Png);
+                test.Log(Status.Fail, "Test ended with " + Status.Fail + '\r' + '\n' + TestContext.CurrentContext.Result.StackTrace);
+                //test.Fail("Fail screenshot: ",
+                //MediaEntityBuilder.CreateScreenCaptureFromPath(screenshotName).Build());
+                test.Log(Status.Fail, "details",
+                    MediaEntityBuilder.CreateScreenCaptureFromBase64String("base64String").Build());
             }
         }
         /// <summary>
@@ -104,7 +143,9 @@ namespace BrowserTesting
         [OneTimeTearDown]
         public void CloseBrowser()
         {
-            extent.Flush();
+            //file.Write(extent);
+            //file.Close();
+            //extent.Flush();
             Driver.Quit();
         }
     }

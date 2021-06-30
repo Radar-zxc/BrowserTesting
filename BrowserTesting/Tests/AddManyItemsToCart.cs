@@ -1,7 +1,7 @@
 ﻿using NUnit.Framework;
 using BrowserTesting.Pages;
 
-namespace BrowserTesting.Tests
+namespace BrowserTesting
 {
     [TestFixture("Computing and Internet", "Fiction", "Health Book")]
     class AddManyItemsToCart : TestBase

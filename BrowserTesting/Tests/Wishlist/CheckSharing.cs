@@ -6,7 +6,7 @@ using AventStack.ExtentReports;
 using OpenQA.Selenium;
 using NUnit.Framework.Interfaces;
 
-namespace BrowserTesting.Tests.Wishlist
+namespace BrowserTesting
 {
     [TestFixture("Black & White Diamond Heart")]
     class CheckSharing :TestBase
@@ -20,7 +20,7 @@ namespace BrowserTesting.Tests.Wishlist
         {
             Driver.Navigate().GoToUrl("http://demowebshop.tricentis.com/");
         }
-
+        
         [OneTimeSetUp]
         public void Prepare()
         {
@@ -33,6 +33,7 @@ namespace BrowserTesting.Tests.Wishlist
         {
             itemName = item1;
         }
+        /*
         [OneTimeSetUp]
         public void InitReport()
         {
@@ -63,7 +64,7 @@ namespace BrowserTesting.Tests.Wishlist
                 test.Fail("Fail screenshot: ",
                 MediaEntityBuilder.CreateScreenCaptureFromPath(screenshotName).Build());
             }
-        }
+        }*/
         [AutomatedTest(9)]
         [Test, Description("Check Wishlist URL for sharing function"), Order(0)]
         public void StartChecking()
