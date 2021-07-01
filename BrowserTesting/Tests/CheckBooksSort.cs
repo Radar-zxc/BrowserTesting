@@ -20,6 +20,7 @@ namespace BrowserTesting
         [Test, Description("Check Sorts on books page"), Order(0)]
         public void CheckSort()
         {
+            test = extent.CreateTest(DescriptionAttribute.value);
             explorer.OpenPage("books");
             page.CheckSort();
             explorer.OpenStartPage();

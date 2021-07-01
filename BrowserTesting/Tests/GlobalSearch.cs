@@ -23,6 +23,7 @@ namespace BrowserTesting
         [Test, Description("Check valid request"), Order(0)]
         public void SimpleValid()
         {
+            test = extent.CreateTest(DescriptionAttribute.value);
             string validRequest = valid;
             search.AdvancedSearch_TurnOn()
                 .NewRequest(validRequest)
@@ -32,6 +33,7 @@ namespace BrowserTesting
         [Test, Description("Check invalid request"), Order(1)]
         public void SimpleInvalid()
         {
+            test = extent.CreateTest(DescriptionAttribute.value);
             string invalidRequest = invalid;
             search.NewRequest(invalidRequest)
                 .UpdateSearch()
@@ -40,6 +42,7 @@ namespace BrowserTesting
         [Test, Description("Check valid request owned only by defined category"), Order(2)]
         public void BelongToCategory()
         {
+            test = extent.CreateTest(DescriptionAttribute.value);
             string validRequest = valid;
             search.NewRequest(validRequest)
                 .UpdateSearch()
@@ -51,6 +54,7 @@ namespace BrowserTesting
         [Test, Description("Check item in valid request which owned only by defined sub-category"), Order(3)]
         public void BelongToSubCategory_WithoutAutomaticallySearch()
         {
+            test = extent.CreateTest(DescriptionAttribute.value);
             string validRequest = validForSubCategory;
             search.NewRequest(validRequest)
                 .ChangeCategory("Computers")
@@ -64,6 +68,7 @@ namespace BrowserTesting
             Order(4)]
         public void BelongToSubCategory_WithAutomaticallySearch()
         {
+            test = extent.CreateTest(DescriptionAttribute.value);
             string validRequest = validForSubCategory;
             search.NewRequest(validRequest)
                 .ChangeCategory("Computers")
@@ -83,6 +88,7 @@ namespace BrowserTesting
             Order(5)]
         public void DontBelongToManufacturer()
         {
+            test = extent.CreateTest(DescriptionAttribute.value);
             string validRequest = valid;
             search.NewRequest(validRequest)
                 .UpdateSearch()
@@ -95,6 +101,7 @@ namespace BrowserTesting
         [Test, Description("Check item from valid price range"), Order(6)]
         public void ValidPriceRange()
         {
+            test = extent.CreateTest(DescriptionAttribute.value);
             string validRequest = valid;
             search.NewRequest(validRequest)
                 .ChangePrice(0, 1000)
@@ -104,6 +111,7 @@ namespace BrowserTesting
         [Test, Description("Check item from invalid price range"), Order(7)]
         public void InvalidPriceRange()
         {
+            test = extent.CreateTest(DescriptionAttribute.value);
             string invalidRequest = valid;
             search.NewRequest(invalidRequest)
                 .ChangePrice(1000, 0)
@@ -114,6 +122,7 @@ namespace BrowserTesting
         [Test, Description("Check request by valid item's description"), Order(8)]
         public void ValidDescription()
         {
+            test = extent.CreateTest(DescriptionAttribute.value);
             string validRequest = validDescription;
             search.NewRequest(validRequest)
                 .UpdateSearch()
@@ -126,6 +135,7 @@ namespace BrowserTesting
         [Test, Description("Check request of 2 characters"), Order(8)]
         public void SmallRequest()
         {
+            test = extent.CreateTest(DescriptionAttribute.value);
             string invalidRequest = lessThanMinValid;
             search.NewRequest(invalidRequest)
                 .UpdateSearch()
@@ -134,6 +144,7 @@ namespace BrowserTesting
         [Test, Description("Check empty search request from header"), Order(9)]
         public void EmptyRequest_Header()
         {
+            test = extent.CreateTest(DescriptionAttribute.value);
             string emptyRequest = "";
             search.NewRequest_Header(emptyRequest)
                 .UpdateSearch_Header()

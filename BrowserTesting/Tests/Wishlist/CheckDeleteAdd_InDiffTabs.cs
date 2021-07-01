@@ -1,10 +1,5 @@
 ﻿using NUnit.Framework;
 using BrowserTesting.Pages;
-using System;
-using AventStack.ExtentReports;
-using AventStack.ExtentReports.Reporter;
-using NUnit.Framework.Interfaces;
-using OpenQA.Selenium;
 
 namespace BrowserTesting.Wishlist
 {
@@ -32,38 +27,7 @@ namespace BrowserTesting.Wishlist
         public CheckDeleteAdd_InDiffTabs(string item1)
         {
             itemName = item1;
-        }/*
-        [OneTimeSetUp]
-        public void InitReport()
-        {
-            string className = (typeof(CheckDeleteAdd_InDiffTabs).Name).ToString();
-            string pth = System.Reflection.Assembly.GetCallingAssembly().CodeBase;
-            string actualPath = pth.Substring(0, pth.LastIndexOf("bin"));
-            string projectPath = new Uri(actualPath).LocalPath;
-            string reportPath = projectPath + "Reports\\" + $"{className} {DateTime.Now.Date.ToShortDateString()}.html";
-            htmlReporter = new ExtentV3HtmlReporter(reportPath);
-            extent = new ExtentReports();
-            extent.AttachReporter(htmlReporter);
         }
-        [TearDown]
-        public void GetScreenshotWhenFail()
-        {
-            var status = TestContext.CurrentContext.Result.Outcome.Status;
-            if (status == TestStatus.Failed)
-            {
-                string className = (typeof(CheckDeleteAdd_InDiffTabs).Name).ToString();
-                string pth = System.Reflection.Assembly.GetCallingAssembly().CodeBase;
-                string actualPath = pth.Substring(0, pth.LastIndexOf("bin"));
-                string projectPath = new Uri(actualPath).LocalPath;
-                string screenshotName = $"{className} {DateTime.Now.Date.ToShortDateString()}.png";
-                string screenshotPath = projectPath + "Reports\\" + screenshotName;
-                Screenshot file = ((ITakesScreenshot)Driver).GetScreenshot();
-                file.SaveAsFile(screenshotPath, ScreenshotImageFormat.Png);
-                test.Log(Status.Fail, "Test ended with " + Status.Fail + '\r' + '\n' + TestContext.CurrentContext.Result.StackTrace);
-                test.Fail("Fail screenshot: ",
-                MediaEntityBuilder.CreateScreenCaptureFromPath(screenshotName).Build());
-            }
-        }*/
         [AutomatedTest(8)]
         [Test, Description("Removing one item from the Wishlist and adding it to Cart in different browser tabs"), Order(0)]
         public void StartChecking()

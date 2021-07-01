@@ -22,6 +22,7 @@ namespace BrowserTesting
         [Test, Description("Сhecking the synchronization of tabs"), Order(0)]
         public void СheckingSynchronization()
         {
+            test = extent.CreateTest(DescriptionAttribute.value);
             string item1 = "Black & White Diamond Heart";
             string item2 = "Computing and Internet";
             explorer.OpenPage("jewelry");

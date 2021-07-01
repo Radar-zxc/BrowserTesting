@@ -19,6 +19,7 @@ namespace BrowserTesting
         [Test, Description("Сhecking the sorting by price on the Jewelry Page")]
         public void CheckFiltersInJewelryPage()
         {
+            test = extent.CreateTest(DescriptionAttribute.value);
             explorer.OpenPage("jewelry");
             page.ChooseFilter("0-500")
                 .CheckTable()

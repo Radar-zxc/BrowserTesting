@@ -25,6 +25,7 @@ namespace BrowserTesting
         [Test, Description("Add jewelry to cart"), Order(0)]
         public void AddJewelry_MultiplyInCart()
         {
+            test = extent.CreateTest(DescriptionAttribute.value);
             explorer.OpenPage("jewelry");
             explorer.GoToItemPage("Black & White Diamond Heart");
             order.CreatePage();
@@ -40,6 +41,7 @@ namespace BrowserTesting
         [Test, Description("Clear cart - add many items in item page"), Order(1)]
         public void AddJewelry_MultiplyInItemPage()
         {
+            test = extent.CreateTest(DescriptionAttribute.value);
             string item = "Black & White Diamond Heart";
             explorer.OpenPage("jewelry");
             explorer.GoToItemPage(item);

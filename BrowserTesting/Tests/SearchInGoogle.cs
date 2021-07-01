@@ -10,6 +10,7 @@ namespace BrowserTesting
         [Test, Description("Search with enter"), Order(0)]
         public void SearchWithEnter()
         {
+            test = extent.CreateTest(DescriptionAttribute.value);
             var enter = Driver.EFindElement(InputSearch);
             enter.Click();
             enter.ESendKeys("ABOBA" + Keys.Enter);
@@ -19,6 +20,7 @@ namespace BrowserTesting
         [Test, Description("Search with button"), Order(1)]
         public void SearchWithButton()
         {
+            test = extent.CreateTest( DescriptionAttribute.value);
             var enter = Driver.EFindElement(InputSearch);
             enter.Clear();
             string searchTerm = "мышь";

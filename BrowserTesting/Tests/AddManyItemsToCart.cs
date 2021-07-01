@@ -32,6 +32,7 @@ namespace BrowserTesting
         [Test, Description("Add 3 books to cart, check cart content"), Order(0)]
         public void AddDifferentBooks_CheckRemove()
         {
+            test = extent.CreateTest(DescriptionAttribute.value);
             string[] items = new string[] { item1, item2, item3 };
             order.CreatePage();
             for (int i = 0; i < items.Length; i++)

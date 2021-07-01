@@ -21,6 +21,7 @@ namespace BrowserTesting
         [Test, Description("Check default parameters on 'Build your own computer' page"), Order(0)]
         public void CheckParameters()
         {
+            test = extent.CreateTest(DescriptionAttribute.value);
             explorer.OpenPageWithList("computers", "desktops");
             explorer.GoToItemPage("Build your own computer");
             computer.StartCheckDefaultParameters();

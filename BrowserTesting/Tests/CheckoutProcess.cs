@@ -24,6 +24,7 @@ namespace BrowserTesting
         [Test, Description("Testing of valid checkout process "), Order(0)]
         public void SimpleValidCheckout()
         {
+            test = extent.CreateTest(DescriptionAttribute.value);
             explorer.OpenPage("books");
             preOrder.AddItem("Computing and Internet");
             explorer.OpenCart();

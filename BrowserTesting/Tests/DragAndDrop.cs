@@ -17,6 +17,7 @@ namespace BrowserTesting
         [Test, Description("Check Drag and Drop functionality on special site")]
         public void CheckDragAndDrop()
         {
+            test = extent.CreateTest(DescriptionAttribute.value);
             elements.StartCheck();
             elements.StartDragDrop_Primitive();
             elements.ClickWithJavaScript();

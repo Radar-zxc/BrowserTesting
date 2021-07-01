@@ -26,6 +26,9 @@ namespace BrowserTesting
         [Test, Description("Add item to wishlist"), Order(0)]
         public void EditGiftCard()
         {
+            
+            test = extent.CreateTest(DescriptionAttribute.value);
+            Program.asd();
             GiftCardInputInfo info = new GiftCardInputInfo(CheckoutInfo.validFirstName, CheckoutInfo.validLastName, CheckoutInfo.validEmail, CheckoutInfo.validEmail1);
             explorer.OpenPage("gift-cards");
             explorer.GoToItemPage("$25 Virtual Gift Card");

@@ -7,9 +7,14 @@ namespace BrowserTesting
     {
         private readonly By InputSearch = By.Id("text");
 
+        public override void DriverSetUp()
+        {
+            Driver.Navigate().GoToUrl("https://yandex.ru");
+        }
         [Test,Description("Search with enter"),Order(0)]
         public void SearchWithEnter()
         {
+            test = extent.CreateTest(DescriptionAttribute.value);
             var enter = Driver.EFindElement(InputSearch);
             enter.Click();
             enter.ESendKeys("ABOBA");
@@ -20,6 +25,7 @@ namespace BrowserTesting
         [Test , Description("Search with button"),Order(1)]
         public void SearchWithButton()
         {
+            test = extent.CreateTest(DescriptionAttribute.value);
             var enter = Driver.EFindElement(By.XPath("//input[@name='text']"));
             enter.Clear();
             string searchTerm = "Audi";
