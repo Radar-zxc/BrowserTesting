@@ -21,9 +21,13 @@ namespace BrowserTesting
         public void CheckSort()
         {
             test = extent.CreateTest(DescriptionAttribute.value);
+                    test.Info($"Открыта базовая страница");
+                    test.Info($"Открытие категории Books");
             explorer.OpenPage("books");
+                    test.Info($"Проверка сортировок A to Z, Z to A, Low to High, High to Low");
             page.CheckSort();
             explorer.OpenStartPage();
+                    test.Pass($"Тест завершен");
         }
     }
 }

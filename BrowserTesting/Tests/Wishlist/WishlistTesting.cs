@@ -34,45 +34,60 @@ namespace BrowserTesting.Wishlist
         public void AddToWishlist()
         {
             test = extent.CreateTest("Test-case №" + AutomatedTestAttribute.value + '\n' + DescriptionAttribute.value);
+                    test.Info("Открыта базовая страница");
             explorer.OpenPage("jewelry");
             explorer.GoToItemPage(itemName);
+                    test.Info($"Добавление предмета {itemName} в Wishlist");
             order.AddItemToWishlist();
             explorer.OpenWishlist();
+                    test.Info($"Проверка наличия предмета {itemName} в Wishlist");
             wishlist.CheckItem(itemName);
+                    test.Pass($"Тест завершен");
         }
         [AutomatedTest(6)]
         [Test, Description("Check item price in wishlist"), Order(1)]
         public void CalculatePrice()
-        {  
+        {
             test = extent.CreateTest("Test-case №" + AutomatedTestAttribute.value + '\n' + DescriptionAttribute.value);
+                    test.Info($"Проверка цены предмета {itemName} в Wishlist");
             wishlist.CheckPrice(itemName)
                 .ChangeCount(itemName, 10)
                 .UpdateWishlist()
                 .CheckPrice(itemName);
+                    test.Pass($"Тест завершен");
         }
         [AutomatedTest(4)]
         [Test, Description("Check move item from Wishlist -> Cart"), Order(2)]
         public void CheckMoving()
         {
             test = extent.CreateTest("Test-case №" + AutomatedTestAttribute.value + '\n' + DescriptionAttribute.value);
+                    test.Info($"Добавление предмета {itemName} из Wishlist в корзину");
             wishlist.AddToCart_CheckBox_On(itemName)
                 .AddToCart();
+                    test.Info($"Проверка наличия предмета {itemName} в корзине");
             cart.CheckCartItem(itemName);
+                    test.Info($"Удаление предмета {itemName} из корзины");
             cart.RemoveItem(itemName);
             cart.UpdateCart();
+                    test.Pass($"Тест завершен");
         }
         [AutomatedTest(5)]
         [Test, Description("Check delete item from Wishlist"), Order(3)]
         public void CheckDelete()
         {
             test = extent.CreateTest("Test-case №" + AutomatedTestAttribute.value + '\n' + DescriptionAttribute.value);
+                    test.Info($"Открыта базовая страница");
             explorer.OpenPage("jewelry");
             explorer.GoToItemPage(itemName);
+                    test.Info($"Добавление предмета {itemName} в Wishlist");
             order.AddItemToWishlist();
             explorer.OpenWishlist();
+                    test.Info($"Удаление всех предметов из списка Wishlist");
             wishlist.RemoveAllItems();
+                    test.Info($"Проверка результата удаления");
             wishlist.UpdateWishlist()
                 .CheckEmptyWishlist();
+                    test.Pass($"Тест завершен");
         }
     }
 }

@@ -25,10 +25,14 @@ namespace BrowserTesting
         public void SimpleValidCheckout()
         {
             test = extent.CreateTest(DescriptionAttribute.value);
+                    test.Info($"Открыта базовая страница");
             explorer.OpenPage("books");
+                    test.Info($"Добавление предмета Computing and Internet в корзину ");
             preOrder.AddItem("Computing and Internet");
+                    test.Info($"Открытие страницы корзины");
             explorer.OpenCart();
             cart.StartCheckout();
+                    test.Info($"Проведение Checkout с валидными параметрами ");
             checkout.CheckoutAsGuest()
                 .WriteBillingInfo()
                 .WriteShippingInfo()
@@ -37,6 +41,7 @@ namespace BrowserTesting
                 .PaymentInfonmation()
                 .ConfirmOrder();
             explorer.OpenStartPage();
+                    test.Pass($"Тест завершен");
         }
     }
 }

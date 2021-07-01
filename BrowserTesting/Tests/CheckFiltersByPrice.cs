@@ -20,7 +20,10 @@ namespace BrowserTesting
         public void CheckFiltersInJewelryPage()
         {
             test = extent.CreateTest(DescriptionAttribute.value);
+                    test.Info($"Открыта базовая страница");
+                    test.Info($"Открытие категории Jewelry");
             explorer.OpenPage("jewelry");
+                    test.Info(@$"Проверка фильтров цены ""0-500"" ""700-3000"" ""500-700""");
             page.ChooseFilter("0-500")
                 .CheckTable()
                 .ChooseFilter("700-3000")
@@ -28,6 +31,7 @@ namespace BrowserTesting
                 .ChooseFilter("500-700")
                 .CheckTable();
             explorer.OpenStartPage();
+                    test.Pass($"Тест завершен");
         }
     }
 }

@@ -22,10 +22,15 @@ namespace BrowserTesting
         public void CheckParameters()
         {
             test = extent.CreateTest(DescriptionAttribute.value);
+                    test.Info($"Открыта базовая страница");
+                    test.Info($"Открытие категории Computers -> Desktops");
             explorer.OpenPageWithList("computers", "desktops");
+                    test.Info(@$"Открытие страницы ""Build your own computer"" ");
             explorer.GoToItemPage("Build your own computer");
+                    test.Info($"Проверка установленных параметров по умолчанию согласно требованиям ");
             computer.StartCheckDefaultParameters();
             explorer.OpenStartPage();
+                    test.Pass($"Тест завершен");
         }
     }
 }

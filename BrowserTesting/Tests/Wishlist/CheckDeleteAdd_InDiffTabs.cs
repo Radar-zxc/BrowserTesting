@@ -33,21 +33,31 @@ namespace BrowserTesting.Wishlist
         public void StartChecking()
         {
             test = extent.CreateTest("Test-case №" + AutomatedTestAttribute.value + '\n' + DescriptionAttribute.value);
+                    test.Info("Открыта базовая страница");
             explorer.OpenPage("jewelry");
             explorer.GoToItemPage(itemName);
             order.AddItemToWishlist();
+                    test.Info("Предмет добавлен в Wishlist");
             explorer.OpenWishlist();
+                    test.Info("Открытие страницы Wishlist в новой вкладке");
             explorer.OpenPageInNewTab("wishlist");
+                    test.Info("Удаление предмета из списка Wishlist");
             wishlist.RemoveItem(itemName)
                 .UpdateWishlist()
                 .CheckEmptyWishlist();
+                    test.Info("Переход на первую вкладку");
             explorer.GoToTab(0);
+                    test.Info("Добавление предмета в корзину и переход в нее");
             wishlist.AddToCart_CheckBox_On(itemName)
                 .UpdateWishlist();
             explorer.CheckCartTravel();
+                    test.Info("Проверка наличия предмета в корзине");
             cart.CheckCartItem(itemName);
+                    test.Info("Очистка корзины");
             cart.RemoveAllItems();
+                    test.Info("Закрытие второго окна");
             explorer.CloseWindow(1);
+                    test.Pass("Тест завершен");
         }
     }
 }

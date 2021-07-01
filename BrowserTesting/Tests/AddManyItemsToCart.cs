@@ -33,8 +33,10 @@ namespace BrowserTesting
         public void AddDifferentBooks_CheckRemove()
         {
             test = extent.CreateTest(DescriptionAttribute.value);
+                    test.Info($"Открыта базовая страница");
             string[] items = new string[] { item1, item2, item3 };
             order.CreatePage();
+                    test.Info($"Добавление 3 книг в корзину");
             for (int i = 0; i < items.Length; i++)
             {
                 explorer.OpenPage("books");
@@ -42,16 +44,20 @@ namespace BrowserTesting
                 order.ChangeItemCount(1);
                 order.AddItemToCart();
             }
+                    test.Info($"Открытие корзины");
             explorer.OpenCart();
             explorer.CheckCartTravel();
+                    test.Info($"Удаление добавленных предметов из корзины");
             for (int i=0; i<items.Length;i++)
             {
                 cart.CheckCartItem(items[i]);
                 cart.RemoveItem(items[i]);
             }
             cart.UpdateCart();
+                    test.Info($"Проверка корзины на пустоту");
             cart.CheckEmptyCart();
             explorer.OpenStartPage();
+                    test.Pass($"Тест завершен");
         }
     }
 }

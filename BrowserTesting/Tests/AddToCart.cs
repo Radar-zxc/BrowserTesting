@@ -26,36 +26,51 @@ namespace BrowserTesting
         public void AddJewelry_MultiplyInCart()
         {
             test = extent.CreateTest(DescriptionAttribute.value);
+            string itemName = "Black & White Diamond Heart";
+                    test.Info($"Открыта базовая страница");
             explorer.OpenPage("jewelry");
-            explorer.GoToItemPage("Black & White Diamond Heart");
+            explorer.GoToItemPage(itemName);
             order.CreatePage();
+                    test.Info($"Добавление предмета {itemName} в корзину");
             order.AddItemToCart();
+                    test.Info($"Открытие страницы корзины");
             explorer.OpenCart();
-            cart.ChangeCount("Black & White Diamond Heart",50);
+                    test.Info($"Изменение количества предмета {itemName} в корзине ");
+            cart.ChangeCount(itemName,50);
             cart.UpdateCart();
-            cart.CheckPrice("Black & White Diamond Heart");
-            cart.RemoveItem("Black & White Diamond Heart");
+                    test.Info($"Проверка цены предмета {itemName} в корзине ");
+            cart.CheckPrice(itemName);
+                    test.Info($"Удаление предмета {itemName} из корзины ");
+            cart.RemoveItem(itemName);
             cart.UpdateCart();
+                    test.Info($"Проверка корзины на пустоту");
             cart.CheckEmptyCart();
+                    test.Pass($"Тест завершен");
         }
         [Test, Description("Clear cart - add many items in item page"), Order(1)]
         public void AddJewelry_MultiplyInItemPage()
         {
             test = extent.CreateTest(DescriptionAttribute.value);
-            string item = "Black & White Diamond Heart";
+                    test.Info($"Открыта базовая страница");
+            string itemName = "Black & White Diamond Heart";
             explorer.OpenPage("jewelry");
-            explorer.GoToItemPage(item);
+            explorer.GoToItemPage(itemName);
             order.CreatePage();
+                    test.Info($"Изменение количества у предмета {itemName} на его странице информации");
             order.ChangeItemCount(60);
+                    test.Info($"Добавление предмета {itemName} в корзину");
             order.AddItemToCart();
             explorer.OpenCart();
             explorer.CheckCartTravel();
-            cart.CheckCartItem(item);
-            cart.CheckPrice(item);
-            cart.RemoveItem(item);
+                    test.Info($"Проверка стоимости предмета {itemName} в корзине с учетом количества");
+            cart.CheckCartItem(itemName);
+            cart.CheckPrice(itemName);
+                    test.Info($"Удаление предмета {itemName} из корзины");
+            cart.RemoveItem(itemName);
             cart.UpdateCart();
             cart.CheckEmptyCart();
             explorer.OpenStartPage();
+                    test.Pass($"Тест завершен");
         }
     }
 }

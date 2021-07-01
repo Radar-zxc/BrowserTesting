@@ -33,18 +33,26 @@ namespace BrowserTesting.Wishlist
         public void StartChecking()
         {
             test = extent.CreateTest("Test-case №" + AutomatedTestAttribute.value + '\n' + DescriptionAttribute.value);
+                    test.Info("Открыта базовая страница");
             explorer.OpenPage("jewelry");
             explorer.GoToItemPage(itemName);
             order.AddItemToWishlist();
+                    test.Info("Предмет добавлен в Wishlist");
             explorer.OpenWishlist();
             wishlist.RemoveItem(itemName)
                 .AddToCart_CheckBox_On(itemName)
                 .UpdateWishlist()
                 .CheckEmptyWishlist();
+                    test.Info("Предмет добавлен в Cart");
+                    test.Info("Предмет удален из  Wishlist");
             explorer.OpenCart();
+                    test.Info("Открыта страница корзины");
+                    test.Info("Проверка наличия предмета в корзине");
             cart.CheckCartItem(itemName);
             cart.RemoveAllItems();
             cart.UpdateCart();
+                    test.Info("Корзина очищена");
+                    test.Pass("Тест завершен");
         }
     }
 }

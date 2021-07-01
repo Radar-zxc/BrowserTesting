@@ -84,9 +84,9 @@ namespace BrowserTesting
                     logStatus = Status.Fail;
                     Screenshot screenshot = (Driver as ITakesScreenshot).GetScreenshot();
                     string base64 = screenshot.AsBase64EncodedString;
-                    test.Log(Status.Info, "Fail screenshot",
+                    test.Log(logStatus, "Fail screenshot",
                         MediaEntityBuilder.CreateScreenCaptureFromBase64String(base64).Build());
-                    test.Log(Status.Info, "Test ended with " + Status.Fail + '\r' + '\n' + TestContext.CurrentContext.Result.StackTrace);
+                    test.Log(logStatus, "Test ended with " + Status.Fail + '\r' + '\n' + TestContext.CurrentContext.Result.StackTrace);
                     break;
                 case TestStatus.Inconclusive:
                     logStatus = Status.Warning;
